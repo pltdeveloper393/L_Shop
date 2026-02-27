@@ -13,7 +13,7 @@ export async function renderMainPage() {
                 nation: 'СССР',
                 tier: 10,
                 price: 6200,
-                image: 'https://via.placeholder.com/200x100/1a1c20/ff7800?text=Object+140',
+                image: '/images/tanks/object-140.png',
                 advantage: 'Лучший СТ для рандома'
             },
             {
@@ -21,7 +21,7 @@ export async function renderMainPage() {
                 nation: 'СССР',
                 tier: 10,
                 price: 5900,
-                image: 'https://via.placeholder.com/200x100/1a1c20/ff7800?text=IS-7',
+                image: '/images/tanks/is-7.png',
                 advantage: 'Легендарный тяж'
             },
             {
@@ -29,7 +29,7 @@ export async function renderMainPage() {
                 nation: 'Германия',
                 tier: 10,
                 price: 6100,
-                image: 'https://via.placeholder.com/200x100/1a1c20/ff7800?text=E+100',
+                image: '/images/tanks/e-100.png',
                 advantage: 'Непробиваемый броня'
             },
             {
@@ -37,7 +37,7 @@ export async function renderMainPage() {
                 nation: 'Германия',
                 tier: 10,
                 price: 5800,
-                image: 'https://via.placeholder.com/200x100/1a1c20/ff7800?text=Leopard+1',
+                image: '/images/tanks/leopard-1.png',
                 advantage: 'Снайперская точность'
             }
         ];
