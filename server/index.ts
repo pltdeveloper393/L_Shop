@@ -33,13 +33,13 @@ app.use('/api/auth', authRoutes);
 // app.use('/api/cart', cartRoutes);        // для cart
 // app.use('/api/delivery', deliveryRoutes);// для delivery
 
-app.use(express.static(path.join(__dirname, '../../public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // SPA в каркас index.html помещаем
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../public/index.html'));
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Сервер запущен по адресу http://localhost:${PORT}`);
 });
