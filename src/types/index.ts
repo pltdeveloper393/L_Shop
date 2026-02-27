@@ -3,3 +3,8 @@ export interface User {
   nickname: string;
   email: string;
 }
+
+export interface AuthResponse {
+  message?: string;
+  user: User;
+}

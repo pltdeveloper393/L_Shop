@@ -1,11 +1,12 @@
-import { api } from '../services/api';
-import { router } from '../main';
+import { api } from '../services/api.js';
+import { router } from '../main.js';
 export async function renderMainPage() {
     const app = document.getElementById('app');
     if (!app)
         return;
     try {
-        const { user } = await api.getMe();
+        const response = await api.getMe();
+        const user = response.user;
         app.innerHTML = `
       <div class="wot-container">
         <h1>Главная страница</h1>

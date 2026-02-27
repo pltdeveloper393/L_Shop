@@ -1,5 +1,5 @@
-import { api } from '../services/api';
-import { router } from '../main';
+import { api } from '../services/api.js';
+import { router } from '../main.js';
 export function renderRegisterPage() {
     const app = document.getElementById('app');
     if (!app)
@@ -32,7 +32,8 @@ export function renderRegisterPage() {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         try {
-            await api.register(nickname, email, password);
+            const response = await api.register(nickname, email, password);
+            console.log('Registration successful:', response.user);
             router.navigateTo('/main');
         }
         catch (err) {

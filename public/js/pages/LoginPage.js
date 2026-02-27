@@ -1,5 +1,5 @@
-import { api } from '../services/api';
-import { router } from '../main';
+import { api } from '../services/api.js';
+import { router } from '../main.js';
 export function renderLoginPage() {
     const app = document.getElementById('app');
     if (!app)
@@ -27,7 +27,8 @@ export function renderLoginPage() {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         try {
-            await api.login(email, password);
+            const response = await api.login(email, password);
+            console.log('Login successful:', response.user);
             router.navigateTo('/main');
         }
         catch (err) {

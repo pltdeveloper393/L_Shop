@@ -1,5 +1,6 @@
-import { api } from '../services/api';
-import { router } from '../main';
+import { api } from '../services/api.js';
+import { router } from '../main.js';
+import { AuthResponse } from '../types/index.js';
 
 export function renderLoginPage() {
   const app = document.getElementById('app');
@@ -30,7 +31,8 @@ export function renderLoginPage() {
     const password = (document.getElementById('password') as HTMLInputElement).value;
 
     try {
-      await api.login(email, password);
+      const response: AuthResponse = await api.login(email, password);
+      console.log('Login successful:', response.user);
       router.navigateTo('/main');
     } catch (err: any) {
       alert(err.message);

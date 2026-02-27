@@ -1,5 +1,6 @@
-import { api } from '../services/api';
-import { router } from '../main';
+import { api } from '../services/api.js';
+import { router } from '../main.js';
+import { AuthResponse } from '../types/index.js';
 
 export function renderRegisterPage() {
   const app = document.getElementById('app');
@@ -35,7 +36,8 @@ export function renderRegisterPage() {
     const password = (document.getElementById('password') as HTMLInputElement).value;
 
     try {
-      await api.register(nickname, email, password);
+      const response: AuthResponse = await api.register(nickname, email, password);
+      console.log('Registration successful:', response.user);
       router.navigateTo('/main');
     } catch (err: any) {
       alert(err.message);
