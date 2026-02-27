@@ -46,10 +46,10 @@ export async function renderMainPage() {
     ];
 
     const advantages = [
-      { icon: '🚀', title: 'Мгновенная доставка', desc: 'Танк в ангаре через 5 минут' },
-      { icon: '🛡️', title: 'Гарантия качества', desc: 'Все танки с полным обслуживанием' },
-      { icon: '💰', title: 'Лучшие цены', desc: 'На 20% дешевле чем в премиум магазине' },
-      { icon: '🎯', title: 'Бонусы за покупку', desc: 'Кэшбек до 10% золотом' }
+      { icon: 'fa-bolt', title: 'Мгновенная доставка', desc: 'Танк в ангаре через 5 минут' },
+      { icon: 'fa-shield-alt', title: 'Гарантия качества', desc: 'Все танки с полным обслуживанием' }, // Исправлено: shield-halved → shield-alt
+      { icon: 'fa-tag', title: 'Лучшие цены', desc: 'На 20% дешевле чем в премиум магазине' }, // Исправлено: sack-dollar → tag
+      { icon: 'fa-gift', title: 'Бонусы за покупку', desc: 'Кэшбек до 10% золотом' }
     ];
 
     const newsItems = [
@@ -64,15 +64,18 @@ export async function renderMainPage() {
         <div class="shop-header">
           <div class="header-left">
             <h1 class="shop-title">WOT<span class="accent">SHOP</span></h1>
-            <p class="welcome-message">С возвращением, командир ${user.nickname}!</p>
+            <p class="welcome-message">
+              <i class="fas fa-hand-peace" style="margin-right: 5px;"></i>
+              С возвращением, командир ${user.nickname}!
+            </p>
           </div>
           <div class="header-right">
             <button class="wot-btn wot-btn-primary" id="catalog-btn">
-              <span class="btn-icon">🛡️</span>
+              <i class="fas fa-store btn-icon"></i> <!-- Исправлено: tank → store -->
               Каталог танков
             </button>
             <button class="wot-btn" id="logout-btn">
-              <span class="btn-icon">🚪</span>
+              <i class="fas fa-sign-out-alt btn-icon"></i> <!-- Исправлено: right-from-bracket → sign-out-alt -->
               Выйти
             </button>
           </div>
@@ -81,24 +84,38 @@ export async function renderMainPage() {
         <!-- Баннер с акцией -->
         <div class="promo-banner">
           <div class="promo-content">
-            <span class="promo-tag">🔥 ГОРЯЧЕЕ ПРЕДЛОЖЕНИЕ</span>
+            <span class="promo-tag">
+              <i class="fas fa-fire" style="margin-right: 5px;"></i>
+              ГОРЯЧЕЕ ПРЕДЛОЖЕНИЕ
+            </span>
             <h2 class="promo-title">Скидка 20% на премиум технику</h2>
             <p class="promo-text">Только до конца месяца! Успейте пополнить ангар легендарными машинами.</p>
-            <button class="wot-btn wot-btn-primary" id="promo-btn">Посмотреть предложение →</button>
+            <button class="wot-btn wot-btn-primary" id="promo-btn">
+              Посмотреть предложение 
+              <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+            </button>
           </div>
           <div class="promo-decoration">
             <div class="tank-silhouette"></div>
-            <div class="promo-badge">-20%</div>
+            <div class="promo-badge">
+              <i class="fas fa-tag"></i>
+              20%
+            </div>
           </div>
         </div>
 
         <!-- Преимущества магазина -->
         <div class="advantages-section">
-          <h2 class="section-title">Почему выбирают <span class="accent">WOTSHOP</span></h2>
+          <h2 class="section-title">
+            <i class="fas fa-star" style="color: #ff7800; margin-right: 10px;"></i>
+            Почему выбирают <span class="accent">WOTSHOP</span>
+          </h2>
           <div class="advantages-grid">
             ${advantages.map(adv => `
               <div class="advantage-card">
-                <div class="advantage-icon">${adv.icon}</div>
+                <div class="advantage-icon">
+                  <i class="fas ${adv.icon}"></i>
+                </div>
                 <h3 class="advantage-title">${adv.title}</h3>
                 <p class="advantage-desc">${adv.desc}</p>
               </div>
@@ -108,41 +125,71 @@ export async function renderMainPage() {
 
         <!-- Топ продаж -->
         <div class="top-sales-section">
-          <h2 class="section-title">🔥 Топ продаж этой недели</h2>
+          <h2 class="section-title">
+            <i class="fas fa-crown" style="color: #ff7800; margin-right: 10px;"></i>
+            Топ продаж этой недели
+          </h2>
           <div class="tanks-grid">
             ${topSellingTanks.map(tank => `
               <div class="tank-sale-card">
                 <div class="tank-image-container">
                   <img src="${tank.image}" alt="${tank.name}" class="tank-image">
-                  <span class="tank-tier">${tank.tier} ур.</span>
+                  <span class="tank-tier">
+                    <i class="fas fa-layer-group" style="margin-right: 3px;"></i>
+                    ${tank.tier} ур.
+                  </span>
                 </div>
                 <div class="tank-info">
                   <h3 class="tank-name">${tank.name}</h3>
-                  <span class="tank-nation">${tank.nation}</span>
-                  <p class="tank-advantage">✨ ${tank.advantage}</p>
+                  <span class="tank-nation">
+                    <i class="fas fa-flag" style="margin-right: 5px;"></i>
+                    ${tank.nation}
+                  </span>
+                  <p class="tank-advantage">
+                    <i class="fas fa-medal" style="color: #ff7800; margin-right: 5px;"></i>
+                    ${tank.advantage}
+                  </p>
                   <div class="tank-price-section">
-                    <span class="tank-price">${tank.price.toLocaleString()} ₽</span>
-                    <button class="wot-btn wot-btn-primary tank-buy-btn" data-tank="${tank.name}">Купить</button>
+                    <span class="tank-price">
+                      <i class="fas fa-coins" style="margin-right: 5px;"></i>
+                      ${tank.price.toLocaleString()} ₽
+                    </span>
+                    <button class="wot-btn wot-btn-primary tank-buy-btn" data-tank="${tank.name}">
+                      <i class="fas fa-shopping-cart" style="margin-right: 5px;"></i> <!-- Исправлено: cart-shopping → shopping-cart -->
+                      Купить
+                    </button>
                   </div>
                 </div>
               </div>
             `).join('')}
           </div>
           <div class="section-footer">
-            <button class="wot-btn" id="view-all-tanks">Все танки →</button>
+            <button class="wot-btn" id="view-all-tanks">
+              Все танки 
+              <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+            </button>
           </div>
         </div>
 
         <!-- Новости и события -->
         <div class="news-section">
-          <h2 class="section-title">📰 Новости магазина</h2>
+          <h2 class="section-title">
+            <i class="fas fa-newspaper" style="color: #ff7800; margin-right: 10px;"></i>
+            Новости магазина
+          </h2>
           <div class="news-grid">
             ${newsItems.map(news => `
               <div class="news-card">
-                <div class="news-date">${news.date}</div>
+                <div class="news-date">
+                  <i class="far fa-calendar-alt" style="margin-right: 5px;"></i>
+                  ${news.date}
+                </div>
                 <h3 class="news-title">${news.title}</h3>
                 <p class="news-desc">${news.desc}</p>
-                <a href="#" class="news-link">Подробнее →</a>
+                <a href="#" class="news-link">
+                  Подробнее 
+                  <i class="fas fa-arrow-right" style="margin-left: 5px; font-size: 0.8rem;"></i>
+                </a>
               </div>
             `).join('')}
           </div>
@@ -151,31 +198,50 @@ export async function renderMainPage() {
         <!-- Статистика магазина -->
         <div class="stats-bar">
           <div class="stat-item">
+            <i class="fas fa-tachometer-alt stat-icon"></i> <!-- Исправлено: tank → tachometer-alt -->
             <span class="stat-value">1500+</span>
             <span class="stat-label">Танков продано</span>
           </div>
           <div class="stat-item">
+            <i class="fas fa-star stat-icon"></i>
             <span class="stat-value">98%</span>
             <span class="stat-label">Довольных клиентов</span>
           </div>
           <div class="stat-item">
+            <i class="fas fa-headset stat-icon"></i>
             <span class="stat-value">24/7</span>
             <span class="stat-label">Поддержка</span>
           </div>
           <div class="stat-item">
-            <span class="stat-value">⚡ 5 мин</span>
+            <i class="fas fa-bolt stat-icon"></i>
+            <span class="stat-value">5 мин</span>
             <span class="stat-label">Доставка</span>
           </div>
         </div>
 
         <!-- Футер -->
         <div class="shop-footer">
-          <p>© 2026 WOTSHOP - Официальный магазин танков</p>
+          <p>
+            <i class="far fa-copyright" style="margin-right: 5px;"></i>
+            2026 WOTSHOP - Официальный магазин танков
+          </p>
           <div class="footer-links">
-            <a href="#">О нас</a>
-            <a href="#">Контакты</a>
-            <a href="#">Доставка</a>
-            <a href="#">Гарантии</a>
+            <a href="#">
+              <i class="fas fa-info-circle" style="margin-right: 5px;"></i>
+              О нас
+            </a>
+            <a href="#">
+              <i class="fas fa-envelope" style="margin-right: 5px;"></i>
+              Контакты
+            </a>
+            <a href="#">
+              <i class="fas fa-truck" style="margin-right: 5px;"></i>
+              Доставка
+            </a>
+            <a href="#">
+              <i class="fas fa-shield-alt" style="margin-right: 5px;"></i> <!-- Исправлено: shield → shield-alt -->
+              Гарантии
+            </a>
           </div>
         </div>
       </div>
