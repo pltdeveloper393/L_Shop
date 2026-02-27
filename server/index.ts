@@ -3,6 +3,12 @@ import session from 'express-session';
 import path from 'path';
 import authRoutes from './routes/auth';
 
+declare module 'express-session' {
+  interface SessionData {
+    userId: string;
+  }
+}
+
 const app = express();
 const PORT = 3000;
 
