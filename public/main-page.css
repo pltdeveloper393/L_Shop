@@ -81,22 +81,74 @@
   max-width: 500px;
 }
 
+/* Промо-баннер с силуэтом танка */
 .promo-decoration {
   position: relative;
   width: 300px;
   height: 200px;
-  z-index: 1;
 }
 
 .tank-silhouette {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, 
+    rgba(255,120,0,0.2) 0%, 
+    rgba(255,120,0,0.05) 100%);
+  clip-path: polygon(20% 30%, 80% 30%, 90% 70%, 10% 70%);
+  position: relative;
+  animation: tankDrift 4s infinite ease-in-out;
+}
+
+.tank-silhouette::before {
+  content: '⏤⏤⏤';
   position: absolute;
-  right: -20px;
-  top: -40px;
-  width: 300px;
-  height: 200px;
-  background: linear-gradient(90deg, transparent, rgba(255,120,0,0.1));
-  transform: rotate(-15deg);
-  border-left: 4px solid #ff7800;
+  bottom: -10px;
+  left: 20%;
+  color: #ff7800;
+  font-size: 1.5rem;
+  letter-spacing: 5px;
+  opacity: 0.5;
+}
+
+.tank-silhouette::after {
+  content: '● ●';
+  position: absolute;
+  bottom: -20px;
+  left: 30%;
+  color: #ff7800;
+  font-size: 1.2rem;
+  opacity: 0.5;
+}
+
+.promo-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #ff7800;
+  color: #000;
+  font-size: 2.5rem;
+  font-weight: bold;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transform: rotate(15deg);
+  box-shadow: 0 0 30px #ff7800;
+  border: 2px solid #fff;
+  z-index: 3;
+  animation: badgePulse 2s infinite;
+}
+
+@keyframes tankDrift {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  50% { transform: translateX(-15px) rotate(-2deg); }
+}
+
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0 30px #ff7800; }
+  50% { box-shadow: 0 0 50px #ff7800; }
 }
 
 /* Секции */
@@ -180,7 +232,7 @@
   border: 1px solid #2a2c30;
   border-radius: 12px;
   overflow: hidden;
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tank-sale-card:hover {
@@ -200,6 +252,27 @@
   width: 100%;
   height: auto;
   display: block;
+}
+
+/* Плейсхолдер для танков */
+.tank-placeholder {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #2a2c30 0%, #1a1c20 100%);
+  border: 2px dashed #ff7800;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.tank-placeholder-text {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  opacity: 0.7;
 }
 
 .tank-tier {
@@ -251,11 +324,23 @@
   font-size: 1.4rem;
   font-weight: bold;
   color: #ff7800;
+  transition: all 0.3s;
+}
+
+.tank-sale-card:hover .tank-price {
+  color: #ffa03d;
+  transform: scale(1.05);
 }
 
 .tank-buy-btn {
   padding: 8px 16px;
   font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.tank-sale-card:hover .tank-buy-btn {
+  background: linear-gradient(180deg, #ffa03d 0%, #ff8c00 100%);
+  transform: scale(1.05);
 }
 
 .section-footer {
@@ -386,11 +471,27 @@
   .promo-banner {
     flex-direction: column;
     text-align: center;
-    padding: 30px;
+    padding: 20px;
   }
-
+  
+  .promo-title {
+    font-size: 1.8rem;
+  }
+  
+  .promo-text {
+    font-size: 1rem;
+  }
+  
   .promo-decoration {
-    display: none;
+    width: 200px;
+    height: 150px;
+    margin-top: 30px;
+  }
+  
+  .promo-badge {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
   }
 
   .stats-bar {

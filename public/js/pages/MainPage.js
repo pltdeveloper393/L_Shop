@@ -82,6 +82,7 @@ export async function renderMainPage() {
           </div>
           <div class="promo-decoration">
             <div class="tank-silhouette"></div>
+            <div class="promo-badge">-20%</div>
           </div>
         </div>
 
