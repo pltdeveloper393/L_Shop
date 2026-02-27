@@ -81,25 +81,29 @@ export async function renderMainPage() {
           </div>
         </div>
 
-        <!-- Баннер с акцией -->
-        <div class="promo-banner">
+        <!-- Промо-баннер -->
+        <div class="promo-banner simple-timer-banner">
           <div class="promo-content">
             <span class="promo-tag">
-              <i class="fas fa-fire" style="margin-right: 5px;"></i>
-              ГОРЯЧЕЕ ПРЕДЛОЖЕНИЕ
+              <i class="fas fa-clock"></i>
+              ОГРАНИЧЕННОЕ ПРЕДЛОЖЕНИЕ
             </span>
-            <h2 class="promo-title">Скидка 20% на премиум технику</h2>
-            <p class="promo-text">Только до конца месяца! Успейте пополнить ангар легендарными машинами.</p>
-            <button class="wot-btn wot-btn-primary" id="promo-btn">
-              Посмотреть предложение 
-              <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+            <h2 class="promo-title">Скидка 25% на премиум технику</h2>
+            <p class="promo-text">
+              Только сегодня! Успейте пополнить ангар редкими машинами.
+            </p>
+            <button class="wot-btn wot-btn-primary" id="promo-simple-btn">
+              <i class="fas fa-gift btn-icon"></i>
+              ПЕРЕЙТИ К АКЦИИ
             </button>
           </div>
-          <div class="promo-decoration">
-            <div class="tank-silhouette"></div>
-            <div class="promo-badge">
-              <i class="fas fa-tag"></i>
-              20%
+          <div class="promo-decoration timer-decoration">
+            <div class="timer-circle">
+              <i class="fas fa-hourglass-half timer-icon"></i>
+              <div class="timer-display" id="simple-timer">
+                <span id="simple-hours">23</span>:<span id="simple-minutes">59</span>:<span id="simple-seconds">59</span>
+              </div>
+              <div class="timer-label">до конца</div>
             </div>
           </div>
         </div>
@@ -274,4 +278,36 @@ export async function renderMainPage() {
   } catch {
     router.navigateTo('/');
   }
+
+  function startSimpleTimer(): void {
+    const now = new Date();
+    const end = new Date(now);
+    end.setHours(23, 59, 59, 999);
+    
+    function update(): void {
+      const diff = end.getTime() - Date.now();
+      if (diff <= 0) {
+        document.getElementById('simple-hours')!.textContent = '00';
+        document.getElementById('simple-minutes')!.textContent = '00';
+        document.getElementById('simple-seconds')!.textContent = '00';
+        return;
+      }
+      const hours = Math.floor(diff / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+      
+      document.getElementById('simple-hours')!.textContent = hours.toString().padStart(2, '0');
+      document.getElementById('simple-minutes')!.textContent = minutes.toString().padStart(2, '0');
+      document.getElementById('simple-seconds')!.textContent = seconds.toString().padStart(2, '0');
+    }
+    
+    update();
+    setInterval(update, 1000);
+  }
+
+  startSimpleTimer();
+
+  document.getElementById('promo-simple-btn')?.addEventListener('click', () => {
+    router.navigateTo('/promo');
+  });
 }
