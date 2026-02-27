@@ -150,7 +150,7 @@ export async function renderMainPage() {
                   <div class="tank-price-section">
                     <span class="tank-price">
                       <i class="fas fa-coins" style="margin-right: 5px;"></i>
-                      ${tank.price.toLocaleString()} ₽
+                      ${tank.price.toLocaleString()}
                     </span>
                     <button class="wot-btn wot-btn-primary tank-buy-btn" data-tank="${tank.name}">
                       <i class="fas fa-shopping-cart" style="margin-right: 5px;"></i> <!-- Исправлено: cart-shopping → shopping-cart -->

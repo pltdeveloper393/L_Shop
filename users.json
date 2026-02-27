@@ -5,5 +5,12 @@
     "email": "12345@gmail.com",
     "passwordHash": "$2b$10$TarUP8QYL1noiYeD2vhUMei9wdC66JgV/cK7PPKRSRclZdwS7hTre",
     "createdAt": "2026-02-27T14:19:15.920Z"
+  },
+  {
+    "id": "1772212259656",
+    "nickname": "KorbenDallasTopStrelok",
+    "email": "korben@gmail.com",
+    "passwordHash": "$2b$10$C/zK6JXMl26qJxHfhlTuMu.CvutFOVED9MgCldQeYXFJFHB5kxY0i",
+    "createdAt": "2026-02-27T17:10:59.656Z"
   }
 ]
