@@ -24,4 +24,8 @@ export const api = {
     }),
     getMe: () => request('/auth/me'),
     logout: () => request('/auth/logout', { method: 'POST' }),
+    changePassword: (oldPassword, newPassword) => request('/auth/change-password', {
+        method: 'POST',
+        body: JSON.stringify({ oldPassword, newPassword }),
+    }),
 };

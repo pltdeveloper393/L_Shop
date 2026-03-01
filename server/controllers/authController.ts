@@ -5,13 +5,11 @@ import bcrypt from 'bcrypt';
 export async function register(req: Request, res: Response) {
   const { nickname, email, password } = req.body;
 
-  // Простая валидация
   if (!nickname || !email || !password) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
   try {
-    // Проверка уникальности
     const existingEmail = await UserModel.findUserByEmail(email);
     if (existingEmail) {
       return res.status(400).json({ message: 'Email already exists' });
@@ -24,7 +22,6 @@ export async function register(req: Request, res: Response) {
 
     const user = await UserModel.createUser(nickname, email, password);
 
-    // Сохраняем userId в сессии
     req.session.userId = user.id;
 
     res.status(201).json({ message: 'Registration successful', user: { id: user.id, nickname: user.nickname, email: user.email } });
@@ -88,4 +85,54 @@ export async function logout(req: Request, res: Response) {
     }
     res.json({ message: 'Logout successful' });
   });
+}
+
+export async function changePassword(req: Request, res: Response) {
+  const { oldPassword, newPassword } = req.body;
+  const userId = req.session.userId;
+
+  if (!userId) {
+    return res.status(401).json({ message: 'Not authenticated' });
+  }
+
+  if (!oldPassword || !newPassword) {
+    return res.status(400).json({ message: 'Old password and new password are required' });
+  }
+
+  if (newPassword.length < 6) {
+    return res.status(400).json({ message: 'New password must be at least 6 characters' });
+  }
+
+  try {
+    const users = await UserModel.readUsers();
+    
+    const userIndex = users.findIndex(u => u.id === userId);
+    if (userIndex === -1) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const user = users[userIndex];
+
+    const isValid = await bcrypt.compare(oldPassword, user.passwordHash);
+    if (!isValid) {
+      return res.status(400).json({ message: 'Old password is incorrect' });
+    }
+
+    const newPasswordHash = await bcrypt.hash(newPassword, 10);
+    
+    users[userIndex].passwordHash = newPasswordHash;
+    
+    await UserModel.writeUsers(users);
+
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Session destroy error:', err);
+      }
+    });
+
+    res.json({ message: 'Password changed successfully' });
+  } catch (err) {
+    console.error('Change password error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
 }

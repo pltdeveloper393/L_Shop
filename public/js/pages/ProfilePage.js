@@ -1,16 +1,13 @@
 import { api } from '../services/api.js';
 import { router } from '../main.js';
-import { AuthResponse } from '../types/index.js';
-
 export async function renderProfilePage() {
-  const app = document.getElementById('app');
-  if (!app) return;
-
-  try {
-    const response: AuthResponse = await api.getMe();
-    const user = response.user;
-
-    app.innerHTML = `
+    const app = document.getElementById('app');
+    if (!app)
+        return;
+    try {
+        const response = await api.getMe();
+        const user = response.user;
+        app.innerHTML = `
       <div class="wot-container profile-page">
         <!-- Заголовок и навигация -->
         <div class="profile-header">
@@ -87,50 +84,45 @@ export async function renderProfilePage() {
         </div>
       </div>
     `;
-
-    document.getElementById('back-to-main')?.addEventListener('click', () => {
-      router.navigateTo('/');
-    });
-
-    document.getElementById('logout-from-profile')?.addEventListener('click', async () => {
-      await api.logout();
-      router.navigateTo('/');
-    });
-
-    const form = document.getElementById('password-change-form') as HTMLFormElement;
-    const errorDiv = document.getElementById('password-error') as HTMLElement;
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      errorDiv.style.display = 'none';
-
-      const oldPassword = (document.getElementById('old-password') as HTMLInputElement).value;
-      const newPassword = (document.getElementById('new-password') as HTMLInputElement).value;
-      const confirmPassword = (document.getElementById('confirm-password') as HTMLInputElement).value;
-
-      if (newPassword !== confirmPassword) {
-        errorDiv.textContent = 'Новые пароли не совпадают.';
-        errorDiv.style.display = 'block';
-        return;
-      }
-      if (newPassword.length < 6) {
-        errorDiv.textContent = 'Пароль должен содержать минимум 6 символов.';
-        errorDiv.style.display = 'block';
-        return;
-      }
-
-      try {
-        await api.changePassword(oldPassword, newPassword);
-        alert('Пароль успешно изменён. Пожалуйста, войдите заново.');
-        await api.logout();
+        document.getElementById('back-to-main')?.addEventListener('click', () => {
+            router.navigateTo('/');
+        });
+        document.getElementById('logout-from-profile')?.addEventListener('click', async () => {
+            await api.logout();
+            router.navigateTo('/');
+        });
+        const form = document.getElementById('password-change-form');
+        const errorDiv = document.getElementById('password-error');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorDiv.style.display = 'none';
+            const oldPassword = document.getElementById('old-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            if (newPassword !== confirmPassword) {
+                errorDiv.textContent = 'Новые пароли не совпадают.';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            if (newPassword.length < 6) {
+                errorDiv.textContent = 'Пароль должен содержать минимум 6 символов.';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            try {
+                // в API добавить метод changePassword
+                await api.changePassword({ oldPassword, newPassword });
+                alert('Пароль успешно изменён. Пожалуйста, войдите заново.');
+                await api.logout();
+                router.navigateTo('/');
+            }
+            catch (err) {
+                errorDiv.textContent = err.message || 'Ошибка при смене пароля. Проверьте старый пароль.';
+                errorDiv.style.display = 'block';
+            }
+        });
+    }
+    catch (error) {
         router.navigateTo('/');
-      } catch (err: any) {
-        errorDiv.textContent = err.message || 'Ошибка при смене пароля. Проверьте старый пароль.';
-        errorDiv.style.display = 'block';
-      }
-    });
-
-  } catch (error) {
-    router.navigateTo('/');
-  }
+    }
 }

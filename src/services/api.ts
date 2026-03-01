@@ -34,4 +34,10 @@ export const api = {
 
   logout: (): Promise<{ message: string }> => 
     request('/auth/logout', { method: 'POST' }),
+
+  changePassword: (oldPassword: string, newPassword: string): Promise<{ message: string }> =>
+    request('/auth/change-password', {
+      method: 'POST',
+      body: JSON.stringify({ oldPassword, newPassword }),
+    }),
 };
