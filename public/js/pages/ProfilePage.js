@@ -110,8 +110,7 @@ export async function renderProfilePage() {
                 return;
             }
             try {
-                // в API добавить метод changePassword
-                await api.changePassword({ oldPassword, newPassword });
+                await api.changePassword(oldPassword, newPassword);
                 alert('Пароль успешно изменён. Пожалуйста, войдите заново.');
                 await api.logout();
                 router.navigateTo('/');

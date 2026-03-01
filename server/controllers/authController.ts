@@ -105,29 +105,25 @@ export async function changePassword(req: Request, res: Response) {
 
   try {
     const users = await UserModel.readUsers();
-    
     const userIndex = users.findIndex(u => u.id === userId);
+    
     if (userIndex === -1) {
       return res.status(404).json({ message: 'User not found' });
     }
 
     const user = users[userIndex];
-
     const isValid = await bcrypt.compare(oldPassword, user.passwordHash);
+    
     if (!isValid) {
       return res.status(400).json({ message: 'Old password is incorrect' });
     }
 
     const newPasswordHash = await bcrypt.hash(newPassword, 10);
-    
     users[userIndex].passwordHash = newPasswordHash;
-    
     await UserModel.writeUsers(users);
 
     req.session.destroy((err) => {
-      if (err) {
-        console.error('Session destroy error:', err);
-      }
+      if (err) console.error('Session destroy error:', err);
     });
 
     res.json({ message: 'Password changed successfully' });
