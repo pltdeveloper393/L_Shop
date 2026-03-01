@@ -69,16 +69,22 @@ export async function renderMainPage() {
               С возвращением, командир ${user.nickname}!
             </p>
           </div>
+
           <div class="header-right">
             <button class="wot-btn wot-btn-primary" id="catalog-btn">
               <i class="fas fa-store btn-icon"></i> <!-- Исправлено: tank → store -->
               Каталог танков
+            </button>
+            <button class="wot-btn" id="profile-btn">
+              <i class="fas fa-user btn-icon"></i>
+              Профиль
             </button>
             <button class="wot-btn" id="logout-btn">
               <i class="fas fa-sign-out-alt btn-icon"></i> <!-- Исправлено: right-from-bracket → sign-out-alt -->
               Выйти
             </button>
           </div>
+
         </div>
 
         <!-- Промо-баннер -->
@@ -273,6 +279,11 @@ export async function renderMainPage() {
         const tankName = (e.target as HTMLElement).getAttribute('data-tank');
         alert(`Танк ${tankName} добавлен в корзину!`);
       });
+    });
+
+    // Профиль пользователя
+    document.getElementById('profile-btn')?.addEventListener('click', () => {
+      router.navigateTo('/profile');
     });
 
   } catch {
