@@ -281,7 +281,6 @@ export async function renderMainPage() {
       });
     });
 
-    // Профиль пользователя
     document.getElementById('profile-btn')?.addEventListener('click', () => {
       router.navigateTo('/profile');
     });

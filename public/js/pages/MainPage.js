@@ -269,7 +269,6 @@ export async function renderMainPage() {
                 alert(`Танк ${tankName} добавлен в корзину!`);
             });
         });
-        // Профиль пользователя
         document.getElementById('profile-btn')?.addEventListener('click', () => {
             router.navigateTo('/profile');
         });

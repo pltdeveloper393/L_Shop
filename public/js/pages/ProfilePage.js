@@ -85,7 +85,7 @@ export async function renderProfilePage() {
       </div>
     `;
         document.getElementById('back-to-main')?.addEventListener('click', () => {
-            router.navigateTo('/');
+            router.navigateTo('/main');
         });
         document.getElementById('logout-from-profile')?.addEventListener('click', async () => {
             await api.logout();
