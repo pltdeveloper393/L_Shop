@@ -56,7 +56,7 @@ function renderNotAuth(app) {
               </button>
             </div>
             
-            <!-- Метрики (компактные) -->
+            <!-- Метрики -->
             <div class="hero-metrics">
               <div class="hero-metric">
                 <span class="hero-metric-value" id="metric-users">0</span>
@@ -74,7 +74,7 @@ function renderNotAuth(app) {
           </div>
         </div>
         
-        <!-- Индикатор скролла (ВНУТРИ hero-section, НО ВНЕ hero-container) -->
+        <!-- Индикатор скролла -->
         <div class="scroll-indicator">
           <span class="scroll-text">Листайте вниз</span>
           <div class="scroll-arrow">
@@ -86,37 +86,37 @@ function renderNotAuth(app) {
       </div>
 
       <div class="wot-container">
-        <!-- Преимущества -->
-        <div class="features-section">
+        <!-- Преимущества (как в MainPage) -->
+        <div class="advantages-section">
           <h2 class="section-title">Почему выбирают IYHANSHOP</h2>
-          <div class="features-grid">
-            <div class="feature-card">
-              <div class="feature-icon">
+          <div class="advantages-grid">
+            <div class="advantage-card">
+              <div class="advantage-icon">
                 <i class="fas fa-bolt"></i>
               </div>
-              <h3 class="feature-title">Быстрая доставка</h3>
-              <p class="feature-desc">Танк в ангаре через 5 минут после покупки</p>
+              <h3 class="advantage-title">Быстрая доставка</h3>
+              <p class="advantage-desc">Танк в ангаре через 5 минут после покупки</p>
             </div>
-            <div class="feature-card">
-              <div class="feature-icon">
+            <div class="advantage-card">
+              <div class="advantage-icon">
                 <i class="fas fa-shield-alt"></i>
               </div>
-              <h3 class="feature-title">Гарантия качества</h3>
-              <p class="feature-desc">Все танки с полным обслуживанием и гарантией</p>
+              <h3 class="advantage-title">Гарантия качества</h3>
+              <p class="advantage-desc">Все заказы с гарантией выполнения</p>
             </div>
-            <div class="feature-card">
-              <div class="feature-icon">
+            <div class="advantage-card">
+              <div class="advantage-icon">
                 <i class="fas fa-tag"></i>
               </div>
-              <h3 class="feature-title">Лучшие цены</h3>
-              <p class="feature-desc">На 20% дешевле чем в премиум магазине</p>
+              <h3 class="advantage-title">Лучшие цены</h3>
+              <p class="advantage-desc">На 20% дешевле чем в премиум магазине</p>
             </div>
-            <div class="feature-card">
-              <div class="feature-icon">
+            <div class="advantage-card">
+              <div class="advantage-icon">
                 <i class="fas fa-headset"></i>
               </div>
-              <h3 class="feature-title">Поддержка 24/7</h3>
-              <p class="feature-desc">Мы всегда на связи, чтобы помочь</p>
+              <h3 class="advantage-title">Поддержка 24/7</h3>
+              <p class="advantage-desc">Мы всегда на связи, чтобы подобрать лучшую технику</p>
             </div>
           </div>
         </div>

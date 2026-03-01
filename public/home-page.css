@@ -254,79 +254,51 @@
    Преимущества
    ========================================= */
 
-.home-page .features-section {
-  padding: 60px 0;
+.home-page .advantages-section {
+  margin-bottom: 60px;
 }
 
-.home-page .section-title {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 40px;
-  position: relative;
-  display: block;
-  border-bottom: none;
-}
-
-.home-page .section-title::after {
-  content: '';
-  display: block;
-  width: 100px;
-  height: 3px;
-  background: var(--wot-primary);
-  margin: 15px auto 0;
-  border-radius: 2px;
-}
-
-.home-page .section-title .accent {
-  color: var(--wot-primary);
-}
-
-.home-page .features-grid {
+.home-page .advantages-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 30px;
-  margin-top: 40px;
 }
 
-.home-page .feature-card {
-  background: var(--wot-bg-panel);
-  border: 1px solid var(--wot-border);
+.home-page .advantage-card {
+  background: #1a1c20;
+  border: 1px solid #2a2c30;
   border-radius: 12px;
   padding: 30px 20px;
   text-align: center;
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  transition: all 0.3s;
 }
 
-.home-page .feature-card:hover {
+.home-page .advantage-card:hover {
   transform: translateY(-10px);
-  border-color: var(--wot-primary);
+  border-color: #ff7800;
   box-shadow: 0 10px 30px rgba(255,120,0,0.1);
 }
 
-.home-page .feature-icon {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg, #ff7800 0%, #cc6a00 100%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 20px;
+.home-page .advantage-icon {
   font-size: 2.5rem;
-  color: #000;
-  box-shadow: 0 5px 15px rgba(255, 120, 0, 0.3);
+  color: #ff7800;
+  margin-bottom: 20px;
 }
 
-.home-page .feature-title {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
+.home-page .advantage-icon i {
+  filter: drop-shadow(0 0 10px rgba(255,120,0,0.3));
+}
+
+.home-page .advantage-title {
   color: #fff;
+  font-size: 1.3rem;
+  margin-bottom: 10px;
 }
 
-.home-page .feature-desc {
-  color: var(--wot-text-dim);
-  line-height: 1.6;
+.home-page .advantage-desc {
+  color: #8f8f8f;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 /* =========================================
