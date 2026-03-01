@@ -71,7 +71,14 @@ export async function getMe(req: Request, res: Response) {
       return res.status(401).json({ message: 'User not found' });
     }
 
-    res.json({ user: { id: user.id, nickname: user.nickname, email: user.email } });
+    res.json({ 
+      user: { 
+        id: user.id, 
+        nickname: user.nickname, 
+        email: user.email,
+        createdAt: user.createdAt
+      } 
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });

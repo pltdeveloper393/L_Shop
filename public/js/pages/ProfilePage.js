@@ -39,7 +39,31 @@ export async function renderProfilePage() {
                 <span class="info-label">Никнейм:</span>
                 <span class="info-value">${user.nickname}</span>
               </div>
-              <!-- При наличии других полей (email, дата регистрации) можно добавить аналогично -->
+              
+              <!-- Дата регистрации (если есть в данных) -->
+              <div class="info-row">
+                <span class="info-label">На сайте с:</span>
+                <span class="info-value">${user.createdAt ? new Date(user.createdAt).toLocaleDateString('ru-RU') : 'Не указано'}</span>
+              </div>
+              
+              <!-- Email со скрытием/отображением -->
+              <div class="info-row email-row">
+                <span class="info-label">Email:</span>
+                <div class="email-value-container">
+                  <span class="info-value email-hidden" id="hidden-email">••••••@•••••</span>
+                  <span class="info-value email-visible" id="visible-email" style="display: none;">${user.email}</span>
+                  <button class="wot-btn wot-btn-small" id="toggle-email-btn">
+                    <i class="fas fa-eye" id="email-eye-icon"></i>
+                    <span id="email-btn-text">Показать</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Заметочка про email -->
+            <div class="info-note">
+              <i class="fas fa-shield-alt" style="color: var(--wot-primary); margin-right: 5px;"></i>
+              <small class="text-dim">Email скрыт для защиты при трансляциях</small>
             </div>
           </div>
 
@@ -120,6 +144,33 @@ export async function renderProfilePage() {
                 errorDiv.style.display = 'block';
             }
         });
+        const toggleEmailBtn = document.getElementById('toggle-email-btn');
+        const hiddenEmail = document.getElementById('hidden-email');
+        const visibleEmail = document.getElementById('visible-email');
+        const emailIcon = document.getElementById('email-eye-icon');
+        const emailBtnText = document.getElementById('email-btn-text');
+        // Проверяем, что ВСЕ элементы существуют перед использованием
+        if (toggleEmailBtn && hiddenEmail && visibleEmail && emailIcon && emailBtnText) {
+            let emailVisible = false;
+            toggleEmailBtn.addEventListener('click', () => {
+                emailVisible = !emailVisible;
+                if (emailVisible) {
+                    hiddenEmail.style.display = 'none';
+                    visibleEmail.style.display = 'inline';
+                    emailIcon.className = 'fas fa-eye-slash';
+                    emailBtnText.textContent = 'Скрыть';
+                }
+                else {
+                    hiddenEmail.style.display = 'inline';
+                    visibleEmail.style.display = 'none';
+                    emailIcon.className = 'fas fa-eye';
+                    emailBtnText.textContent = 'Показать';
+                }
+            });
+        }
+        else {
+            console.warn('123');
+        }
     }
     catch (error) {
         router.navigateTo('/');

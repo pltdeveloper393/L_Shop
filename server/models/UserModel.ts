@@ -17,7 +17,6 @@ export async function readUsers(): Promise<User[]> {
     const data = await fs.readFile(USERS_FILE, 'utf-8');
     return JSON.parse(data);
   } catch (err) {
-    // If file doesn't exist, return empty array
     return [];
   }
 }

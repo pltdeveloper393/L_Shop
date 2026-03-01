@@ -80,3 +80,39 @@
 .profile-page .text-dim {
   color: var(--wot-text-dim);
 }
+
+.profile-page .email-row .info-value {
+  min-width: 200px;
+}
+
+.profile-page .email-value-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.profile-page .email-hidden {
+  color: var(--wot-text-dim);
+  font-family: monospace;
+  letter-spacing: 2px;
+}
+
+.profile-page .email-visible {
+  color: var(--wot-primary);
+  font-weight: 500;
+}
+
+.profile-page .wot-btn-small {
+  padding: 4px 12px;
+  font-size: 0.85rem;
+  background: linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 100%);
+}
+
+.profile-page .wot-btn-small:hover {
+  background: linear-gradient(180deg, #4a4a4a 0%, #3a3a3a 100%);
+}
+
+.profile-page .wot-btn-small i {
+  margin-right: 5px;
+}
