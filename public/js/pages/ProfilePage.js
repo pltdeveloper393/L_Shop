@@ -11,7 +11,7 @@ export async function renderProfilePage() {
       <div class="wot-container profile-page">
         <!-- Заголовок и навигация -->
         <div class="profile-header">
-          <h1 class="shop-title">WOT<span class="accent">SHOP</span> / <span class="profile-title">Личный кабинет</span></h1>
+          <h1 class="shop-title">IYHAN<span class="accent">SHOP</span> / <span class="profile-title">Личный кабинет</span></h1>
           <div class="profile-actions">
             <button class="wot-btn" id="back-to-main">
               <i class="fas fa-arrow-left btn-icon"></i>
@@ -99,7 +99,7 @@ export async function renderProfilePage() {
                   </label>
                   <input type="password" id="confirm-password" class="wot-input" placeholder="Повторите новый пароль" required>
                 </div>
-                
+
                 <div id="password-error" class="error-message" style="color: #d32f2f; margin-bottom: 15px; display: none;"></div>
                 <button type="submit" class="wot-btn wot-btn-primary" style="width: 100%;">
                   <i class="fas fa-sync-alt btn-icon"></i>

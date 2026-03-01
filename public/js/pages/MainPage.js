@@ -57,7 +57,7 @@ export async function renderMainPage() {
         <!-- Шапка с приветствием и навигацией -->
         <div class="shop-header">
           <div class="header-left">
-            <h1 class="shop-title">WOT<span class="accent">SHOP</span></h1>
+            <h1 class="shop-title">IYHAN<span class="accent">SHOP</span></h1>
             <p class="welcome-message">
               <i class="fas fa-hand-peace" style="margin-right: 5px;"></i>
               С возвращением, командир ${user.nickname}!
@@ -112,7 +112,7 @@ export async function renderMainPage() {
         <div class="advantages-section">
           <h2 class="section-title">
             <i class="fas fa-star" style="color: #ff7800; margin-right: 10px;"></i>
-            Почему выбирают <span class="accent">WOTSHOP</span>
+            Почему выбирают <span class="accent">IYHANSHOP</span>
           </h2>
           <div class="advantages-grid">
             ${advantages.map(adv => `
@@ -227,7 +227,7 @@ export async function renderMainPage() {
         <div class="shop-footer">
           <p>
             <i class="far fa-copyright" style="margin-right: 5px;"></i>
-            2026 WOTSHOP - Официальный магазин танков
+            2026 IYHANSHOP - Официальный магазин танков
           </p>
           <div class="footer-links">
             <a href="#">
