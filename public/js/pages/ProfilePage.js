@@ -77,18 +77,29 @@ export async function renderProfilePage() {
             </div>
             <div class="wot-card-body">
               <form id="password-change-form">
+
                 <div class="wot-input-group">
-                  <label for="old-password" class="wot-label">Старый пароль</label>
-                  <input type="password" id="old-password" class="wot-input" required>
+                  <label for="old-password" class="wot-label">
+                    <i class="fas fa-key"></i>
+                    Старый пароль
+                  </label>
+                  <input type="password" id="old-password" class="wot-input" placeholder="Введите старый пароль" required>
                 </div>
                 <div class="wot-input-group">
-                  <label for="new-password" class="wot-label">Новый пароль</label>
-                  <input type="password" id="new-password" class="wot-input" required minlength="6">
+                  <label for="new-password" class="wot-label">
+                    <i class="fas fa-lock"></i>
+                    Новый пароль
+                  </label>
+                  <input type="password" id="new-password" class="wot-input" placeholder="Минимум 6 символов" required minlength="6">
                 </div>
                 <div class="wot-input-group">
-                  <label for="confirm-password" class="wot-label">Подтвердите новый пароль</label>
-                  <input type="password" id="confirm-password" class="wot-input" required>
+                  <label for="confirm-password" class="wot-label">
+                    <i class="fas fa-check-circle"></i>
+                    Подтвердите новый пароль
+                  </label>
+                  <input type="password" id="confirm-password" class="wot-input" placeholder="Повторите новый пароль" required>
                 </div>
+                
                 <div id="password-error" class="error-message" style="color: #d32f2f; margin-bottom: 15px; display: none;"></div>
                 <button type="submit" class="wot-btn wot-btn-primary" style="width: 100%;">
                   <i class="fas fa-sync-alt btn-icon"></i>
@@ -149,7 +160,6 @@ export async function renderProfilePage() {
         const visibleEmail = document.getElementById('visible-email');
         const emailIcon = document.getElementById('email-eye-icon');
         const emailBtnText = document.getElementById('email-btn-text');
-        // Проверяем, что ВСЕ элементы существуют перед использованием
         if (toggleEmailBtn && hiddenEmail && visibleEmail && emailIcon && emailBtnText) {
             let emailVisible = false;
             toggleEmailBtn.addEventListener('click', () => {
