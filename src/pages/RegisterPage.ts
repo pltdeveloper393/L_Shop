@@ -27,9 +27,9 @@ export function renderRegisterPage() {
   if (!app) return;
 
   app.innerHTML = `
-    <div class="register-page">
-      <div class="register-card">
-        <div class="register-header">
+    <div class="auth-page register-page">
+      <div class="auth-card">
+        <div class="auth-header">
           <h2>IYHAN SHOP</h2>
           <p>Создание нового аккаунта</p>
         </div>
@@ -69,10 +69,10 @@ export function renderRegisterPage() {
             <input type="checkbox" id="terms" required>
             <label for="terms">Я принимаю <a href="#">условия использования</a> и <a href="#">политику конфиденциальности</a></label>
           </div>
-          <button type="submit" class="wot-btn wot-btn-primary register-btn" id="submit-btn">
+          <button type="submit" class="auth-btn" id="submit-btn">
             <i class="fas fa-user-plus"></i> Зарегистрироваться
           </button>
-          <div class="login-link">
+          <div class="auth-link">
             Уже есть аккаунт? <a href="#" id="login-link">Войти</a>
           </div>
           <button type="button" class="back-btn" id="back-btn">

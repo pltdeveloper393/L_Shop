@@ -7,9 +7,9 @@ export function renderLoginPage() {
   if (!app) return;
 
   app.innerHTML = `
-    <div class="login-page">
-      <div class="login-card">
-        <div class="login-header">
+    <div class="auth-page login-page">
+      <div class="auth-card">
+        <div class="auth-header">
           <h2>IYHAN SHOP</h2>
           <p>Вход в аккаунт</p>
         </div>
@@ -28,16 +28,16 @@ export function renderLoginPage() {
             </label>
             <input type="password" class="wot-input" id="password" placeholder="••••••••" required>
           </div>
-          <div class="login-options">
+          <div class="auth-options">
             <label class="remember-me">
               <input type="checkbox"> Запомнить меня
             </label>
             <a href="#" class="forgot-password">Забыли пароль?</a>
           </div>
-          <button type="submit" class="wot-btn wot-btn-primary login-btn">
+          <button type="submit" class="auth-btn">
             <i class="fas fa-sign-in-alt"></i> Войти
           </button>
-          <div class="register-link">
+          <div class="auth-link">
             Нет аккаунта? <a href="#" id="register-link">Зарегистрироваться</a>
           </div>
           <button type="button" class="back-btn" id="back-btn">

@@ -1,31 +1,26 @@
 /* =========================================
-   WOT ONLINE SHOP - GLOBAL THEME STYLES
+   Основные стили сайта IYHANSHOP
    ========================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;500;700&display=swap');
 
 :root {
-  /* Основная палитра */
-  --wot-bg-dark: #0d0e10;          /* Основной фон (темный) */
-  --wot-bg-panel: #1a1c20;         /* Фон панелей и карточек */
-  --wot-bg-input: #0f1012;         /* Фон полей ввода */
+  --wot-bg-dark: #0d0e10;
+  --wot-bg-panel: #1a1c20;
+  --wot-bg-input: #0f1012;
   
-  /* Акцентные цвета */
-  --wot-primary: #ff7800;          /* Оранжевый (основной акцент WOT) */
-  --wot-primary-hover: #ffa03d;    /* Оранжевый при наведении */
-  --wot-secondary: #9e9e9e;        /* Серый для второстепенного текста */
-  --wot-gold: #c9a052;             /* Золотой (для премиум техники) */
+  --wot-primary: #ff7800;
+  --wot-primary-hover: #ffa03d;
+  --wot-secondary: #9e9e9e;
+  --wot-gold: #c9a052;
   
-  /* Текст */
-  --wot-text-main: #e2e2e2;        /* Основной текст */
-  --wot-text-dim: #8f8f8f;         /* Приглушенный текст */
+  --wot-text-main: #e2e2e2;
+  --wot-text-dim: #8f8f8f;
   
-  /* Границы и тени */
   --wot-border: #3a3a3a;
   --wot-shadow: rgba(0, 0, 0, 0.6);
 }
 
-/* 1. Сброс и Базовые стили */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -37,13 +32,11 @@ body {
   background-color: var(--wot-bg-dark);
   color: var(--wot-text-main);
   line-height: 1.6;
-  /* Легкая текстура "металла" на фоне */
   background-image: 
     radial-gradient(circle at 50% 0%, #1a1e24 0%, var(--wot-bg-dark) 70%);
   min-height: 100vh;
 }
 
-/* Сделаем скроллбар тематическим */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -58,7 +51,6 @@ body {
   background: var(--wot-primary);
 }
 
-/* 2. Типографика */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Roboto Condensed', sans-serif;
   text-transform: uppercase;
@@ -82,14 +74,12 @@ a:hover {
   text-decoration: underline;
 }
 
-/* 3. Контейнер */
 .wot-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* 4. Кнопки */
 .wot-btn {
   display: inline-block;
   background: linear-gradient(180deg, #4a4a4a 0%, #2a2a2a 100%);
@@ -113,7 +103,6 @@ a:hover {
   transform: translateY(-2px);
 }
 
-/* Главная кнопка действия (Купить) */
 .wot-btn-primary {
   background: linear-gradient(180deg, #ff8c00 0%, #cc6a00 100%);
   border: 1px solid #ff9a30;
@@ -125,7 +114,6 @@ a:hover {
   box-shadow: 0 0 15px rgba(255, 120, 0, 0.4);
 }
 
-/* Кнопка Премиум (Золотая) */
 .wot-btn-gold {
   background: linear-gradient(180deg, #f2d479 0%, #a07c20 100%);
   border: 1px solid #fff3b0;
@@ -136,7 +124,6 @@ a:hover {
   background: linear-gradient(180deg, #fff7d6 0%, #c9a052 100%);
 }
 
-/* 5. Карточки товаров (Танки) */
 .wot-card {
   background-color: var(--wot-bg-panel);
   border: 1px solid #2a2c30;
@@ -190,7 +177,6 @@ a:hover {
   background: rgba(0,0,0,0.1);
 }
 
-/* Бейджи (статусы) */
 .wot-badge {
   padding: 4px 8px;
   font-size: 0.75rem;
@@ -214,7 +200,6 @@ a:hover {
   color: #000;
 }
 
-/* 6. Формы и Инпуты */
 .wot-input-group {
   margin-bottom: 15px;
 }
@@ -243,7 +228,6 @@ a:hover {
   box-shadow: 0 0 5px rgba(255, 120, 0, 0.2);
 }
 
-/* 7. Таблицы (Характеристики) */
 .wot-table {
   width: 100%;
   border-collapse: collapse;
@@ -267,7 +251,6 @@ a:hover {
   background-color: rgba(255, 120, 0, 0.05);
 }
 
-/* 8. Навигация (Пример) */
 .wot-navbar {
   background: linear-gradient(180deg, #1f2227 0%, #121316 100%);
   padding: 0 20px;
@@ -305,7 +288,6 @@ a:hover {
   text-decoration: none;
 }
 
-/* Утилиты */
 .text-center { text-align: center; }
 .text-gold { color: var(--wot-gold); }
 .text-price { color: var(--wot-primary); font-weight: bold; font-size: 1.2rem; }
