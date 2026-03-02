@@ -68,7 +68,9 @@ export function renderRegisterPage() {
             <i class="fas fa-user-plus"></i> Зарегистрироваться
           </button>
           <div class="auth-link">
-            Уже есть аккаунт? <a href="#" id="login-link">Войти</a>
+            <div style="text-align: center; width: 100%;">
+              Уже есть аккаунт? <a href="#" id="login-link">Войти</a>
+            </div>
           </div>
           <button type="button" class="back-btn" id="back-btn">
             <i class="fas fa-arrow-left"></i> На главную
