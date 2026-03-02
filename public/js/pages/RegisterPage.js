@@ -130,7 +130,7 @@ export function renderRegisterPage() {
             console.log('Registration successful:', response.user);
             showNotification('Регистрация успешна! Перенаправляем...', false);
             setTimeout(() => {
-                router.navigateTo('/main');
+                router.navigateTo('/login');
             }, 1500);
         }
         catch (err) {

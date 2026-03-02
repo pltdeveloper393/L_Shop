@@ -148,7 +148,7 @@ export function renderRegisterPage() {
       showNotification('Регистрация успешна! Перенаправляем...', false);
       
       setTimeout(() => {
-        router.navigateTo('/main');
+        router.navigateTo('/login');
       }, 1500);
       
     } catch (err: any) {

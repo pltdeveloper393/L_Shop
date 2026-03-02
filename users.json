@@ -26,5 +26,12 @@
     "email": "vutakusli@gmail.com",
     "passwordHash": "$2b$10$Lwy/e4aC1.1/Xd/mxgmQGOteh1tvm8NkaNXcqbx29I.ovsHCyuVsq",
     "createdAt": "2026-03-02T11:09:07.886Z"
+  },
+  {
+    "id": "1772474460028",
+    "nickname": "KitaVusli2",
+    "email": "vutakusli2@gmail.com",
+    "passwordHash": "$2b$10$PsmE24mDMkItW5jrqK4h3eGAvTJJdej1VFTaTtziFuL/qPo0VoqMC",
+    "createdAt": "2026-03-02T18:01:00.028Z"
   }
 ]
