@@ -61,8 +61,8 @@ export function renderRegisterPage() {
               Подтверждение пароля
             </label>
             <input type="password" class="wot-input" id="confirm-password" placeholder="Повторите пароль" required minlength="6">
-            <div class="password-hint" id="password-match-hint" style="display: none;">
-              <i class="fas fa-check-circle" style="color: #4caf50;"></i> Пароли совпадают
+            <div class="password-hint" id="password-match-hint">
+              <i class="fas fa-check-circle"></i> Пароли совпадают
             </div>
           </div>
           <div class="terms">
@@ -92,16 +92,16 @@ export function renderRegisterPage() {
 
   function checkPasswordMatch() {
     if (!confirmInput.value) {
-      matchHint.style.display = 'none';
+      matchHint.classList.remove('show');
       return;
     }
     
     if (passwordInput.value === confirmInput.value) {
-      matchHint.style.display = 'flex';
-      matchHint.innerHTML = '<i class="fas fa-check-circle" style="color: #4caf50;"></i> Пароли совпадают';
+      matchHint.classList.add('show');
+      matchHint.innerHTML = '<i class="fas fa-check-circle"></i> Пароли совпадают';
     } else {
-      matchHint.style.display = 'flex';
-      matchHint.innerHTML = '<i class="fas fa-exclamation-circle" style="color: #d32f2f;"></i> Пароли не совпадают';
+      matchHint.classList.add('show');
+      matchHint.innerHTML = '<i class="fas fa-exclamation-circle"></i> Пароли не совпадают';
     }
   }
 
