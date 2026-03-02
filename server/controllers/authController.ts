@@ -6,28 +6,28 @@ export async function register(req: Request, res: Response) {
   const { nickname, email, password } = req.body;
 
   if (!nickname || !email || !password) {
-    return res.status(400).json({ message: 'All fields are required' });
+    return res.status(400).json({ message: 'Необходимо заполнить все поля' });
   }
 
   try {
     const existingEmail = await UserModel.findUserByEmail(email);
     if (existingEmail) {
-      return res.status(400).json({ message: 'Email already exists' });
+      return res.status(400).json({ message: 'Пользователь с таким emal уже существует' });
     }
 
     const existingNickname = await UserModel.findUserByNickname(nickname);
     if (existingNickname) {
-      return res.status(400).json({ message: 'Nickname already exists' });
+      return res.status(400).json({ message: 'Пользователь с таким никнеймом уже существует' });
     }
 
     const user = await UserModel.createUser(nickname, email, password);
 
     req.session.userId = user.id;
 
-    res.status(201).json({ message: 'Registration successful', user: { id: user.id, nickname: user.nickname, email: user.email } });
+    res.status(201).json({ message: 'Регистрация прошла успешно', user: { id: user.id, nickname: user.nickname, email: user.email } });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Ошибка сервера 1' });
   }
 }
 
@@ -35,32 +35,32 @@ export async function login(req: Request, res: Response) {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ message: 'Email and password are required' });
+    return res.status(400).json({ message: 'Необходим email-почта и пароль' });
   }
 
   try {
     const user = await UserModel.findUserByEmail(email);
     if (!user) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+      return res.status(401).json({ message: 'Некорректный email или пароль' });
     }
 
     const valid = await bcrypt.compare(password, user.passwordHash);
     if (!valid) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+      return res.status(401).json({ message: 'Некорректный email или пароль' });
     }
 
     req.session.userId = user.id;
 
-    res.json({ message: 'Login successful', user: { id: user.id, nickname: user.nickname, email: user.email } });
+    res.json({ message: 'Авторизация прошла успешно', user: { id: user.id, nickname: user.nickname, email: user.email } });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Ошибка сервера 2' });
   }
 }
 
 export async function getMe(req: Request, res: Response) {
   if (!req.session.userId) {
-    return res.status(401).json({ message: 'Not authenticated' });
+    return res.status(401).json({ message: 'Не аутентифицирован' });
   }
 
   try {
@@ -68,7 +68,7 @@ export async function getMe(req: Request, res: Response) {
     const user = users.find(u => u.id === req.session.userId);
     if (!user) {
       req.session.destroy(() => {});
-      return res.status(401).json({ message: 'User not found' });
+      return res.status(401).json({ message: 'Пользователь не найден' });
     }
 
     res.json({ 
@@ -81,16 +81,16 @@ export async function getMe(req: Request, res: Response) {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Ошибка сервера 3' });
   }
 }
 
 export async function logout(req: Request, res: Response) {
   req.session.destroy((err) => {
     if (err) {
-      return res.status(500).json({ message: 'Could not log out' });
+      return res.status(500).json({ message: 'Не удалось выйти из аккаунта' });
     }
-    res.json({ message: 'Logout successful' });
+    res.json({ message: 'Выход выполнен успешно' });
   });
 }
 
@@ -99,15 +99,15 @@ export async function changePassword(req: Request, res: Response) {
   const userId = req.session.userId;
 
   if (!userId) {
-    return res.status(401).json({ message: 'Not authenticated' });
+    return res.status(401).json({ message: 'Не аутентифицирован' });
   }
 
   if (!oldPassword || !newPassword) {
-    return res.status(400).json({ message: 'Old password and new password are required' });
+    return res.status(400).json({ message: 'Требуется старый и новый пароль.' });
   }
 
   if (newPassword.length < 6) {
-    return res.status(400).json({ message: 'New password must be at least 6 characters' });
+    return res.status(400).json({ message: 'Новый пароль должен состоять как минимум из 6 символов.' });
   }
 
   try {
@@ -115,14 +115,14 @@ export async function changePassword(req: Request, res: Response) {
     const userIndex = users.findIndex(u => u.id === userId);
     
     if (userIndex === -1) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'Пользователь не найден' });
     }
 
     const user = users[userIndex];
     const isValid = await bcrypt.compare(oldPassword, user.passwordHash);
     
     if (!isValid) {
-      return res.status(400).json({ message: 'Old password is incorrect' });
+      return res.status(400).json({ message: 'Старый пароль неверен' });
     }
 
     const newPasswordHash = await bcrypt.hash(newPassword, 10);
@@ -130,12 +130,12 @@ export async function changePassword(req: Request, res: Response) {
     await UserModel.writeUsers(users);
 
     req.session.destroy((err) => {
-      if (err) console.error('Session destroy error:', err);
+      if (err) console.error('Ошибка разрыва сеанса:', err);
     });
 
     res.json({ message: 'Password changed successfully' });
   } catch (err) {
-    console.error('Change password error:', err);
-    res.status(500).json({ message: 'Server error' });
+    console.error('Ошибка смены пароля:', err);
+    res.status(500).json({ message: 'Ошибка сервера 4' });
   }
 }

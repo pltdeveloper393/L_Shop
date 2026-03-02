@@ -265,7 +265,7 @@ function renderNotAuth(app) {
     }, { threshold: 0.3 });
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
     document.getElementById('learn-more-btn')?.addEventListener('click', () => {
-        document.querySelector('.features-section')?.scrollIntoView({
+        document.querySelector('.advantages-section')?.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
         });

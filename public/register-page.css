@@ -1,0 +1,360 @@
+/* =========================================
+   Доп стили страницы RegisterPage
+   ========================================= */
+
+.register-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  animation: fadeIn 0.4s ease-out;
+  background: var(--wot-bg-dark);
+  margin: 0;
+  box-sizing: border-box;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Карточка регистрации */
+.register-page .register-card {
+  max-width: 460px;
+  width: 100%;
+  background: linear-gradient(145deg, #1a1c20 0%, #121316 100%);
+  border: 1px solid #2f3136;
+  border-radius: 20px;
+  padding: 30px 35px;
+  box-shadow: 0 25px 50px -10px rgba(0,0,0,0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.register-page .register-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff7800, #ffa03d, #ff7800);
+  animation: shimmer 4s infinite;
+  z-index: 1;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.register-page .register-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.register-page .register-header h2 {
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 5px;
+  border-bottom: none;
+  letter-spacing: 1px;
+}
+
+.register-page .register-header h2 .accent {
+  color: var(--wot-primary);
+}
+
+.register-page .register-header p {
+  color: var(--wot-text-dim);
+  font-size: 0.95rem;
+}
+
+.register-page .wot-input-group {
+  margin-bottom: 18px;
+}
+
+.register-page .wot-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.register-page .wot-label i {
+  color: var(--wot-primary);
+  width: 18px;
+  font-size: 1rem;
+}
+
+.register-page .wot-input {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: #1a1c20;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.register-page .wot-input:hover {
+  border-color: #5a5a5a;
+}
+
+.register-page .wot-input:focus {
+  border-color: var(--wot-primary);
+  box-shadow: 0 0 0 3px rgba(255, 120, 0, 0.15), inset 0 2px 4px rgba(0,0,0,0.3);
+  outline: none;
+  background-color: #1e2126;
+}
+
+.register-page .wot-input:-webkit-autofill,
+.register-page .wot-input:-webkit-autofill:hover,
+.register-page .wot-input:-webkit-autofill:focus,
+.register-page .wot-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #1a1c20 inset !important;
+  -webkit-text-fill-color: #fff !important;
+  caret-color: #fff;
+  border-color: #3a3a3a;
+}
+
+.register-page .wot-input:-webkit-autofill:focus {
+  border-color: var(--wot-primary);
+  -webkit-box-shadow: 0 0 0 30px #1a1c20 inset, 0 0 0 3px rgba(255, 120, 0, 0.15) !important;
+}
+
+.register-page .password-hint {
+  font-size: 0.75rem;
+  color: var(--wot-text-dim);
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+
+.register-page .password-hint i {
+  color: var(--wot-primary);
+  font-size: 0.8rem;
+}
+
+.register-page .terms {
+  margin: 18px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--wot-text-dim);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  background: rgba(0,0,0,0.15);
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #2a2c30;
+}
+
+.register-page .terms input[type="checkbox"] {
+  accent-color: var(--wot-primary);
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.register-page .terms a {
+  color: var(--wot-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-page .terms a:hover {
+  text-decoration: underline;
+}
+
+.register-page .register-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #ff7800, #cc6a00);
+  border: none;
+  color: #000;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.register-page .register-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ff8c00, #ff7800);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(255,120,0,0.5);
+}
+
+.register-page .register-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.register-page .register-btn i {
+  font-size: 1.1rem;
+}
+
+.register-page .login-link {
+  text-align: center;
+  color: var(--wot-text-dim);
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.register-page .login-link a {
+  color: var(--wot-primary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.register-page .login-link a:hover {
+  color: #ffa03d;
+  text-decoration: underline;
+}
+
+.register-page .back-btn {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.register-page .back-btn:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: #5a5a5a;
+}
+
+.custom-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  min-width: 320px;
+  max-width: 400px;
+  padding: 16px 20px;
+  background: linear-gradient(145deg, #1e2126, #15171c);
+  border-left: 4px solid;
+  border-radius: 10px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 9999;
+  transform: translateX(120%);
+  transition: transform 0.3s ease;
+  border: 1px solid #2f3136;
+  backdrop-filter: blur(5px);
+}
+
+.custom-notification.show {
+  transform: translateX(0);
+}
+
+.custom-notification.error {
+  border-left-color: #d32f2f;
+}
+
+.custom-notification.success {
+  border-left-color: #4caf50;
+}
+
+.custom-notification i {
+  font-size: 1.5rem;
+}
+
+.custom-notification.error i {
+  color: #d32f2f;
+}
+
+.custom-notification.success i {
+  color: #4caf50;
+}
+
+.custom-notification span {
+  color: #fff;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  flex: 1;
+  word-break: break-word;
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+  .register-page .register-card {
+    padding: 25px 20px;
+  }
+  
+  .register-page .register-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .register-page .register-header p {
+    font-size: 0.9rem;
+  }
+  
+  .register-page .wot-input {
+    padding: 11px 14px;
+  }
+  
+  .register-page .terms {
+    padding: 10px;
+    font-size: 0.8rem;
+  }
+  
+  .register-page .register-btn {
+    padding: 12px;
+    font-size: 1rem;
+  }
+  
+  .custom-notification {
+    min-width: 280px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .register-page .register-card {
+    padding: 20px 15px;
+  }
+  
+  .register-page .wot-label {
+    font-size: 0.85rem;
+  }
+  
+  .register-page .terms {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
