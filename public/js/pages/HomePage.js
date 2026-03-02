@@ -4,6 +4,7 @@ export async function renderHomePage() {
     const app = document.getElementById('app');
     if (!app)
         return;
+    // убрать позже проверку на авторизацию т.к. эта страница не будет показываться для авторизованных юзеров
     try {
         const response = await api.getMe();
         const user = response.user;

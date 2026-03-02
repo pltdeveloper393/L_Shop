@@ -34,15 +34,15 @@ export async function renderMainPage() {
         price: 6100,
         image: '/images/tanks/e-100.png',
         advantage: 'Непробиваемый броня'
-      },
-      { 
+      }
+      /*{ 
         name: 'Leopard 1', 
         nation: 'Германия', 
         tier: 10, 
         price: 5800,
         image: '/images/tanks/leopard-1.png',
         advantage: 'Снайперская точность'
-      }
+      }*/
     ];
 
     const advantages = [
