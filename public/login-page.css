@@ -1,0 +1,214 @@
+/* =========================================
+   Доп стили страницы LoginPage
+   ========================================= */
+
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  animation: fadeIn 0.4s ease-out;
+  background: var(--wot-bg-dark);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.login-page .login-card {
+  max-width: 450px;
+  width: 100%;
+  background: var(--wot-bg-panel);
+  border: 1px solid var(--wot-border);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 25px 50px -10px rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+}
+
+.login-page .login-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff7800, #ffa03d, #ff7800);
+  animation: shimmer 4s infinite;
+  z-index: 1;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.login-page .login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-page .login-header h2 {
+  font-size: 2.2rem;
+  color: #fff;
+  margin-bottom: 10px;
+  border-bottom: none;
+}
+
+.login-page .login-header p {
+  color: var(--wot-text-dim);
+  font-size: 1rem;
+}
+
+.login-page .login-header p a {
+  color: var(--wot-primary);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.login-page .login-header p a:hover {
+  text-decoration: underline;
+}
+
+.login-page .wot-input-group {
+  margin-bottom: 25px;
+}
+
+.login-page .wot-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.login-page .wot-label i {
+  color: var(--wot-primary);
+  width: 20px;
+}
+
+.login-page .wot-input {
+  width: 100%;
+  padding: 14px 16px;
+  background-color: rgba(0,0,0,0.3);
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.login-page .wot-input:focus {
+  border-color: var(--wot-primary);
+  box-shadow: 0 0 0 3px rgba(255, 120, 0, 0.2);
+  background-color: rgba(0,0,0,0.5);
+  outline: none;
+}
+
+.login-page .wot-input:hover {
+  border-color: #5a5a5a;
+}
+
+.login-page .login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  font-size: 0.9rem;
+}
+
+.login-page .remember-me {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--wot-text-dim);
+  cursor: pointer;
+}
+
+.login-page .remember-me input[type="checkbox"] {
+  accent-color: var(--wot-primary);
+  width: 16px;
+  height: 16px;
+}
+
+.login-page .forgot-password {
+  color: var(--wot-primary);
+  text-decoration: none;
+}
+
+.login-page .forgot-password:hover {
+  text-decoration: underline;
+}
+
+.login-page .login-btn {
+  width: 100%;
+  padding: 16px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.login-page .login-btn i {
+  font-size: 1.1rem;
+}
+
+.login-page .register-link {
+  text-align: center;
+  color: var(--wot-text-dim);
+}
+
+.login-page .register-link a {
+  color: var(--wot-primary);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.login-page .register-link a:hover {
+  text-decoration: underline;
+}
+
+.login-page .back-btn {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+  transition: all 0.2s;
+}
+
+.login-page .back-btn:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: #5a5a5a;
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+  .login-page .login-card {
+    padding: 30px 20px;
+  }
+  
+  .login-page .login-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .login-page .login-options {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}

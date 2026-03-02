@@ -5,20 +5,44 @@ export function renderLoginPage() {
     if (!app)
         return;
     app.innerHTML = `
-    <div class="wot-container">
-      <h2>Вход в аккаунт</h2>
-      <form id="login-form">
-        <div class="wot-input-group">
-          <label class="wot-label">Email</label>
-          <input type="email" class="wot-input" id="email" required>
+    <div class="login-page">
+      <div class="login-card">
+        <div class="login-header">
+          <h2>IYHAN SHOP</h2>
+          <p>Вход в аккаунт</p>
         </div>
-        <div class="wot-input-group">
-          <label class="wot-label">Пароль</label>
-          <input type="password" class="wot-input" id="password" required>
-        </div>
-        <button type="submit" class="wot-btn wot-btn-primary">Войти</button>
-        <button type="button" class="wot-btn" id="back-btn">Назад</button>
-      </form>
+        <form id="login-form">
+          <div class="wot-input-group">
+            <label class="wot-label">
+              <i class="fas fa-envelope"></i>
+              Email
+            </label>
+            <input type="email" class="wot-input" id="email" placeholder="your@email.com" required>
+          </div>
+          <div class="wot-input-group">
+            <label class="wot-label">
+              <i class="fas fa-lock"></i>
+              Пароль
+            </label>
+            <input type="password" class="wot-input" id="password" placeholder="••••••••" required>
+          </div>
+          <div class="login-options">
+            <label class="remember-me">
+              <input type="checkbox"> Запомнить меня
+            </label>
+            <a href="#" class="forgot-password">Забыли пароль?</a>
+          </div>
+          <button type="submit" class="wot-btn wot-btn-primary login-btn">
+            <i class="fas fa-sign-in-alt"></i> Войти
+          </button>
+          <div class="register-link">
+            Нет аккаунта? <a href="#" id="register-link">Зарегистрироваться</a>
+          </div>
+          <button type="button" class="back-btn" id="back-btn">
+            <i class="fas fa-arrow-left"></i> На главную
+          </button>
+        </form>
+      </div>
     </div>
   `;
     const form = document.getElementById('login-form');
@@ -34,6 +58,10 @@ export function renderLoginPage() {
         catch (err) {
             alert(err.message);
         }
+    });
+    document.getElementById('register-link')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        router.navigateTo('/register');
     });
     document.getElementById('back-btn')?.addEventListener('click', () => {
         router.navigateTo('/');
