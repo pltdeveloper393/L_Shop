@@ -40,6 +40,7 @@ import { renderMainPage } from './pages/MainPage.js';
 // маршрут профиля
 import { renderProfilePage } from './pages/ProfilePage.js';
 
+
 router.addRoute('/', renderHomePage);
 router.addRoute('/login', renderLoginPage);
 router.addRoute('/register', renderRegisterPage);

@@ -1,5 +1,5 @@
 {
-  "name": "WOT-tanks-shop",
+  "name": "IYHAN SHOP - L_Shop",
   "version": "1.0.0",
   "scripts": {
     "dev": "concurrently \"nodemon --exec ts-node server/index.ts\" \"tsc -p tsconfig.client.json --watch\"",
