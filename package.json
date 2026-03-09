@@ -2,7 +2,7 @@
   "name": "WOT-tanks-shop",
   "version": "1.0.0",
   "scripts": {
-    "dev": "nodemon --exec ts-node server/index.ts",
+    "dev": "concurrently \"nodemon --exec ts-node server/index.ts\" \"tsc -p tsconfig.client.json --watch\"",
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.client.json",
     "start": "node dist/index.js"
   },
@@ -21,6 +21,7 @@
     "@types/express": "^4.17.17",
     "@types/express-session": "^1.18.2",
     "@types/node": "^20.4.0",
+    "concurrently": "^8.2.0",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
