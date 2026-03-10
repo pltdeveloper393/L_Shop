@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import session from 'express-session';
 import path from 'path';
+import cartRoutes from './routes/route_cart';
 
 declare module 'express-session' {
   interface SessionData {
@@ -30,6 +31,8 @@ app.use(session({
     sameSite: 'lax'
   }
 }));
+
+app.use('/api/cart', cartRoutes);
 
 app.use(express.static(path.join(__dirname, '../public')));
 
