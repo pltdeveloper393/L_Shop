@@ -9,7 +9,7 @@ import {
   ProductFilters 
 } from '../models/ProductModel_catalog';
 
-// Получить все товары с фильтрацией
+// Получить все товары
 export async function getProducts(req: Request, res: Response) {
   try {
     const { search, nation, type, level, inStock, sortBy } = req.query;
