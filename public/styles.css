@@ -294,3 +294,47 @@ a:hover {
 .mt-20 { margin-top: 20px; }
 .mb-20 { margin-bottom: 20px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #2e7d32 0%, #ff7800 100%);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 9999;
+  font-family: 'Roboto', sans-serif;
+}
+
+.notification.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.cart-item.removing {
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: all 0.3s ease;
+}
+
+.tank-buy-btn.success {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%) !important;
+}
+
+.card-input-group {
+  margin-bottom: 15px;
+}
+
+.card-input-group .wot-input {
+  letter-spacing: 2px;
+}
+
+input[type="text"][maxlength="16"] {
+  font-family: 'Courier New', monospace;
+  font-size: 1.1rem;
+}
