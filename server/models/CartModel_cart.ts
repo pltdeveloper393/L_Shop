@@ -25,7 +25,9 @@ export interface Cart {
   updatedAt: string;
 }
 
+// Временная заглушка для получения товара (товары хранятся в корзине)
 async function getProductById(productId: number): Promise<Product | null> {
+  // Попробуем найти товар в существующих корзинах
   try {
     const carts = await readCarts();
     for (const cart of carts) {

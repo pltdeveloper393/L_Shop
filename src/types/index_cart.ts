@@ -1,3 +1,5 @@
+// Типы для корзины
+
 export interface Product {
   id: number;
   name: string;

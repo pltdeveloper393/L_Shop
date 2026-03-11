@@ -9,34 +9,55 @@ import {
 } from '../models/CartModel_cart';
 
 function getUserId(req: Request): string {
+  // Если нет userId в сессии, используем гостевой ID
   if (!req.session.userId) {
     req.session.userId = 'guest_' + Date.now();
   }
   return req.session.userId;
 }
 
+// Получить корзину пользователя
 export async function getCart(req: Request, res: Response) {
   try {
     const userId = getUserId(req);
+
     const cart = await getCartByUserId(userId);
     const total = await getCartTotal(userId);
-    res.json({ cart: cart || { items: [] }, total });
+
+    res.json({ 
+      cart: cart || { items: [] },
+      total 
+    });
   } catch (err: unknown) {
     console.error(err);
     res.status(500).json({ message: 'Ошибка при получении корзины' });
   }
 }
 
+// Добавить товар в корзину
 export async function addItemToCart(req: Request, res: Response) {
   try {
     const userId = getUserId(req);
-    if (!userId) return res.status(401).json({ message: 'Не авторизован' });
+    
+    if (!userId) {
+      return res.status(401).json({ message: 'Не авторизован' });
+    }
+
     const { productId, quantity } = req.body;
-    if (!productId) return res.status(400).json({ message: 'Не указан ID товара' });
+
+    if (!productId) {
+      return res.status(400).json({ message: 'Не указан ID товара' });
+    }
+
     const qty = typeof quantity === 'string' ? parseInt(quantity) : (quantity || 1);
     const cart = await addToCart(userId, parseInt(productId), qty);
     const total = await getCartTotal(userId);
-    res.json({ message: 'Товар добавлен в корзину', cart, total });
+
+    res.json({ 
+      message: 'Товар добавлен в корзину',
+      cart,
+      total 
+    });
   } catch (err: unknown) {
     console.error(err);
     const errorMessage = err instanceof Error ? err.message : 'Ошибка при добавлении товара';
@@ -44,16 +65,30 @@ export async function addItemToCart(req: Request, res: Response) {
   }
 }
 
+// Изменить количество товара
 export async function updateItemQuantity(req: Request, res: Response) {
   try {
     const userId = getUserId(req);
-    if (!userId) return res.status(401).json({ message: 'Не авторизован' });
+    
+    if (!userId) {
+      return res.status(401).json({ message: 'Не авторизован' });
+    }
+
     const { productId, quantity } = req.body;
-    if (!productId || quantity === undefined) return res.status(400).json({ message: 'Не указан ID товара или количество' });
+
+    if (!productId || quantity === undefined) {
+      return res.status(400).json({ message: 'Не указан ID товара или количество' });
+    }
+
     const qty = typeof quantity === 'string' ? parseInt(quantity) : quantity;
     const cart = await updateCartItemQuantity(userId, parseInt(productId), qty);
     const total = await getCartTotal(userId);
-    res.json({ message: 'Количество обновлено', cart, total });
+
+    res.json({ 
+      message: 'Количество обновлено',
+      cart,
+      total 
+    });
   } catch (err: unknown) {
     console.error(err);
     const errorMessage = err instanceof Error ? err.message : 'Ошибка при обновлении количества';
@@ -61,15 +96,29 @@ export async function updateItemQuantity(req: Request, res: Response) {
   }
 }
 
+// Удалить товар из корзины
 export async function removeItemFromCart(req: Request, res: Response) {
   try {
     const userId = getUserId(req);
-    if (!userId) return res.status(401).json({ message: 'Не авторизован' });
+    
+    if (!userId) {
+      return res.status(401).json({ message: 'Не авторизован' });
+    }
+
     const productId = parseInt(String(req.params.productId));
-    if (isNaN(productId)) return res.status(400).json({ message: 'Некорректный ID товара' });
+
+    if (isNaN(productId)) {
+      return res.status(400).json({ message: 'Некорректный ID товара' });
+    }
+
     const cart = await removeFromCart(userId, productId);
     const total = await getCartTotal(userId);
-    res.json({ message: 'Товар удалён из корзины', cart, total });
+
+    res.json({ 
+      message: 'Товар удалён из корзины',
+      cart,
+      total 
+    });
   } catch (err: unknown) {
     console.error(err);
     const errorMessage = err instanceof Error ? err.message : 'Ошибка при удалении товара';
@@ -77,11 +126,17 @@ export async function removeItemFromCart(req: Request, res: Response) {
   }
 }
 
+// Очистить корзину
 export async function clearUserCart(req: Request, res: Response) {
   try {
     const userId = getUserId(req);
-    if (!userId) return res.status(401).json({ message: 'Не авторизован' });
+    
+    if (!userId) {
+      return res.status(401).json({ message: 'Не авторизован' });
+    }
+
     await clearCart(userId);
+
     res.json({ message: 'Корзина очищена' });
   } catch (err: unknown) {
     console.error(err);
@@ -89,12 +144,18 @@ export async function clearUserCart(req: Request, res: Response) {
   }
 }
 
+// Получить количество товаров в корзине
 export async function getCartItemCount(req: Request, res: Response) {
   try {
     const userId = getUserId(req);
-    if (!userId) return res.json({ count: 0 });
+    
+    if (!userId) {
+      return res.json({ count: 0 });
+    }
+
     const cart = await getCartByUserId(userId);
     const count = cart ? cart.items.reduce((sum, item) => sum + item.quantity, 0) : 0;
+
     res.json({ count });
   } catch (err: unknown) {
     console.error(err);

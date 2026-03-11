@@ -6,13 +6,8 @@
     "rootDir": "./server",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    "moduleResolution": "node"
+    "skipLibCheck": true
   },
   "include": ["server/**/*"],
-  "exclude": ["node_modules", "dist", "src", "public"]
+  "exclude": ["node_modules", "src"]
 }

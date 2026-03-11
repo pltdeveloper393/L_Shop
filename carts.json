@@ -1,34 +1,98 @@
 [
   {
-    "userId": "guest_123456789",
+    "userId": "1772697864764",
     "items": [
-      {
-        "productId": 1,
-        "quantity": 2,
-        "product": {
-          "id": 1,
-          "name": "Танк Т-34",
-          "price": 150000,
-          "img": "/images/tanks/t34.png",
-          "level": 5,
-          "type": "medium",
-          "nation": "ussr"
-        }
-      },
       {
         "productId": 2,
         "quantity": 1,
         "product": {
           "id": 2,
-          "name": "Танк КВ-1",
-          "price": 200000,
-          "img": "/images/tanks/kv1.png",
-          "level": 5,
+          "name": "E 100",
+          "nation": "germany",
           "type": "heavy",
-          "nation": "ussr"
+          "level": 10,
+          "img": "images/tanks/e-100.png",
+          "price": 6100,
+          "inStock": true,
+          "hp": "2 700",
+          "dmg": "530",
+          "dpm": "2 200",
+          "ptrs": "240",
+          "ptrp": "300",
+          "spw": "10.0",
+          "description": "Непробиваемая броня"
+        }
+      },
+      {
+        "productId": 3,
+        "quantity": 1,
+        "product": {
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
+          "type": "heavy",
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня"
+        }
+      },
+      {
+        "productId": 1,
+        "quantity": 1,
+        "product": {
+          "id": 1,
+          "name": "Объект 140",
+          "nation": "ussr",
+          "type": "medium",
+          "level": 10,
+          "img": "images/tanks/object-140.png",
+          "price": 6200,
+          "inStock": true,
+          "hp": "1 900",
+          "dmg": "320",
+          "dpm": "2 900",
+          "ptrs": "264",
+          "ptrp": "330",
+          "spw": "18.0",
+          "description": "Лучший СТ для рандома"
         }
       }
     ],
-    "updatedAt": "2026-03-09T18:00:00.000Z"
+    "updatedAt": "2026-03-07T08:34:10.051Z"
+  },
+  {
+    "userId": "1772871004683",
+    "items": [
+      {
+        "productId": 9,
+        "quantity": 3,
+        "product": {
+          "id": 9,
+          "name": "ИС-7",
+          "nation": "ussr",
+          "type": "heavy",
+          "level": 10,
+          "img": "images/IS7.png",
+          "price": 5900,
+          "inStock": true,
+          "hp": "2 400",
+          "dmg": "490",
+          "dpm": "2 300",
+          "ptrs": "250",
+          "ptrp": "330",
+          "spw": "12.0",
+          "description": "Легендарный тяж"
+        }
+      }
+    ],
+    "updatedAt": "2026-03-07T08:15:23.867Z"
   }
 ]
