@@ -1,4 +1,6 @@
 import { apiCatalog } from '../services/api_catalog.js';
+import { apiCart } from '../services/api_cart.js';
+import { api } from '../services/api.js';
 import { router } from '../main.js';
 import { Product, ProductFilters } from '../types/index_catalog.js';
 
@@ -287,11 +289,16 @@ function getTypeName(type: string): string {
   return types[type] || type;
 }
 
-function updateCartBadge() {
-  // Корзина временно недоступна
-  const badge = document.getElementById('cart-badge');
-  if (badge) {
-    badge.style.display = 'none';
+async function updateCartBadge() {
+  try {
+    const count = await apiCart.getCartCount();
+    const badge = document.getElementById('cart-badge');
+    if (badge) {
+      badge.textContent = count.count.toString();
+      badge.style.display = count.count > 0 ? 'inline-block' : 'none';
+    }
+  } catch (_err: unknown) {
+    // Игнорируем ошибки
   }
 }
 
@@ -351,12 +358,22 @@ function setupModalEventListeners(product: Product) {
     updatePriceDisplay(priceEl, product.price, qty);
   });
   
-  // Добавление в корзину из модального окна (временно недоступно)
+  // Добавление в корзину из модального окна
   const addBtn = document.querySelector('.modal-add-btn');
-  addBtn?.addEventListener('click', () => {
+  addBtn?.addEventListener('click', async () => {
     const qty = parseInt(qtySpan?.textContent || '1');
-    closeModal();
-    showNotification(`${product.name} (x${qty}) - корзина в разработке`);
+    
+    try {
+      await apiCart.addToCart(product.id, qty);
+      updateCartBadge();
+      closeModal();
+      
+      // Показываем уведомление
+      showNotification(`${product.name} (x${qty}) добавлен в корзину!`);
+      } catch (err: unknown) {
+        console.error(err);
+        alert('Ошибка при добавлении в корзину');
+      }
   });
 }
 
@@ -460,9 +477,9 @@ function setupEventListeners() {
     });
   });
 
-  // Добавление в корзину из карточки (временно недоступно)
+  // Добавление в корзину из карточки
   document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', async (e) => {
       e.stopPropagation();
       const target = e.currentTarget as HTMLElement;
       const productId = parseInt(target.getAttribute('data-product') || '0');
@@ -470,18 +487,26 @@ function setupEventListeners() {
       const qtySpan = card?.querySelector('.qty-value');
       const quantity = parseInt(qtySpan?.textContent || '1');
       
-      // Сбрасываем количество
-      if (qtySpan) qtySpan.textContent = '1';
-      
-      // Восстанавливаем цену
-      const unitPrice = parseInt(card?.getAttribute('data-unit-price') || '0');
-      const priceEl = document.getElementById(`price-${productId}`);
-      updatePriceDisplay(priceEl, unitPrice, 1);
-      
-      // Показываем уведомление
-      const product = allProducts.find(p => p.id === productId);
-      if (product) {
-        showNotification(`${product.name} (x${quantity}) - корзина в разработке`);
+      try {
+        await apiCart.addToCart(productId, quantity);
+        updateCartBadge();
+        
+        // Сбрасываем количество
+        if (qtySpan) qtySpan.textContent = '1';
+        
+        // Восстанавливаем цену
+        const unitPrice = parseInt(card?.getAttribute('data-unit-price') || '0');
+        const priceEl = document.getElementById(`price-${productId}`);
+        updatePriceDisplay(priceEl, unitPrice, 1);
+        
+        // Показываем уведомление
+        const product = allProducts.find(p => p.id === productId);
+        if (product) {
+          showNotification(`${product.name} (x${quantity}) добавлен в корзину!`);
+        }
+      } catch (err: unknown) {
+        console.error(err);
+        alert('Ошибка при добавлении в корзину');
       }
     });
   });
@@ -495,9 +520,13 @@ function setupEventListeners() {
     router.navigateTo('/cart');
   });
 
-  document.getElementById('logout-btn')?.addEventListener('click', () => {
-    // Выход временно недоступен
-    showNotification('Функция выхода в разработке');
+  document.getElementById('logout-btn')?.addEventListener('click', async () => {
+    try {
+      await api.logout();
+      router.navigateTo('/');
+    } catch (_err: unknown) {
+      router.navigateTo('/');
+    }
   });
   
   // Закрытие модального окна по Escape
