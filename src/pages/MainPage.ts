@@ -1,4 +1,5 @@
 import { api } from '../services/api.js';
+// import { apiCart } from '../services/api_cart.js';
 import { router } from '../main.js';
 import { AuthResponse } from '../types/index.js';
 
@@ -12,7 +13,8 @@ export async function renderMainPage() {
     
     const topSellingTanks = [
       { 
-        name: 'Object 140', 
+        id: 1,
+        name: 'Объект 140', 
         nation: 'СССР', 
         tier: 10, 
         price: 6200,
@@ -20,7 +22,8 @@ export async function renderMainPage() {
         advantage: 'Лучший СТ для рандома'
       },
       { 
-        name: 'IS-7', 
+        id: 9,
+        name: 'ИС-7', 
         nation: 'СССР', 
         tier: 10, 
         price: 5900,
@@ -28,27 +31,20 @@ export async function renderMainPage() {
         advantage: 'Легендарный тяж'
       },
       { 
+        id: 2,
         name: 'E 100', 
         nation: 'Германия', 
         tier: 10, 
         price: 6100,
         image: '/images/tanks/e-100.png',
-        advantage: 'Непробиваемый броня'
+        advantage: 'Непробиваемая броня'
       }
-      /*{ 
-        name: 'Leopard 1', 
-        nation: 'Германия', 
-        tier: 10, 
-        price: 5800,
-        image: '/images/tanks/leopard-1.png',
-        advantage: 'Снайперская точность'
-      }*/
     ];
 
     const advantages = [
       { icon: 'fa-bolt', title: 'Мгновенная доставка', desc: 'Танк в ангаре через 5 минут' },
-      { icon: 'fa-shield-alt', title: 'Гарантия качества', desc: 'Все танки с полным обслуживанием' }, // Исправлено: shield-halved → shield-alt
-      { icon: 'fa-tag', title: 'Лучшие цены', desc: 'На 20% дешевле чем в премиум магазине' }, // Исправлено: sack-dollar → tag
+      { icon: 'fa-shield-alt', title: 'Гарантия качества', desc: 'Все танки с полным обслуживанием' },
+      { icon: 'fa-tag', title: 'Лучшие цены', desc: 'На 20% дешевле чем в премиум магазине' },
       { icon: 'fa-gift', title: 'Бонусы за покупку', desc: 'Кэшбек до 10% золотом' }
     ];
 
@@ -72,15 +68,19 @@ export async function renderMainPage() {
 
           <div class="header-right">
             <button class="wot-btn wot-btn-primary" id="catalog-btn">
-              <i class="fas fa-store btn-icon"></i> <!-- Исправлено: tank → store -->
+              <i class="fas fa-store btn-icon"></i>
               Каталог танков
+            </button>
+            <button class="wot-btn" id="cart-btn">
+              <i class="fas fa-shopping-cart btn-icon"></i>
+              Корзина
             </button>
             <button class="wot-btn" id="profile-btn">
               <i class="fas fa-user btn-icon"></i>
               Профиль
             </button>
             <button class="wot-btn" id="logout-btn">
-              <i class="fas fa-sign-out-alt btn-icon"></i> <!-- Исправлено: right-from-bracket → sign-out-alt -->
+              <i class="fas fa-sign-out-alt btn-icon"></i>
               Выйти
             </button>
           </div>
@@ -164,8 +164,8 @@ export async function renderMainPage() {
                       <i class="fas fa-coins" style="margin-right: 5px;"></i>
                       ${tank.price.toLocaleString()}
                     </span>
-                    <button class="wot-btn wot-btn-primary tank-buy-btn" data-tank="${tank.name}">
-                      <i class="fas fa-shopping-cart" style="margin-right: 5px;"></i> <!-- Исправлено: cart-shopping → shopping-cart -->
+                    <button class="wot-btn wot-btn-primary tank-buy-btn" data-tank-id="${tank.id}" data-tank-name="${tank.name}">
+                      <i class="fas fa-shopping-cart" style="margin-right: 5px;"></i>
                       Купить
                     </button>
                   </div>
@@ -208,7 +208,7 @@ export async function renderMainPage() {
         <!-- Статистика магазина -->
         <div class="stats-bar">
           <div class="stat-item">
-            <i class="fas fa-tachometer-alt stat-icon"></i> <!-- Исправлено: tank → tachometer-alt -->
+            <i class="fas fa-tachometer-alt stat-icon"></i>
             <span class="stat-value">1500+</span>
             <span class="stat-label">Танков продано</span>
           </div>
@@ -249,7 +249,7 @@ export async function renderMainPage() {
               Доставка
             </a>
             <a href="#">
-              <i class="fas fa-shield-alt" style="margin-right: 5px;"></i> <!-- Исправлено: shield → shield-alt -->
+              <i class="fas fa-shield-alt" style="margin-right: 5px;"></i>
               Гарантии
             </a>
           </div>
@@ -257,67 +257,108 @@ export async function renderMainPage() {
       </div>
     `;
 
-    document.getElementById('catalog-btn')?.addEventListener('click', () => {
-      router.navigateTo('/catalog');
-    });
-
-    document.getElementById('logout-btn')?.addEventListener('click', async () => {
-      await api.logout();
-      router.navigateTo('/');
-    });
-
-    document.getElementById('promo-btn')?.addEventListener('click', () => {
-      alert('Промо-предложения скоро появятся!');
-    });
-
-    document.getElementById('view-all-tanks')?.addEventListener('click', () => {
-      router.navigateTo('/catalog');
-    });
-
-    document.querySelectorAll('.tank-buy-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const tankName = (e.target as HTMLElement).getAttribute('data-tank');
-        alert(`Танк ${tankName} добавлен в корзину!`);
-      });
-    });
-
-    document.getElementById('profile-btn')?.addEventListener('click', () => {
-      router.navigateTo('/profile');
-    });
+    setupEventListeners();
 
   } catch {
     router.navigateTo('/');
   }
+}
 
-  function startSimpleTimer(): void {
-    const now = new Date();
-    const end = new Date(now);
-    end.setHours(23, 59, 59, 999);
-    
-    function update(): void {
-      const diff = end.getTime() - Date.now();
-      if (diff <= 0) {
-        document.getElementById('simple-hours')!.textContent = '00';
-        document.getElementById('simple-minutes')!.textContent = '00';
-        document.getElementById('simple-seconds')!.textContent = '00';
-        return;
-      }
-      const hours = Math.floor(diff / 3600000);
-      const minutes = Math.floor((diff % 3600000) / 60000);
-      const seconds = Math.floor((diff % 60000) / 1000);
-      
-      document.getElementById('simple-hours')!.textContent = hours.toString().padStart(2, '0');
-      document.getElementById('simple-minutes')!.textContent = minutes.toString().padStart(2, '0');
-      document.getElementById('simple-seconds')!.textContent = seconds.toString().padStart(2, '0');
-    }
-    
-    update();
-    setInterval(update, 1000);
-  }
+function setupEventListeners() {
+  document.getElementById('catalog-btn')?.addEventListener('click', () => {
+    router.navigateTo('/catalog');
+  });
 
-  startSimpleTimer();
+  document.getElementById('cart-btn')?.addEventListener('click', () => {
+    router.navigateTo('/cart');
+  });
+
+  document.getElementById('logout-btn')?.addEventListener('click', async () => {
+    await api.logout();
+    router.navigateTo('/');
+  });
+
+  document.getElementById('view-all-tanks')?.addEventListener('click', () => {
+    router.navigateTo('/catalog');
+  });
+
+  document.getElementById('profile-btn')?.addEventListener('click', () => {
+    router.navigateTo('/profile');
+  });
 
   document.getElementById('promo-simple-btn')?.addEventListener('click', () => {
-    router.navigateTo('/promo');
+    router.navigateTo('/catalog');
   });
+
+  document.querySelectorAll('.tank-buy-btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const target = e.currentTarget as HTMLElement;
+      const tankId = parseInt(target.getAttribute('data-tank-id') || '0');
+      const tankName = target.getAttribute('data-tank-name') || 'Танк';
+      
+      target.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Добавление...';
+      (target as HTMLButtonElement).disabled = true;
+      
+      try {
+        target.innerHTML = '<i class="fas fa-check"></i> Добавлено!';
+        target.classList.add('success');
+        
+        showNotification(`${tankName} добавлен в корзину!`);
+        
+        setTimeout(() => {
+          target.innerHTML = '<i class="fas fa-shopping-cart" style="margin-right: 5px;"></i> Купить';
+          target.classList.remove('success');
+          (target as HTMLButtonElement).disabled = false;
+        }, 2000);
+        
+      } catch (err) {
+        console.error(err);
+        target.innerHTML = '<i class="fas fa-shopping-cart" style="margin-right: 5px;"></i> Купить';
+        (target as HTMLButtonElement).disabled = false;
+        alert('Ошибка при добавлении в корзину. Попробуйте ещё раз.');
+      }
+    });
+  });
+
+  startSimpleTimer();
+}
+
+function showNotification(message: string) {
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+  document.body.appendChild(notification);
+  
+  setTimeout(() => notification.classList.add('show'), 10);
+  
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => notification.remove(), 300);
+  }, 3000);
+}
+
+function startSimpleTimer(): void {
+  const now = new Date();
+  const end = new Date(now);
+  end.setHours(23, 59, 59, 999);
+  
+  function update(): void {
+    const diff = end.getTime() - Date.now();
+    if (diff <= 0) {
+      document.getElementById('simple-hours')!.textContent = '00';
+      document.getElementById('simple-minutes')!.textContent = '00';
+      document.getElementById('simple-seconds')!.textContent = '00';
+      return;
+    }
+    const hours = Math.floor(diff / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+    
+    document.getElementById('simple-hours')!.textContent = hours.toString().padStart(2, '0');
+    document.getElementById('simple-minutes')!.textContent = minutes.toString().padStart(2, '0');
+    document.getElementById('simple-seconds')!.textContent = seconds.toString().padStart(2, '0');
+  }
+  
+  update();
+  setInterval(update, 1000);
 }
