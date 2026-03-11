@@ -9,14 +9,12 @@ import {
 } from '../models/CartModel_cart';
 
 function getUserId(req: Request): string {
-  // Если нет userId в сессии, используем гостевой ID
   if (!req.session.userId) {
     req.session.userId = 'guest_' + Date.now();
   }
   return req.session.userId;
 }
 
-// Получить корзину пользователя
 export async function getCart(req: Request, res: Response) {
   try {
     const userId = getUserId(req);
@@ -34,7 +32,6 @@ export async function getCart(req: Request, res: Response) {
   }
 }
 
-// Добавить товар в корзину
 export async function addItemToCart(req: Request, res: Response) {
   try {
     const userId = getUserId(req);
@@ -65,7 +62,6 @@ export async function addItemToCart(req: Request, res: Response) {
   }
 }
 
-// Изменить количество товара
 export async function updateItemQuantity(req: Request, res: Response) {
   try {
     const userId = getUserId(req);
@@ -96,7 +92,6 @@ export async function updateItemQuantity(req: Request, res: Response) {
   }
 }
 
-// Удалить товар из корзины
 export async function removeItemFromCart(req: Request, res: Response) {
   try {
     const userId = getUserId(req);
@@ -126,7 +121,6 @@ export async function removeItemFromCart(req: Request, res: Response) {
   }
 }
 
-// Очистить корзину
 export async function clearUserCart(req: Request, res: Response) {
   try {
     const userId = getUserId(req);
@@ -144,7 +138,6 @@ export async function clearUserCart(req: Request, res: Response) {
   }
 }
 
-// Получить количество товаров в корзине
 export async function getCartItemCount(req: Request, res: Response) {
   try {
     const userId = getUserId(req);

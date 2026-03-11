@@ -1,7 +1,3 @@
-/* =========================================
-   Стили страницы корзины
-   ========================================= */
-
 .cart-header {
   display: flex;
   justify-content: space-between;
@@ -19,7 +15,6 @@
   margin-left: 15px;
 }
 
-/* Контент корзины */
 .cart-content {
   display: grid;
   grid-template-columns: 1fr 350px;
@@ -27,7 +22,6 @@
   padding-bottom: 30px;
 }
 
-/* Секция товаров */
 .cart-items-section {
   background: var(--wot-bg-panel);
   border: 1px solid var(--wot-border);
@@ -46,7 +40,6 @@
   margin-right: 10px;
 }
 
-/* Пустая корзина */
 .cart-empty {
   text-align: center;
   padding: 60px 20px;
@@ -64,7 +57,6 @@
   margin-bottom: 20px;
 }
 
-/* Список товаров */
 .cart-items-list {
   display: flex;
   flex-direction: column;
@@ -190,7 +182,6 @@
   color: #fff;
 }
 
-/* Кнопка очистки */
 .clear-cart-btn {
   margin-top: 20px;
   width: 100%;
@@ -200,7 +191,6 @@
   margin-right: 8px;
 }
 
-/* Секция итогов */
 .cart-summary-section {
   position: sticky;
   top: 20px;
@@ -280,7 +270,6 @@
   margin-right: 8px;
 }
 
-/* Адаптивность */
 @media (max-width: 992px) {
   .cart-content {
     grid-template-columns: 1fr;

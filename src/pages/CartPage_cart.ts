@@ -1,7 +1,6 @@
 import { apiCart } from '../services/api_cart.js';
 import { CartItem } from '../types/index_cart.js';
 
-// Глобальная переменная для хранения данных корзины
 let cartItems: CartItem[] = [];
 let cartTotal = 0;
 
@@ -9,7 +8,6 @@ export async function renderCartPage() {
   const app = document.getElementById('app');
   if (!app) return;
 
-  // Показываем загрузку
   app.innerHTML = `
     <div class="wot-container">
       <div class="loading-message" style="text-align: center; padding: 50px;">
@@ -128,7 +126,6 @@ export async function renderCartPage() {
 
   } catch (err: unknown) {
     console.error('Ошибка загрузки корзины:', err);
-    // Не перенаправляем на главную, показываем ошибку
     app.innerHTML = `
       <div class="wot-container">
         <div class="error-message" style="text-align: center; padding: 50px;">
@@ -227,18 +224,15 @@ async function refreshCartDisplay() {
     
     const itemsCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
     
-    // Обновляем количество товаров
     const countEl = document.getElementById('items-count');
     if (countEl) countEl.textContent = `${itemsCount} шт.`;
 
-    // Обновляем цену
     const priceEl = document.getElementById('total-price');
     if (priceEl) priceEl.innerHTML = `<i class="fas fa-coins"></i> ${cartTotal.toLocaleString()}`;
 
     const totalPriceEl = document.querySelector('.total-price-value');
     if (totalPriceEl) totalPriceEl.innerHTML = `<i class="fas fa-coins"></i> ${cartTotal.toLocaleString()}`;
 
-    // Если корзина пуста - перерисовываем
     if (cartItems.length === 0) {
       renderCartPage();
     }
@@ -248,7 +242,6 @@ async function refreshCartDisplay() {
 }
 
 function setupEventListeners() {
-  // Навигация
   document.getElementById('catalog-btn')?.addEventListener('click', () => {
     window.location.href = '/catalog';
   });
@@ -265,12 +258,10 @@ function setupEventListeners() {
     window.location.href = '/';
   });
 
-  // Оформление доставки
   document.getElementById('checkout-btn')?.addEventListener('click', () => {
     window.location.href = '/delivery';
   });
 
-  // Очистка корзины
   document.getElementById('clear-cart-btn')?.addEventListener('click', async () => {
     if (confirm('Вы уверены, что хотите очистить корзину?')) {
       try {
@@ -285,7 +276,6 @@ function setupEventListeners() {
     }
   });
 
-  // Удаление товара
   document.querySelectorAll('.remove-item-btn').forEach(btn => {
     btn.addEventListener('click', async (e) => {
       const target = e.currentTarget as HTMLElement;
@@ -293,18 +283,12 @@ function setupEventListeners() {
       
       try {
         await apiCart.removeFromCart(productId);
-        
-        // Обновляем локальные данные
         cartItems = cartItems.filter(item => item.productId !== productId);
-        
-        // Находим и удаляем элемент
         const item = document.querySelector(`.cart-item[data-product-id="${productId}"]`);
         if (item) {
           item.classList.add('removing');
-          // Удаляем элемент из DOM после анимации
           setTimeout(() => {
             item.remove();
-            // Перерисовываем страницу если корзина пуста
             if (cartItems.length === 0) {
               renderCartPage();
             } else {
@@ -319,7 +303,6 @@ function setupEventListeners() {
     });
   });
 
-  // Изменение количества
   document.querySelectorAll('.cart-item .qty-btn').forEach(btn => {
     btn.addEventListener('click', async (e) => {
       const target = e.target as HTMLElement;
@@ -339,7 +322,6 @@ function setupEventListeners() {
       }
 
       if (qty < 1) {
-        // Удаляем товар
         try {
           await apiCart.removeFromCart(productId);
           cartItems = cartItems.filter(item => item.productId !== productId);
@@ -353,17 +335,12 @@ function setupEventListeners() {
 
       try {
         await apiCart.updateQuantity(productId, qty);
-        
-        // Обновляем отображение
         qtySpan.textContent = qty.toString();
-        
-        // Обновляем сумму позиции
         const itemTotal = cartItem.querySelector('.item-total-price');
         if (itemTotal) {
           itemTotal.innerHTML = `<i class="fas fa-coins"></i> ${(unitPrice * qty).toLocaleString()}`;
         }
         
-        // Обновляем итоги
         refreshCartDisplay();
       } catch (err: unknown) {
         console.error(err);
