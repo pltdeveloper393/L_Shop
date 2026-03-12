@@ -26,22 +26,21 @@ app.use(session({
   saveUninitialized: true,
   cookie: { 
     secure: false, 
-    maxAge: 24 * 60 * 60 * 1000,
+    maxAge: 10 * 60 * 1000,
     httpOnly: true,
     sameSite: 'lax'
   }
 }));
 
-// ========== API РОУТЫ ==========
 app.use('/api/auth', authRoutes);
 
-// import catalogRoutes from './routes/route_catalog';
-// import cartRoutes from './routes/route_cart';
-// import deliveryRoutes from './routes/route_delivery';
+import catalogRoutes from './routes/route_catalog';
+import cartRoutes from './routes/route_cart';
+import deliveryRoutes from './routes/route_delivery';
 
-// app.use('/api/catalog', catalogRoutes);
-// app.use('/api/cart', cartRoutes);
-// app.use('/api/delivery', deliveryRoutes);
+app.use('/api/catalog', catalogRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/delivery', deliveryRoutes);
 
 app.use(express.static(path.join(__dirname, '../public')));
 
