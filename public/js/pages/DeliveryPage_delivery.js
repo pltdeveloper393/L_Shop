@@ -1,17 +1,12 @@
 import { apiDelivery } from '../services/api_delivery.js';
-import { apiCart } from '../services/api_cart.js';
-import { api } from '../services/api.js';
 import { router } from '../main.js';
-import { DeliveryFormData } from '../types/index_delivery.js';
-
 let captchaAnswer = 0;
-
 export async function renderDeliveryPage() {
-  const app = document.getElementById('app');
-  if (!app) return;
-
-  // Показываем загрузку
-  app.innerHTML = `
+    const app = document.getElementById('app');
+    if (!app)
+        return;
+    // Показываем загрузку
+    app.innerHTML = `
     <div class="wot-container">
       <div class="loading-message" style="text-align: center; padding: 50px;">
         <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--wot-primary);"></i>
@@ -19,20 +14,18 @@ export async function renderDeliveryPage() {
       </div>
     </div>
   `;
-
-  try {
-    // Проверяем корзину
-    const cartData = await apiCart.getCart();
-    const items = cartData.cart.items || [];
-    const total = cartData.total || 0;
-
-    if (items.length === 0) {
-      // Корзина пуста - идём в корзину
-      router.navigateTo('/cart');
-      return;
-    }
-
-    app.innerHTML = `
+    try {
+        // Тестовые данные (корзины нет)
+        const items = [{
+                product: {
+                    name: 'Тестовый танк',
+                    img: '/images/tanks/test-tank.png',
+                    price: 1000
+                },
+                quantity: 1
+            }];
+        const total = 1000;
+        app.innerHTML = `
       <div class="wot-container">
         <!-- Шапка -->
         <div class="delivery-header">
@@ -41,17 +34,9 @@ export async function renderDeliveryPage() {
             <span class="delivery-subtitle">ОФОРМЛЕНИЕ ДОСТАВКИ</span>
           </div>
           <div class="header-right">
-            <button class="wot-btn" id="cart-btn">
-              <i class="fas fa-shopping-cart btn-icon"></i>
-              Назад в корзину
-            </button>
             <button class="wot-btn" id="main-btn">
               <i class="fas fa-home btn-icon"></i>
               Главная
-            </button>
-            <button class="wot-btn" id="logout-btn">
-              <i class="fas fa-sign-out-alt btn-icon"></i>
-              Выйти
             </button>
           </div>
         </div>
@@ -209,9 +194,9 @@ export async function renderDeliveryPage() {
               </h3>
               
               <div class="order-items">
-                ${items.map(item => `
+                ${items.map((item) => `
                   <div class="order-item">
-                    <img src="/${item.product.img}" alt="${item.product.name}" class="order-item-img">
+                    <img src="${item.product.img}" alt="${item.product.name}" class="order-item-img">
                     <div class="order-item-info">
                       <span class="order-item-name">${item.product.name}</span>
                       <span class="order-item-qty">x${item.quantity}</span>
@@ -255,15 +240,13 @@ export async function renderDeliveryPage() {
         </div>
       </div>
     `;
-
-    // Инициализация капчи
-    generateCaptcha();
-    setupEventListeners();
-
-  } catch (err) {
-    console.error('Ошибка загрузки страницы доставки:', err);
-    // Показываем ошибку вместо перенаправления
-    app.innerHTML = `
+        // Инициализация капчи
+        generateCaptcha();
+        setupEventListeners();
+    }
+    catch (err) {
+        console.error('Ошибка загрузки страницы доставки:', err);
+        app.innerHTML = `
       <div class="wot-container">
         <div class="error-message" style="text-align: center; padding: 50px;">
           <i class="fas fa-exclamation-circle" style="font-size: 3rem; color: #d32f2f;"></i>
@@ -272,208 +255,164 @@ export async function renderDeliveryPage() {
           <button class="wot-btn wot-btn-primary" onclick="window.location.reload()" style="margin-top: 20px;">
             <i class="fas fa-sync-alt"></i> Обновить страницу
           </button>
-          <button class="wot-btn" id="back-cart-btn" style="margin-left: 10px;">
-            <i class="fas fa-shopping-cart"></i> В корзину
-          </button>
         </div>
       </div>
     `;
-    
-    document.getElementById('back-cart-btn')?.addEventListener('click', () => {
-      router.navigateTo('/cart');
-    });
-  }
+    }
 }
-
 function generateCaptcha() {
-  const a = Math.floor(Math.random() * 10) + 1;
-  const b = Math.floor(Math.random() * 10) + 1;
-  captchaAnswer = a + b;
-  
-  const questionEl = document.getElementById('captcha-question');
-  if (questionEl) {
-    questionEl.textContent = `${a} + ${b} = ?`;
-  }
+    const a = Math.floor(Math.random() * 10) + 1;
+    const b = Math.floor(Math.random() * 10) + 1;
+    captchaAnswer = a + b;
+    const questionEl = document.getElementById('captcha-question');
+    if (questionEl) {
+        questionEl.textContent = `${a} + ${b} = ?`;
+    }
 }
-
 function setupEventListeners() {
-  // Обновление капчи
-  document.getElementById('refresh-captcha')?.addEventListener('click', () => {
-    generateCaptcha();
-    const input = document.getElementById('captcha-answer') as HTMLInputElement;
-    if (input) input.value = '';
-  });
-
-  // Переключение способов оплаты
-  document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
-    radio.addEventListener('change', (e) => {
-      const target = e.target as HTMLInputElement;
-      const cardForm = document.getElementById('card-form');
-      if (cardForm) {
-        if (target.value === 'card') {
-          cardForm.style.display = 'block';
-        } else {
-          cardForm.style.display = 'none';
-        }
-      }
+    // Обновление капчи
+    document.getElementById('refresh-captcha')?.addEventListener('click', () => {
+        generateCaptcha();
+        const input = document.getElementById('captcha-answer');
+        if (input)
+            input.value = '';
     });
-  });
-
-  // Форматирование номера карты
-  const cardNumberInput = document.getElementById('cardNumber') as HTMLInputElement;
-  cardNumberInput?.addEventListener('input', (e) => {
-    const target = e.target as HTMLInputElement;
-    let value = target.value.replace(/\s/g, '').replace(/\D/g, '');
-    let formatted = '';
-    for (let i = 0; i < value.length && i < 16; i++) {
-      if (i > 0 && i % 4 === 0) formatted += ' ';
-      formatted += value[i];
-    }
-    target.value = formatted;
-    
-    // Обновление превью карты
-    const display = document.getElementById('card-number-display');
-    if (display) {
-      display.textContent = formatted || '•••• •••• •••• ••••';
-    }
-  });
-
-  // Форматирование имени держателя
-  const cardHolderInput = document.getElementById('cardHolder') as HTMLInputElement;
-  cardHolderInput?.addEventListener('input', (e) => {
-    const target = e.target as HTMLInputElement;
-    target.value = target.value.toUpperCase();
-    
-    const display = document.getElementById('card-holder-display');
-    if (display) {
-      display.textContent = target.value || 'ИМЯ ФАМИЛИЯ';
-    }
-  });
-
-  // Форматирование срока действия
-  const cardExpiryInput = document.getElementById('cardExpiry') as HTMLInputElement;
-  cardExpiryInput?.addEventListener('input', (e) => {
-    const target = e.target as HTMLInputElement;
-    let value = target.value.replace(/\D/g, '');
-    if (value.length >= 2) {
-      value = value.substring(0, 2) + '/' + value.substring(2, 4);
-    }
-    target.value = value;
-    
-    const display = document.getElementById('card-expiry-display');
-    if (display) {
-      display.textContent = value || 'MM/YY';
-    }
-  });
-
-  // Навигация
-  document.getElementById('cart-btn')?.addEventListener('click', () => {
-    router.navigateTo('/cart');
-  });
-
-  document.getElementById('main-btn')?.addEventListener('click', () => {
-    router.navigateTo('/main');
-  });
-
-  document.getElementById('logout-btn')?.addEventListener('click', async () => {
-    try {
-      await api.logout();
-      router.navigateTo('/');
-    } catch {
-      router.navigateTo('/');
-    }
-  });
-
-  // Отправка формы
-  document.getElementById('delivery-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const captchaInput = document.getElementById('captcha-answer') as HTMLInputElement;
-    const userCaptchaAnswer = captchaInput ? parseInt(captchaInput.value) : 0;
-    
-    if (userCaptchaAnswer !== captchaAnswer) {
-      alert('Неверный ответ на проверочный вопрос. Попробуйте ещё раз.');
-      generateCaptcha();
-      if (captchaInput) captchaInput.value = '';
-      return;
-    }
-
-    const address = (document.getElementById('address') as HTMLInputElement)?.value;
-    const phone = (document.getElementById('phone') as HTMLInputElement)?.value;
-    const email = (document.getElementById('email') as HTMLInputElement)?.value;
-    const paymentMethodEl = document.querySelector('input[name="paymentMethod"]:checked') as HTMLInputElement;
-    const paymentMethod = paymentMethodEl?.value as 'card' | 'cash';
-
-    if (!address || !phone || !email || !paymentMethod) {
-      alert('Пожалуйста, заполните все обязательные поля');
-      return;
-    }
-
-    // Валидация данных карты при оплате картой
-    if (paymentMethod === 'card') {
-      const cardNumber = (document.getElementById('cardNumber') as HTMLInputElement)?.value.replace(/\s/g, '');
-      const cardHolder = (document.getElementById('cardHolder') as HTMLInputElement)?.value.trim();
-      const cardExpiry = (document.getElementById('cardExpiry') as HTMLInputElement)?.value;
-      const cardCvv = (document.getElementById('cardCvv') as HTMLInputElement)?.value;
-
-      if (!cardNumber || cardNumber.length !== 16) {
-        alert('Введите корректный номер карты (16 цифр)');
-        return;
-      }
-
-      if (!cardHolder || cardHolder.length < 3) {
-        alert('Введите имя держателя карты');
-        return;
-      }
-
-      if (!cardExpiry || cardExpiry.length !== 5) {
-        alert('Введите срок действия карты в формате MM/YY');
-        return;
-      }
-
-      if (!cardCvv || cardCvv.length !== 3) {
-        alert('Введите CVV код (3 цифры)');
-        return;
-      }
-    }
-
-    const deliveryData: DeliveryFormData = {
-      address,
-      phone,
-      email,
-      paymentMethod
-    };
-
-    const submitBtn = document.querySelector('.submit-order-btn') as HTMLButtonElement;
-    
-    try {
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Оформление...';
-      }
-
-      const response = await apiDelivery.createDelivery(deliveryData);
-      
-      // Показываем успех
-      showSuccessMessage(response.delivery.id);
-      
-    } catch (err) {
-      console.error(err);
-      alert('Ошибка при оформлении доставки. Попробуйте ещё раз.');
-      
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fas fa-check"></i> Подтвердить заказ';
-      }
-    }
-  });
+    // Переключение способов оплаты
+    document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            const target = e.target;
+            const cardForm = document.getElementById('card-form');
+            if (cardForm) {
+                if (target.value === 'card') {
+                    cardForm.style.display = 'block';
+                }
+                else {
+                    cardForm.style.display = 'none';
+                }
+            }
+        });
+    });
+    // Форматирование номера карты
+    const cardNumberInput = document.getElementById('cardNumber');
+    cardNumberInput?.addEventListener('input', (e) => {
+        const target = e.target;
+        let value = target.value.replace(/\s/g, '').replace(/\D/g, '');
+        let formatted = '';
+        for (let i = 0; i < value.length && i < 16; i++) {
+            if (i > 0 && i % 4 === 0)
+                formatted += ' ';
+            formatted += value[i];
+        }
+        target.value = formatted;
+        // Обновление превью карты
+        const display = document.getElementById('card-number-display');
+        if (display) {
+            display.textContent = formatted || '•••• •••• •••• ••••';
+        }
+    });
+    // Форматирование имени держателя
+    const cardHolderInput = document.getElementById('cardHolder');
+    cardHolderInput?.addEventListener('input', (e) => {
+        const target = e.target;
+        target.value = target.value.toUpperCase();
+        const display = document.getElementById('card-holder-display');
+        if (display) {
+            display.textContent = target.value || 'ИМЯ ФАМИЛИЯ';
+        }
+    });
+    // Форматирование срока действия
+    const cardExpiryInput = document.getElementById('cardExpiry');
+    cardExpiryInput?.addEventListener('input', (e) => {
+        const target = e.target;
+        let value = target.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        }
+        target.value = value;
+        const display = document.getElementById('card-expiry-display');
+        if (display) {
+            display.textContent = value || 'MM/YY';
+        }
+    });
+    // Навигация
+    document.getElementById('main-btn')?.addEventListener('click', () => {
+        router.navigateTo('/');
+    });
+    // Отправка формы
+    document.getElementById('delivery-form')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const captchaInput = document.getElementById('captcha-answer');
+        const userCaptchaAnswer = captchaInput ? parseInt(captchaInput.value) : 0;
+        if (userCaptchaAnswer !== captchaAnswer) {
+            alert('Неверный ответ на проверочный вопрос. Попробуйте ещё раз.');
+            generateCaptcha();
+            if (captchaInput)
+                captchaInput.value = '';
+            return;
+        }
+        const address = document.getElementById('address')?.value;
+        const phone = document.getElementById('phone')?.value;
+        const email = document.getElementById('email')?.value;
+        const paymentMethodEl = document.querySelector('input[name="paymentMethod"]:checked');
+        const paymentMethod = paymentMethodEl?.value;
+        if (!address || !phone || !email || !paymentMethod) {
+            alert('Пожалуйста, заполните все обязательные поля');
+            return;
+        }
+        // Валидация данных карты при оплате картой
+        if (paymentMethod === 'card') {
+            const cardNumber = document.getElementById('cardNumber')?.value.replace(/\s/g, '');
+            const cardHolder = document.getElementById('cardHolder')?.value.trim();
+            const cardExpiry = document.getElementById('cardExpiry')?.value;
+            const cardCvv = document.getElementById('cardCvv')?.value;
+            if (!cardNumber || cardNumber.length !== 16) {
+                alert('Введите корректный номер карты (16 цифр)');
+                return;
+            }
+            if (!cardHolder || cardHolder.length < 3) {
+                alert('Введите имя держателя карты');
+                return;
+            }
+            if (!cardExpiry || cardExpiry.length !== 5) {
+                alert('Введите срок действия карты в формате MM/YY');
+                return;
+            }
+            if (!cardCvv || cardCvv.length !== 3) {
+                alert('Введите CVV код (3 цифры)');
+                return;
+            }
+        }
+        const deliveryData = {
+            address,
+            phone,
+            email,
+            paymentMethod
+        };
+        const submitBtn = document.querySelector('.submit-order-btn');
+        try {
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Оформление...';
+            }
+            const response = await apiDelivery.createDelivery(deliveryData);
+            // Показываем успех
+            showSuccessMessage(response.delivery.id);
+        }
+        catch (err) {
+            console.error(err);
+            alert('Ошибка при оформлении доставки. Попробуйте ещё раз.');
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Подтвердить заказ';
+            }
+        }
+    });
 }
-
-function showSuccessMessage(deliveryId: string) {
-  const app = document.getElementById('app');
-  if (!app) return;
-
-  app.innerHTML = `
+function showSuccessMessage(deliveryId) {
+    const app = document.getElementById('app');
+    if (!app)
+        return;
+    app.innerHTML = `
     <div class="wot-container">
       <div class="success-page">
         <div class="success-icon">
@@ -491,20 +430,11 @@ function showSuccessMessage(deliveryId: string) {
             <i class="fas fa-home"></i>
             На главную
           </button>
-          <button class="wot-btn" id="go-catalog-btn">
-            <i class="fas fa-store"></i>
-            Продолжить покупки
-          </button>
         </div>
       </div>
     </div>
   `;
-
-  document.getElementById('go-main-btn')?.addEventListener('click', () => {
-    router.navigateTo('/main');
-  });
-
-  document.getElementById('go-catalog-btn')?.addEventListener('click', () => {
-    router.navigateTo('/catalog');
-  });
+    document.getElementById('go-main-btn')?.addEventListener('click', () => {
+        router.navigateTo('/');
+    });
 }
