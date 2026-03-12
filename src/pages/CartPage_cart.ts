@@ -1,4 +1,6 @@
 import { apiCart } from '../services/api_cart.js';
+import { api } from '../services/api.js';
+import { router } from '../main.js';
 import { CartItem } from '../types/index_cart.js';
 
 let cartItems: CartItem[] = [];
@@ -143,7 +145,7 @@ export async function renderCartPage() {
     `;
     
     document.getElementById('to-catalog-btn')?.addEventListener('click', () => {
-      window.location.href = '/catalog';
+      router.navigateTo('/catalog');
     });
   }
 }
@@ -158,9 +160,9 @@ function renderCartItem(item: CartItem): string {
       <div class="cart-item-info">
         <h4 class="cart-item-name" data-title="basket">${item.product.name}</h4>
         <div class="cart-item-details">
-          <span class="item-level">${item.product.level || ''} ур.</span>
-          <span class="item-type">${getTypeName(item.product.type || '')}</span>
-          <span class="item-nation">${getNationName(item.product.nation || '')}</span>
+          <span class="item-level">${item.product.level} ур.</span>
+          <span class="item-type">${getTypeName(item.product.type)}</span>
+          <span class="item-nation">${getNationName(item.product.nation)}</span>
         </div>
         <p class="cart-item-price" data-price="basket">
           <i class="fas fa-coins"></i>
@@ -243,23 +245,28 @@ async function refreshCartDisplay() {
 
 function setupEventListeners() {
   document.getElementById('catalog-btn')?.addEventListener('click', () => {
-    window.location.href = '/catalog';
+    router.navigateTo('/catalog');
   });
 
   document.getElementById('main-btn')?.addEventListener('click', () => {
-    window.location.href = '/main';
+    router.navigateTo('/main');
   });
 
   document.getElementById('go-catalog-btn')?.addEventListener('click', () => {
-    window.location.href = '/catalog';
+    router.navigateTo('/catalog');
   });
 
   document.getElementById('logout-btn')?.addEventListener('click', async () => {
-    window.location.href = '/';
+    try {
+      await api.logout();
+      router.navigateTo('/');
+    } catch (_err: unknown) {
+      router.navigateTo('/');
+    }
   });
 
   document.getElementById('checkout-btn')?.addEventListener('click', () => {
-    window.location.href = '/delivery';
+    router.navigateTo('/delivery');
   });
 
   document.getElementById('clear-cart-btn')?.addEventListener('click', async () => {
@@ -283,7 +290,9 @@ function setupEventListeners() {
       
       try {
         await apiCart.removeFromCart(productId);
+        
         cartItems = cartItems.filter(item => item.productId !== productId);
+        
         const item = document.querySelector(`.cart-item[data-product-id="${productId}"]`);
         if (item) {
           item.classList.add('removing');
@@ -335,7 +344,9 @@ function setupEventListeners() {
 
       try {
         await apiCart.updateQuantity(productId, qty);
+        
         qtySpan.textContent = qty.toString();
+        
         const itemTotal = cartItem.querySelector('.item-total-price');
         if (itemTotal) {
           itemTotal.innerHTML = `<i class="fas fa-coins"></i> ${(unitPrice * qty).toLocaleString()}`;

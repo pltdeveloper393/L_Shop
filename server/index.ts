@@ -1,7 +1,7 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
 import session from 'express-session';
 import path from 'path';
-import cartRoutes from './routes/route_cart';
+import authRoutes from './routes/auth';
 
 declare module 'express-session' {
   interface SessionData {
@@ -12,7 +12,7 @@ declare module 'express-session' {
 const app = express();
 const PORT = 3000;
 
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} ${req.method} ${req.url}`);
   next();
 });
@@ -32,11 +32,19 @@ app.use(session({
   }
 }));
 
+app.use('/api/auth', authRoutes);
+
+import catalogRoutes from './routes/route_catalog';
+import cartRoutes from './routes/route_cart';
+import deliveryRoutes from './routes/route_delivery';
+
+app.use('/api/catalog', catalogRoutes);
 app.use('/api/cart', cartRoutes);
+app.use('/api/delivery', deliveryRoutes);
 
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.get('*', (req: Request, res: Response) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 

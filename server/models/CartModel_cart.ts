@@ -1,17 +1,8 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { Product, getProductById } from './ProductModel_catalog';
 
 const CARTS_FILE = path.join(__dirname, '../../carts.json');
-
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  img?: string;
-  level?: number;
-  type?: string;
-  nation?: string;
-}
 
 export interface CartItem {
   productId: number;
@@ -23,17 +14,6 @@ export interface Cart {
   userId: string;
   items: CartItem[];
   updatedAt: string;
-}
-
-async function getProductById(productId: number): Promise<Product | null> {
-  try {
-    const carts = await readCarts();
-    for (const cart of carts) {
-      const item = cart.items.find(i => i.productId === productId);
-      if (item) return item.product;
-    }
-  } catch {}
-  return null;
 }
 
 export async function readCarts(): Promise<Cart[]> {

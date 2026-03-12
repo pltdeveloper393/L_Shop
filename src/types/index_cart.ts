@@ -1,13 +1,4 @@
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  image?: string;
-  img?: string;
-  level?: number;
-  type?: string;
-  nation?: string;
-}
+import { Product } from './index_catalog';
 
 export interface CartItem {
   productId: number;

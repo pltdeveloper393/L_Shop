@@ -7,17 +7,15 @@ import {
   clearCart,
   getCartTotal 
 } from '../models/CartModel_cart';
-
-function getUserId(req: Request): string {
-  if (!req.session.userId) {
-    req.session.userId = 'guest_' + Date.now();
-  }
-  return req.session.userId;
-}
+import { getUserId } from '../middleware/authMiddleware';
 
 export async function getCart(req: Request, res: Response) {
   try {
     const userId = getUserId(req);
+    
+    if (!userId) {
+      return res.status(401).json({ message: 'Не авторизован' });
+    }
 
     const cart = await getCartByUserId(userId);
     const total = await getCartTotal(userId);

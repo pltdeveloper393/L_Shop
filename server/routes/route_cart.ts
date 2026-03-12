@@ -7,14 +7,20 @@ import {
   clearUserCart,
   getCartItemCount 
 } from '../controllers/controller_cart';
+import { requireAuth } from '../middleware/authMiddleware';
 
 const router = Router();
 
-router.get('/', getCart);
+router.get('/', requireAuth, getCart);
+
 router.get('/count', getCartItemCount);
-router.post('/', addItemToCart);
-router.put('/', updateItemQuantity);
-router.delete('/:productId', removeItemFromCart);
-router.delete('/', clearUserCart);
+
+router.post('/', requireAuth, addItemToCart);
+
+router.put('/', requireAuth, updateItemQuantity);
+
+router.delete('/:productId', requireAuth, removeItemFromCart);
+
+router.delete('/', requireAuth, clearUserCart);
 
 export default router;
