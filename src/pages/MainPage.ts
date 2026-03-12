@@ -1,5 +1,5 @@
 import { api } from '../services/api.js';
-// import { apiCart } from '../services/api_cart.js';
+import { apiCart } from '../services/api_cart.js';
 import { router } from '../main.js';
 import { AuthResponse } from '../types/index.js';
 
@@ -18,7 +18,7 @@ export async function renderMainPage() {
         nation: 'СССР', 
         tier: 10, 
         price: 6200,
-        image: '/images/tanks/object-140.png',
+        image: '/images/tanks_main/object-140.png',
         advantage: 'Лучший СТ для рандома'
       },
       { 
@@ -27,7 +27,7 @@ export async function renderMainPage() {
         nation: 'СССР', 
         tier: 10, 
         price: 5900,
-        image: '/images/tanks/is-7.png',
+        image: '/images/tanks_main/is-7.png',
         advantage: 'Легендарный тяж'
       },
       { 
@@ -36,7 +36,7 @@ export async function renderMainPage() {
         nation: 'Германия', 
         tier: 10, 
         price: 6100,
-        image: '/images/tanks/e-100.png',
+        image: '/images/tanks_main/e-100.png',
         advantage: 'Непробиваемая броня'
       }
     ];
