@@ -3,7 +3,7 @@ import * as UserModel from '../models/UserModel';
 import bcrypt from 'bcrypt';
 
 export async function register(req: Request, res: Response) {
-  const { nickname, email, password } = req.body;
+  const { nickname, email, password, phone } = req.body;
 
   if (!nickname || !email || !password) {
     return res.status(400).json({ message: 'Необходимо заполнить все поля' });
@@ -20,14 +20,14 @@ export async function register(req: Request, res: Response) {
       return res.status(400).json({ message: 'Пользователь с таким никнеймом уже существует' });
     }
 
-    const user = await UserModel.createUser(nickname, email, password);
+    const user = await UserModel.createUser(nickname, email, password, phone);
 
     req.session.userId = user.id;
 
-    res.status(201).json({ message: 'Регистрация прошла успешно', user: { id: user.id, nickname: user.nickname, email: user.email } });
-  } catch (err) {
+    res.status(201).json({ message: 'Регистрация прошла успешно', user: { id: user.id, nickname: user.nickname, email: user.email, phone: user.phone } });
+  } catch (err: unknown) {
     console.error(err);
-    res.status(500).json({ message: 'Ошибка сервера 1' });
+    res.status(500).json({ message: 'Ошибка сервера 4' });
   }
 }
 
@@ -52,7 +52,7 @@ export async function login(req: Request, res: Response) {
     req.session.userId = user.id;
 
     res.json({ message: 'Авторизация прошла успешно', user: { id: user.id, nickname: user.nickname, email: user.email } });
-  } catch (err) {
+  } catch (err: unknown) {
     console.error(err);
     res.status(500).json({ message: 'Ошибка сервера 2' });
   }
@@ -79,7 +79,7 @@ export async function getMe(req: Request, res: Response) {
         createdAt: user.createdAt
       } 
     });
-  } catch (err) {
+  } catch (err: unknown) {
     console.error(err);
     res.status(500).json({ message: 'Ошибка сервера 3' });
   }
@@ -134,7 +134,7 @@ export async function changePassword(req: Request, res: Response) {
     });
 
     res.json({ message: 'Password changed successfully' });
-  } catch (err) {
+  } catch (err: unknown) {
     console.error('Ошибка смены пароля:', err);
     res.status(500).json({ message: 'Ошибка сервера 4' });
   }
