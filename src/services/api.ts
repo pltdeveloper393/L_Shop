@@ -9,6 +9,7 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
       'Content-Type': 'application/json',
       ...options?.headers,
     },
+    credentials: 'include',
   });
   const data = await res.json();
   if (!res.ok) {
@@ -18,10 +19,10 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
 }
 
 export const api = {
-  register: (nickname: string, email: string, password: string): Promise<AuthResponse> =>
+  register: (nickname: string, email: string, password: string, phone?: string): Promise<AuthResponse> =>
     request('/auth/register', {
       method: 'POST',
-      body: JSON.stringify({ nickname, email, password }),
+      body: JSON.stringify({ nickname, email, password, phone }),
     }),
 
   login: (email: string, password: string): Promise<AuthResponse> =>
