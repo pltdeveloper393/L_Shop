@@ -343,7 +343,7 @@ function startSimpleTimer(): void {
   const end = new Date(now);
   end.setHours(23, 59, 59, 999);
   
-  let timerInterval: number | undefined;
+  let timerInterval: ReturnType<typeof setInterval> | undefined;
   
   function update(): void {
     const hoursEl = document.getElementById('simple-hours');
@@ -379,6 +379,5 @@ function startSimpleTimer(): void {
   }
   
   update();
-  
   timerInterval = setInterval(update, 1000);
 }
