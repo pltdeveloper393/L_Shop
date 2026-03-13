@@ -31,9 +31,21 @@ export class Router {
 
 export const router = new Router();
 
-// ========================================================
+import { renderHomePage } from './pages/HomePage.js';
+import { renderLoginPage } from './pages/LoginPage.js';
+import { renderRegisterPage } from './pages/RegisterPage.js';
+import { renderMainPage } from './pages/MainPage.js';
+import { renderProfilePage } from './pages/ProfilePage.js';
+
+import { renderCatalogPage } from './pages/CatalogPage_catalog.js';
+import { renderCartPage } from './pages/CartPage_cart.js';
 import { renderDeliveryPage } from './pages/DeliveryPage_delivery.js';
 
-router.addRoute('/', renderDeliveryPage);
+router.addRoute('/', renderHomePage);
+router.addRoute('/login', renderLoginPage);
+router.addRoute('/register', renderRegisterPage);
+router.addRoute('/main', renderMainPage);
+router.addRoute('/profile', renderProfilePage);
+router.addRoute('/catalog', renderCatalogPage);
+router.addRoute('/cart', renderCartPage);
 router.addRoute('/delivery', renderDeliveryPage);
-// ========================================================

@@ -6,14 +6,17 @@ import {
   cancelDelivery,
   DeliveryFormData 
 } from '../models/DeliveryModel_delivery';
-
-// Временный userId для тестирования (без авторизации)
-const TEMP_USER_ID = 'test-user-123';
+import { getUserId } from '../middleware/authMiddleware';
 
 // Получить доставки пользователя
 export async function getDeliveries(req: Request, res: Response) {
   try {
-    const userId = TEMP_USER_ID;
+    const userId = getUserId(req);
+    
+    if (!userId) {
+      return res.status(401).json({ message: 'Не авторизован' });
+    }
+
     const deliveries = await getDeliveriesByUserId(userId);
 
     res.json({ deliveries });
@@ -26,12 +29,21 @@ export async function getDeliveries(req: Request, res: Response) {
 // Получить доставку по ID
 export async function getDelivery(req: Request, res: Response) {
   try {
-    const userId = TEMP_USER_ID;
+    const userId = getUserId(req);
+    
+    if (!userId) {
+      return res.status(401).json({ message: 'Не авторизован' });
+    }
+
     const deliveryId = String(req.params.id);
     const delivery = await getDeliveryById(deliveryId);
 
     if (!delivery) {
       return res.status(404).json({ message: 'Доставка не найдена' });
+    }
+
+    if (delivery.userId !== userId) {
+      return res.status(403).json({ message: 'Нет доступа к этой доставке' });
     }
 
     res.json({ delivery });
@@ -44,7 +56,11 @@ export async function getDelivery(req: Request, res: Response) {
 // Создать доставку
 export async function createNewDelivery(req: Request, res: Response) {
   try {
-    const userId = TEMP_USER_ID;
+    const userId = getUserId(req);
+    
+    if (!userId) {
+      return res.status(401).json({ message: 'Не авторизован' });
+    }
 
     const { address, phone, email, paymentMethod } = req.body;
 
@@ -79,7 +95,12 @@ export async function createNewDelivery(req: Request, res: Response) {
 // Отменить доставку
 export async function cancelDeliveryById(req: Request, res: Response) {
   try {
-    const userId = TEMP_USER_ID;
+    const userId = getUserId(req);
+    
+    if (!userId) {
+      return res.status(401).json({ message: 'Не авторизован' });
+    }
+
     const deliveryId = req.params.id;
     const delivery = await cancelDelivery(deliveryId, userId);
 

@@ -1,4 +1,6 @@
 import { apiDelivery } from '../services/api_delivery.js';
+import { apiCart } from '../services/api_cart.js';
+import { api } from '../services/api.js';
 import { router } from '../main.js';
 import { DeliveryFormData } from '../types/index_delivery.js';
 
@@ -19,16 +21,16 @@ export async function renderDeliveryPage() {
   `;
 
   try {
-    // Тестовые данные (корзины нет)
-    const items: any[] = [{ 
-      product: { 
-        name: 'Тестовый танк', 
-        img: '/images/tanks/test-tank.png', 
-        price: 1000 
-      }, 
-      quantity: 1 
-    }];
-    const total = 1000;
+    // Проверяем корзину
+    const cartData = await apiCart.getCart();
+    const items = cartData.cart.items || [];
+    const total = cartData.total || 0;
+
+    if (items.length === 0) {
+      // Корзина пуста - идём в корзину
+      router.navigateTo('/cart');
+      return;
+    }
 
     app.innerHTML = `
       <div class="wot-container">
@@ -39,9 +41,17 @@ export async function renderDeliveryPage() {
             <span class="delivery-subtitle">ОФОРМЛЕНИЕ ДОСТАВКИ</span>
           </div>
           <div class="header-right">
+            <button class="wot-btn" id="cart-btn">
+              <i class="fas fa-shopping-cart btn-icon"></i>
+              Назад в корзину
+            </button>
             <button class="wot-btn" id="main-btn">
               <i class="fas fa-home btn-icon"></i>
               Главная
+            </button>
+            <button class="wot-btn" id="logout-btn">
+              <i class="fas fa-sign-out-alt btn-icon"></i>
+              Выйти
             </button>
           </div>
         </div>
@@ -199,9 +209,9 @@ export async function renderDeliveryPage() {
               </h3>
               
               <div class="order-items">
-                ${items.map((item: any) => `
+                ${items.map(item => `
                   <div class="order-item">
-                    <img src="${item.product.img}" alt="${item.product.name}" class="order-item-img">
+                    <img src="/${item.product.img}" alt="${item.product.name}" class="order-item-img">
                     <div class="order-item-info">
                       <span class="order-item-name">${item.product.name}</span>
                       <span class="order-item-qty">x${item.quantity}</span>
@@ -252,6 +262,7 @@ export async function renderDeliveryPage() {
 
   } catch (err) {
     console.error('Ошибка загрузки страницы доставки:', err);
+    // Показываем ошибку вместо перенаправления
     app.innerHTML = `
       <div class="wot-container">
         <div class="error-message" style="text-align: center; padding: 50px;">
@@ -261,9 +272,16 @@ export async function renderDeliveryPage() {
           <button class="wot-btn wot-btn-primary" onclick="window.location.reload()" style="margin-top: 20px;">
             <i class="fas fa-sync-alt"></i> Обновить страницу
           </button>
+          <button class="wot-btn" id="back-cart-btn" style="margin-left: 10px;">
+            <i class="fas fa-shopping-cart"></i> В корзину
+          </button>
         </div>
       </div>
     `;
+    
+    document.getElementById('back-cart-btn')?.addEventListener('click', () => {
+      router.navigateTo('/cart');
+    });
   }
 }
 
@@ -349,8 +367,21 @@ function setupEventListeners() {
   });
 
   // Навигация
+  document.getElementById('cart-btn')?.addEventListener('click', () => {
+    router.navigateTo('/cart');
+  });
+
   document.getElementById('main-btn')?.addEventListener('click', () => {
-    router.navigateTo('/');
+    router.navigateTo('/main');
+  });
+
+  document.getElementById('logout-btn')?.addEventListener('click', async () => {
+    try {
+      await api.logout();
+      router.navigateTo('/');
+    } catch {
+      router.navigateTo('/');
+    }
   });
 
   // Отправка формы
@@ -460,12 +491,20 @@ function showSuccessMessage(deliveryId: string) {
             <i class="fas fa-home"></i>
             На главную
           </button>
+          <button class="wot-btn" id="go-catalog-btn">
+            <i class="fas fa-store"></i>
+            Продолжить покупки
+          </button>
         </div>
       </div>
     </div>
   `;
 
   document.getElementById('go-main-btn')?.addEventListener('click', () => {
-    router.navigateTo('/');
+    router.navigateTo('/main');
+  });
+
+  document.getElementById('go-catalog-btn')?.addEventListener('click', () => {
+    router.navigateTo('/catalog');
   });
 }

@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { clearCart, getCartByUserId } from './CartModel_cart';
 
 const DELIVERIES_FILE = path.join(__dirname, '../../deliveries.json');
 
@@ -57,20 +58,23 @@ export async function getDeliveryById(id: string): Promise<Delivery | undefined>
 }
 
 export async function createDelivery(userId: string, formData: DeliveryFormData): Promise<Delivery> {
+  const cart = await getCartByUserId(userId);
+  
+  if (!cart || cart.items.length === 0) {
+    throw new Error('Корзина пуста');
+  }
+
   const deliveries = await readDeliveries();
   
-  // Создаем тестовую доставку с одним товаром (так как корзины нет)
-  const deliveryItems: DeliveryItem[] = [
-    {
-      productId: 1,
-      productName: 'Тестовый танк',
-      productImg: '/images/tanks/test-tank.png',
-      quantity: 1,
-      price: 1000
-    }
-  ];
+  const deliveryItems: DeliveryItem[] = cart.items.map(item => ({
+    productId: item.productId,
+    productName: item.product.name,
+    productImg: item.product.img,
+    quantity: item.quantity,
+    price: item.product.price
+  }));
 
-  const totalPrice = deliveryItems.reduce((total: number, item: DeliveryItem) => total + (item.price * item.quantity), 0);
+  const totalPrice = cart.items.reduce((total, item) => total + (item.product.price * item.quantity), 0);
 
   const newDelivery: Delivery = {
     id: Date.now().toString(),
@@ -87,6 +91,9 @@ export async function createDelivery(userId: string, formData: DeliveryFormData)
 
   deliveries.push(newDelivery);
   await writeDeliveries(deliveries);
+  
+  // Очищаем корзину после создания доставки
+  await clearCart(userId);
   
   return newDelivery;
 }
