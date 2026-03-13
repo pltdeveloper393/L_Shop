@@ -33,5 +33,12 @@
     "email": "vutakusli2@gmail.com",
     "passwordHash": "$2b$10$PsmE24mDMkItW5jrqK4h3eGAvTJJdej1VFTaTtziFuL/qPo0VoqMC",
     "createdAt": "2026-03-02T18:01:00.028Z"
+  },
+  {
+    "id": "1773388263463",
+    "nickname": "Китя Вислый",
+    "email": "vitalik@gmail.com",
+    "passwordHash": "$2b$10$lQAv2qCohf0yDSkS35jcneZ1oiKW24RJC5RajBUUKEe4zX17u6xzO",
+    "createdAt": "2026-03-13T07:51:03.463Z"
   }
 ]

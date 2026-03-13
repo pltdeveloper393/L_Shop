@@ -107,7 +107,7 @@ export async function renderMainPage() {
             <div class="timer-circle">
               <i class="fas fa-hourglass-half timer-icon"></i>
               <div class="timer-display" id="simple-timer">
-                <span id="simple-hours">23</span>:<span id="simple-minutes">59</span>:<span id="simple-seconds">59</span>
+                <span id="simple-hours">00</span>:<span id="simple-minutes">00</span>:<span id="simple-seconds">00</span>
               </div>
               <div class="timer-label">до конца</div>
             </div>
@@ -258,6 +258,7 @@ export async function renderMainPage() {
     `;
 
     setupEventListeners();
+    startSimpleTimer();
 
   } catch {
     router.navigateTo('/');
@@ -300,6 +301,8 @@ function setupEventListeners() {
       (target as HTMLButtonElement).disabled = true;
       
       try {
+        await apiCart.addToCart(tankId, 1);
+
         target.innerHTML = '<i class="fas fa-check"></i> Добавлено!';
         target.classList.add('success');
         
@@ -319,8 +322,6 @@ function setupEventListeners() {
       }
     });
   });
-
-  startSimpleTimer();
 }
 
 function showNotification(message: string) {
@@ -342,23 +343,42 @@ function startSimpleTimer(): void {
   const end = new Date(now);
   end.setHours(23, 59, 59, 999);
   
+  let timerInterval: number | undefined;
+  
   function update(): void {
-    const diff = end.getTime() - Date.now();
-    if (diff <= 0) {
-      document.getElementById('simple-hours')!.textContent = '00';
-      document.getElementById('simple-minutes')!.textContent = '00';
-      document.getElementById('simple-seconds')!.textContent = '00';
+    const hoursEl = document.getElementById('simple-hours');
+    const minutesEl = document.getElementById('simple-minutes');
+    const secondsEl = document.getElementById('simple-seconds');
+    
+    if (!hoursEl || !minutesEl || !secondsEl) {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+      }
       return;
     }
+    
+    const diff = end.getTime() - Date.now();
+    
+    if (diff <= 0) {
+      hoursEl.textContent = '00';
+      minutesEl.textContent = '00';
+      secondsEl.textContent = '00';
+      if (timerInterval) {
+        clearInterval(timerInterval);
+      }
+      return;
+    }
+    
     const hours = Math.floor(diff / 3600000);
     const minutes = Math.floor((diff % 3600000) / 60000);
     const seconds = Math.floor((diff % 60000) / 1000);
     
-    document.getElementById('simple-hours')!.textContent = hours.toString().padStart(2, '0');
-    document.getElementById('simple-minutes')!.textContent = minutes.toString().padStart(2, '0');
-    document.getElementById('simple-seconds')!.textContent = seconds.toString().padStart(2, '0');
+    hoursEl.textContent = hours.toString().padStart(2, '0');
+    minutesEl.textContent = minutes.toString().padStart(2, '0');
+    secondsEl.textContent = seconds.toString().padStart(2, '0');
   }
   
   update();
-  setInterval(update, 1000);
+  
+  timerInterval = setInterval(update, 1000);
 }
