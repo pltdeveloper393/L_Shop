@@ -178,5 +178,25 @@
     "paymentMethod": "card",
     "status": "pending",
     "createdAt": "2026-03-07T05:36:10.863Z"
+  },
+  {
+    "id": "1773473807562",
+    "userId": "1773388263463",
+    "items": [
+      {
+        "productId": 5,
+        "productName": "VK 72.01 (K)",
+        "productImg": "images/VK7201K.png",
+        "quantity": 1,
+        "price": 22000
+      }
+    ],
+    "totalPrice": 22000,
+    "address": "г. Бахмут ул. Крымская 14 корпус 88",
+    "phone": "+375297777777",
+    "email": "12345@gmail.com",
+    "paymentMethod": "card",
+    "status": "pending",
+    "createdAt": "2026-03-14T07:36:47.562Z"
   }
 ]

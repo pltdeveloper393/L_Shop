@@ -27,44 +27,48 @@ IYHAN SHOP – это SPA интернет-магазин танков. Прое
 ## Структура проекта
 ```
 L_Shop/
-├── server/                          # Бэкенд (Node.js + Express)
-│   ├── index.ts                     # Главный сервер (точка входа)
-│   ├── routes/                      # Маршруты API
-│   │   └── auth.ts                   # Авторизация (пример для подражания)
-│   ├── controllers/                  # Логика обработки запросов
-│   │   └── authController.ts         
-│   ├── models/                       # Работа с данными
-│   │   └── UserModel.ts              
-│   ├── middleware/                    # Промежуточные обработчики
-│   │   └── authMiddleware.ts          # Защита роутов (ВАЖНО!)
-│   └── types/                         # TypeScript типы для сервера
+├── server/                         # Бэкенд (Node.js + Express)
+│   ├── index.ts                    	# Главный сервер (точка входа)
+│   ├── routes/                     	# Маршруты API
+│   ├── controllers/               		# Логика обработки запросов
+│   ├── models/                     	# Работа с данными             
+│   ├── middleware/                 	# Промежуточные обработчики
+│   └── types/                      	# TypeScript типы сервера
 │       └── index.ts                   
 │
-├── public/                          # Статика (доступно браузеру)
-│   ├── index.html                    # Единственная HTML страница
-│   ├── styles.css                     # Общие стили всего проекта
-│   ├── main-page.css                   # Стили главной страницы (пример)
+├── public/                         # Статика (доступно браузеру)
+│   ├── index.html                  	# HTML страница приёма SPA
+│   ├── styles.css                     	# Общие css-стили проекта
+│   ├── <name>-page.css                 # уникальные css-стили страниц
+│   ├── ...
 │   ├── js/                             # Скомпилированный JavaScript
 │   └── images/                         # Изображения
 │
-├── src/                              # Клиентский TypeScript
-│   ├── main.ts                        # Точка входа
+├── src/                            # Клиентский TypeScript
+│   ├── main.ts                         # Точка входа
 │   ├── router.ts                       # SPA роутер
-│   ├── pages/                          # Страницы приложения
-│   │   ├── HomePage.ts                  # Пример страницы
-│   │   ├── LoginPage.ts                 
-│   │   ├── RegisterPage.ts              
-│   │   └── MainPage.ts                  # Главная после входа
-│   ├── services/                        # Взаимодействие с сервером
-│   │   └── api.ts                        # API клиент
-│   └── types/                           # Общие типы
-│       └── index.ts                      
+│   ├── pages/                          # TS страницы с HTML
+│   │   ├── <Name>Page.ts                 	# Пример страницы
+│   │   └── ...
+│   ├── services/                       # Взаимодействие с сервером
+│   │   ├── api.ts                      	# API авторизации
+│   │   ├── api_cart.ts  					# API корзины
+│   │   ├── api_catalog.ts 					# API каталога
+│   │   └── api_delivery.ts 				# API доставки
+│   └── types/                          # Общие типы
+│       ├── index.ts                      	# Типы авторизации
+│       ├── index_cart.ts  					# Типы корзины
+│       ├── index_catalog.ts 				# Типы каталога
+│       └── index_delivery.ts               # Типы доставки
 │
-├── users.json                        # База пользователей (создаётся автоматически)
-├── package.json                      # Зависимости
-├── tsconfig.json                      # Настройки TypeScript для сервера
-├── tsconfig.client.json                # Настройки TypeScript для клиента
-└── README.md                          # Этот файл
+├── deliveries.json 		# Данные итоговых заказов и доставки
+├── tanks.json 				# Информация о товарах в каталоге
+├── users.json 				# Учётные записи пользователей
+├── package.json            # Зависимости
+├── tsconfig.json           # Настройки TypeScript сервера
+├── tsconfig.client.json    # Настройки TypeScript клиента
+├── .gitignore 				# игнор папок/файлов при коммитах
+└── README.md               # Вы находитесь здесь
 ```
 
 ## Маршруты SPA-страниц
