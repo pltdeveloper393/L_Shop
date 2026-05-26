@@ -33,6 +33,23 @@ export async function getReviewsByProductId(productId: number): Promise<Review[]
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 }
 
+export async function hasUserReviewedProduct(userId: string, productId: number): Promise<boolean> {
+  const reviews = await readReviews();
+  return reviews.some(r => r.userId === userId && r.productId === productId);
+}
+
+export async function addReview(review: Omit<Review, 'id' | 'createdAt'>): Promise<Review> {
+  const reviews = await readReviews();
+  const newReview: Review = {
+    ...review,
+    id: Date.now().toString(),
+    createdAt: new Date().toISOString()
+  };
+  reviews.push(newReview);
+  await writeReviews(reviews);
+  return newReview;
+}
+
 export async function getAverageRating(productId: number): Promise<number> {
   const reviews = await getReviewsByProductId(productId);
   if (reviews.length === 0) return 0;
