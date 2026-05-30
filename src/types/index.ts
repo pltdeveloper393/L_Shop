@@ -3,6 +3,7 @@ export interface User {
   nickname: string;
   email: string;
   phone?: string;
+  role?: 'user' | 'admin' | 'owner';
   createdAt?: string;
 }
 
