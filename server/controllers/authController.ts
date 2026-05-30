@@ -76,6 +76,7 @@ export async function getMe(req: Request, res: Response) {
         id: user.id, 
         nickname: user.nickname, 
         email: user.email,
+        role: user.role,
         createdAt: user.createdAt
       } 
     });

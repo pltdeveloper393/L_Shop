@@ -42,6 +42,9 @@ app.use('/api/catalog', catalogRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/delivery', deliveryRoutes);
 
+import localeRoutes from './routes/route_locale';
+app.use('/api/locale', localeRoutes);
+
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('*', (req, res) => {

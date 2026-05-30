@@ -40,5 +40,34 @@
     "email": "vitalik@gmail.com",
     "passwordHash": "$2b$10$lQAv2qCohf0yDSkS35jcneZ1oiKW24RJC5RajBUUKEe4zX17u6xzO",
     "createdAt": "2026-03-13T07:51:03.463Z"
+  },
+  {
+    "id": "1780135085995",
+    "nickname": "Iyhan",
+    "email": "iyhan@gmail.com",
+    "passwordHash": "$2b$10$Qb.m4TytTGqwIOmOPZoise3IOopNVDwavRuS93619kWHuiJjnami2",
+    "createdAt": "2026-05-30T09:58:05.995Z",
+    "role": "admin",
+    "likedTags": [
+      {
+        "tag": "sweden",
+        "timestamp": 1780135142075
+      },
+      {
+        "tag": "at",
+        "timestamp": 1780135142075
+      },
+      {
+        "tag": "t8",
+        "timestamp": 1780135142075
+      },
+      {
+        "tag": "premium",
+        "timestamp": 1780135142075
+      }
+    ],
+    "likedProductIds": [
+      47
+    ]
   }
 ]

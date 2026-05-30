@@ -3,15 +3,6 @@ import session from 'express-session';
 import path from 'path';
 import authRoutes from './routes/auth';
 
-declare module 'express-session' {
-  interface SessionData {
-    userId: string;
-    locale: string;
-    role: string;
-    recommendationsAt?: number;
-  }
-}
-
 const app = express();
 
 app.use((req, res, next) => {
