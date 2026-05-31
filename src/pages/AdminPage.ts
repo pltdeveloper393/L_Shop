@@ -43,109 +43,15 @@ export async function renderAdminPage() {
         </div>
 
         <div class="admin-section">
-          <h2 class="section-title">
-            <i class="fas fa-plus-circle" style="color: #ff7800;"></i>
-            ${t('admin.addProduct')}
-          </h2>
-          <form id="admin-add-form" class="admin-form">
-            <div class="admin-form-row">
-              <div class="form-group">
-                <label>${t('admin.name')} *</label>
-                <input type="text" id="af-name" class="wot-input" required>
-              </div>
-              <div class="form-group">
-                <label>${t('admin.price')} *</label>
-                <input type="number" id="af-price" class="wot-input" required>
-              </div>
-            </div>
-            <div class="admin-form-row">
-              <div class="form-group">
-                <label>${t('admin.nation')}</label>
-                <select id="af-nation" class="wot-select">
-                  <option value="ussr">${t('nation.ussr')}</option>
-                  <option value="germany">${t('nation.germany')}</option>
-                  <option value="usa">${t('nation.usa')}</option>
-                  <option value="france">${t('nation.france')}</option>
-                  <option value="uk">${t('nation.uk')}</option>
-                  <option value="china">${t('nation.china')}</option>
-                  <option value="japan">${t('nation.japan')}</option>
-                  <option value="czech">${t('nation.czech')}</option>
-                  <option value="sweden">${t('nation.sweden')}</option>
-                  <option value="italy">${t('nation.italy')}</option>
-                  <option value="other">${t('nation.other')}</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>${t('admin.type')}</label>
-                <select id="af-type" class="wot-select">
-                  <option value="heavy">${t('type.heavy')}</option>
-                  <option value="medium">${t('type.medium')}</option>
-                  <option value="light">${t('type.light')}</option>
-                  <option value="at">${t('type.at')}</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>${t('admin.level')}</label>
-                <input type="number" id="af-level" class="wot-input" value="8">
-              </div>
-            </div>
-            <div class="admin-form-row">
-              <div class="form-group">
-                <label>HP</label>
-                <input type="text" id="af-hp" class="wot-input" placeholder="1 500">
-              </div>
-              <div class="form-group">
-                <label>DMG</label>
-                <input type="text" id="af-dmg" class="wot-input" placeholder="320">
-              </div>
-              <div class="form-group">
-                <label>DPM</label>
-                <input type="text" id="af-dpm" class="wot-input" placeholder="2 000">
-              </div>
-              <div class="form-group">
-                <label>ACC</label>
-                <input type="text" id="af-ptrs" class="wot-input" placeholder="0.35">
-              </div>
-              <div class="form-group">
-                <label>TRAV</label>
-                <input type="text" id="af-ptrp" class="wot-input" placeholder="30">
-              </div>
-              <div class="form-group">
-                <label>SPD</label>
-                <input type="text" id="af-spw" class="wot-input" placeholder="40">
-              </div>
-            </div>
-            <div class="admin-form-row">
-              <div class="form-group file-upload-group">
-                <label>${t('admin.tankPhoto')}</label>
-                <label class="custom-file-upload">
-                  <input type="file" id="af-img" accept="image/png,image/jpeg,image/webp,image/gif">
-                  <i class="fas fa-camera"></i>
-                  <span id="af-img-label">${t('admin.chooseFile')}</span>
-                </label>
-              </div>
-              <div class="form-group checkbox-inline">
-                <label class="checkbox-label">
-                  <input type="checkbox" id="af-instock" checked>
-                  <span>${t('admin.inStock')}</span>
-                </label>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>${t('admin.description')}</label>
-              <textarea id="af-desc" class="wot-input" rows="2"></textarea>
-            </div>
-            <button type="submit" class="wot-btn wot-btn-primary" style="margin-top: 15px;">
+          <div class="admin-section-header">
+            <h2 class="section-title" style="margin-bottom: 0;">
+              <i class="fas fa-list"></i>
+              ${t('nav.catalog')}
+            </h2>
+            <button class="wot-btn wot-btn-primary" id="admin-add-btn">
               <i class="fas fa-plus"></i> ${t('admin.addProduct')}
             </button>
-          </form>
-        </div>
-
-        <div class="admin-section">
-          <h2 class="section-title">
-            <i class="fas fa-list"></i>
-            ${t('nav.catalog')}
-          </h2>
+          </div>
           <div class="admin-table-wrapper">
             <table class="wot-table">
               <thead>
@@ -183,6 +89,10 @@ export async function renderAdminPage() {
           </div>
         </div>
 
+        <div class="modal-overlay" id="admin-add-modal" style="display: none;">
+          <div class="modal-content" id="admin-add-content"></div>
+        </div>
+
         <div class="modal-overlay" id="admin-edit-modal" style="display: none;">
           <div class="modal-content" id="admin-edit-content"></div>
         </div>
@@ -198,61 +108,13 @@ export async function renderAdminPage() {
 
 function setupAdminListeners() {
   document.getElementById('admin-main-btn')?.addEventListener('click', () => router.navigateTo('/main'));
-
-  document.getElementById('af-img')?.addEventListener('change', function() {
-    const label = document.getElementById('af-img-label');
-    const files = (this as HTMLInputElement).files;
-    if (label && files && files[0]) {
-      label.textContent = files[0].name;
-    }
-  });
   document.getElementById('admin-catalog-btn')?.addEventListener('click', () => router.navigateTo('/catalog'));
   document.getElementById('admin-logout-btn')?.addEventListener('click', async () => {
     await api.logout();
     router.navigateTo('/');
   });
 
-  document.getElementById('admin-add-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-
-    const fd = new FormData();
-    fd.append('name', (document.getElementById('af-name') as HTMLInputElement).value);
-    fd.append('price', (document.getElementById('af-price') as HTMLInputElement).value);
-    fd.append('nation', (document.getElementById('af-nation') as HTMLSelectElement).value);
-    fd.append('type', (document.getElementById('af-type') as HTMLSelectElement).value);
-    fd.append('level', (document.getElementById('af-level') as HTMLInputElement).value);
-    fd.append('hp', (document.getElementById('af-hp') as HTMLInputElement).value || '0');
-    fd.append('dmg', (document.getElementById('af-dmg') as HTMLInputElement).value || '0');
-    fd.append('dpm', (document.getElementById('af-dpm') as HTMLInputElement).value || '0');
-    fd.append('ptrs', (document.getElementById('af-ptrs') as HTMLInputElement).value || '0');
-    fd.append('ptrp', (document.getElementById('af-ptrp') as HTMLInputElement).value || '0');
-    fd.append('spw', (document.getElementById('af-spw') as HTMLInputElement).value || '0');
-    fd.append('inStock', (document.getElementById('af-instock') as HTMLInputElement).checked ? 'true' : 'false');
-    fd.append('description', (document.getElementById('af-desc') as HTMLTextAreaElement).value || '');
-    const fileInput = document.getElementById('af-img') as HTMLInputElement;
-    if (fileInput.files && fileInput.files[0]) {
-      fd.append('image', fileInput.files[0]);
-    }
-
-    try {
-      const res = await fetch('/api/catalog', {
-        method: 'POST',
-        body: fd
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Ошибка при создании товара');
-      renderAdminPage();
-    } catch (err) {
-      console.error(err);
-      alert(err instanceof Error ? err.message : 'Ошибка при создании товара');
-      btn.disabled = false;
-      btn.innerHTML = `<i class="fas fa-plus"></i> ${t('admin.addProduct')}`;
-    }
-  });
+  document.getElementById('admin-add-btn')?.addEventListener('click', openAddModal);
 
   document.querySelectorAll('.admin-edit-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -261,7 +123,7 @@ function setupAdminListeners() {
     });
   });
 
-    document.querySelectorAll('.admin-delete-btn').forEach(btn => {
+  document.querySelectorAll('.admin-delete-btn').forEach(btn => {
     btn.addEventListener('click', async (e) => {
       const id = parseInt((e.currentTarget as HTMLElement).getAttribute('data-id') || '0');
       if (!confirm(`Удалить товар #${id}?`)) return;
@@ -276,6 +138,175 @@ function setupAdminListeners() {
         alert(err instanceof Error ? err.message : 'Ошибка при удалении');
       }
     });
+  });
+}
+
+function closeModal(id: string) {
+  const overlay = document.getElementById(id);
+  if (overlay) overlay.style.display = 'none';
+}
+
+function openAddModal() {
+  const overlay = document.getElementById('admin-add-modal');
+  const content = document.getElementById('admin-add-content');
+  if (!overlay || !content) return;
+
+  content.innerHTML = `
+    <div class="admin-edit-form">
+      <h3>${t('admin.addProduct')}</h3>
+      <form id="admin-add-form-inner">
+        <div class="admin-form-row">
+          <div class="form-group">
+            <label>${t('admin.name')} *</label>
+            <input type="text" id="am-name" class="wot-input" required>
+          </div>
+          <div class="form-group">
+            <label>${t('admin.price')} *</label>
+            <input type="number" id="am-price" class="wot-input" required>
+          </div>
+        </div>
+        <div class="admin-form-row">
+          <div class="form-group">
+            <label>${t('admin.nation')}</label>
+            <select id="am-nation" class="wot-select">
+              <option value="ussr">${t('nation.ussr')}</option>
+              <option value="germany">${t('nation.germany')}</option>
+              <option value="usa">${t('nation.usa')}</option>
+              <option value="france">${t('nation.france')}</option>
+              <option value="uk">${t('nation.uk')}</option>
+              <option value="china">${t('nation.china')}</option>
+              <option value="japan">${t('nation.japan')}</option>
+              <option value="czech">${t('nation.czech')}</option>
+              <option value="sweden">${t('nation.sweden')}</option>
+              <option value="italy">${t('nation.italy')}</option>
+              <option value="other">${t('nation.other')}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>${t('admin.type')}</label>
+            <select id="am-type" class="wot-select">
+              <option value="heavy">${t('type.heavy')}</option>
+              <option value="medium">${t('type.medium')}</option>
+              <option value="light">${t('type.light')}</option>
+              <option value="at">${t('type.at')}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>${t('admin.level')}</label>
+            <input type="number" id="am-level" class="wot-input" value="8">
+          </div>
+        </div>
+        <div class="admin-form-row">
+          <div class="form-group">
+            <label>HP</label>
+            <input type="text" id="am-hp" class="wot-input" placeholder="1 500">
+          </div>
+          <div class="form-group">
+            <label>DMG</label>
+            <input type="text" id="am-dmg" class="wot-input" placeholder="320">
+          </div>
+          <div class="form-group">
+            <label>DPM</label>
+            <input type="text" id="am-dpm" class="wot-input" placeholder="2 000">
+          </div>
+          <div class="form-group">
+            <label>ACC</label>
+            <input type="text" id="am-ptrs" class="wot-input" placeholder="0.35">
+          </div>
+          <div class="form-group">
+            <label>TRAV</label>
+            <input type="text" id="am-ptrp" class="wot-input" placeholder="30">
+          </div>
+          <div class="form-group">
+            <label>SPD</label>
+            <input type="text" id="am-spw" class="wot-input" placeholder="40">
+          </div>
+        </div>
+        <div class="admin-form-row">
+          <div class="form-group file-upload-group">
+            <label>${t('admin.tankPhoto')}</label>
+            <label class="custom-file-upload">
+              <input type="file" id="am-img" accept="image/png,image/jpeg,image/webp,image/gif">
+              <i class="fas fa-camera"></i>
+              <span id="am-img-label">${t('admin.chooseFile')}</span>
+            </label>
+          </div>
+          <div class="form-group checkbox-inline">
+            <label class="checkbox-label">
+              <input type="checkbox" id="am-instock" checked>
+              <span>${t('admin.inStock')}</span>
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>${t('admin.description')}</label>
+          <textarea id="am-desc" class="wot-input" rows="2"></textarea>
+        </div>
+        <div class="admin-form-actions">
+          <button type="submit" class="wot-btn wot-btn-primary">
+            <i class="fas fa-plus"></i> ${t('admin.addProduct')}
+          </button>
+          <button type="button" class="wot-btn" id="admin-add-close">
+            <i class="fas fa-times"></i> ${t('admin.cancel')}
+          </button>
+        </div>
+      </form>
+    </div>
+  `;
+
+  overlay.style.display = 'flex';
+
+  document.getElementById('admin-add-close')?.addEventListener('click', () => closeModal('admin-add-modal'));
+
+  document.getElementById('am-img')?.addEventListener('change', function() {
+    const label = document.getElementById('am-img-label');
+    const files = (this as HTMLInputElement).files;
+    if (label && files && files[0]) {
+      label.textContent = files[0].name;
+    }
+  });
+
+  document.getElementById('admin-add-form-inner')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+    const fd = new FormData();
+    fd.append('name', (document.getElementById('am-name') as HTMLInputElement).value);
+    fd.append('price', (document.getElementById('am-price') as HTMLInputElement).value);
+    fd.append('nation', (document.getElementById('am-nation') as HTMLSelectElement).value);
+    fd.append('type', (document.getElementById('am-type') as HTMLSelectElement).value);
+    fd.append('level', (document.getElementById('am-level') as HTMLInputElement).value);
+    fd.append('hp', (document.getElementById('am-hp') as HTMLInputElement).value || '0');
+    fd.append('dmg', (document.getElementById('am-dmg') as HTMLInputElement).value || '0');
+    fd.append('dpm', (document.getElementById('am-dpm') as HTMLInputElement).value || '0');
+    fd.append('ptrs', (document.getElementById('am-ptrs') as HTMLInputElement).value || '0');
+    fd.append('ptrp', (document.getElementById('am-ptrp') as HTMLInputElement).value || '0');
+    fd.append('spw', (document.getElementById('am-spw') as HTMLInputElement).value || '0');
+    fd.append('inStock', (document.getElementById('am-instock') as HTMLInputElement).checked ? 'true' : 'false');
+    fd.append('description', (document.getElementById('am-desc') as HTMLTextAreaElement).value || '');
+    const fileInput = document.getElementById('am-img') as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      fd.append('image', fileInput.files[0]);
+    }
+
+    try {
+      const res = await fetch('/api/catalog', {
+        method: 'POST',
+        body: fd
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Ошибка при создании товара');
+      closeModal('admin-add-modal');
+      renderAdminPage();
+    } catch (err) {
+      console.error(err);
+      alert(err instanceof Error ? err.message : 'Ошибка при создании товара');
+      btn.disabled = false;
+      btn.innerHTML = `<i class="fas fa-plus"></i> ${t('admin.addProduct')}`;
+    }
   });
 }
 
@@ -391,13 +422,7 @@ function openEditModal(id: number) {
 
   overlay.style.display = 'flex';
 
-  document.getElementById('admin-edit-close')?.addEventListener('click', () => {
-    overlay.style.display = 'none';
-  });
-
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) overlay.style.display = 'none';
-  });
+  document.getElementById('admin-edit-close')?.addEventListener('click', () => closeModal('admin-edit-modal'));
 
   document.getElementById('admin-edit-form-inner')?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -429,6 +454,7 @@ function openEditModal(id: number) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Ошибка при обновлении');
+      closeModal('admin-edit-modal');
       renderAdminPage();
     } catch (err) {
       console.error(err);
