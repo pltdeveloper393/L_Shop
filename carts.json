@@ -32,7 +32,36 @@
   },
   {
     "userId": "1780135085995",
-    "items": [],
-    "updatedAt": "2026-05-31T08:38:54.215Z"
+    "items": [
+      {
+        "productId": 53,
+        "quantity": 1,
+        "product": {
+          "name": "Свининг",
+          "nation": "germany",
+          "type": "heavy",
+          "level": 8,
+          "img": "images/1780215467580-771905458.png",
+          "price": 1488,
+          "inStock": true,
+          "hp": "1488",
+          "dmg": "1488",
+          "dpm": "1488",
+          "ptrs": "1488",
+          "ptrp": "1488",
+          "spw": "1488",
+          "description": "Лютый свининг X1488",
+          "tags": [
+            "germany",
+            "heavy",
+            "t8",
+            "premium"
+          ],
+          "id": 53,
+          "likesCount": 1
+        }
+      }
+    ],
+    "updatedAt": "2026-05-31T08:58:50.454Z"
   }
 ]

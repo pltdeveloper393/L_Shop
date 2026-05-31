@@ -185,6 +185,7 @@ function renderTable() {
 function closeModal(id: string) {
   const overlay = document.getElementById(id);
   if (overlay) overlay.style.display = 'none';
+  document.body.style.overflow = '';
 }
 
 function openAddModal() {
@@ -192,16 +193,18 @@ function openAddModal() {
   const content = document.getElementById('admin-add-content');
   if (!overlay || !content) return;
 
+  document.body.style.overflow = 'hidden';
+
   content.innerHTML = `
     <div class="admin-edit-form">
       <h3>${t('admin.addProduct')}</h3>
       <form id="admin-add-form-inner">
         <div class="admin-form-row">
-          <div class="form-group">
+          <div class="form-group" style="flex:2">
             <label>${t('admin.name')} *</label>
             <input type="text" id="am-name" class="wot-input" required>
           </div>
-          <div class="form-group">
+          <div class="form-group" style="flex:1">
             <label>${t('admin.price')} *</label>
             <input type="number" id="am-price" class="wot-input" required>
           </div>
@@ -250,6 +253,8 @@ function openAddModal() {
             <label>DPM</label>
             <input type="text" id="am-dpm" class="wot-input" placeholder="2 000">
           </div>
+        </div>
+        <div class="admin-form-row">
           <div class="form-group">
             <label>ACC</label>
             <input type="text" id="am-ptrs" class="wot-input" placeholder="0.35">
@@ -263,21 +268,26 @@ function openAddModal() {
             <input type="text" id="am-spw" class="wot-input" placeholder="40">
           </div>
         </div>
-        <div class="admin-form-row">
+        <div class="admin-form-row photo-row">
           <div class="form-group file-upload-group">
             <label>${t('admin.tankPhoto')}</label>
-            <label class="custom-file-upload">
-              <input type="file" id="am-img" accept="image/png,image/jpeg,image/webp,image/gif">
-              <i class="fas fa-camera"></i>
-              <span id="am-img-label">${t('admin.chooseFile')}</span>
-            </label>
+            <div class="photo-upload-wrapper">
+              <label class="custom-file-upload">
+                <input type="file" id="am-img" accept="image/png,image/jpeg,image/webp,image/gif">
+                <i class="fas fa-camera"></i>
+                <span id="am-img-label">${t('admin.chooseFile')}</span>
+              </label>
+              <div class="image-preview" id="am-img-preview" style="display:none">
+                <img src="" alt="preview">
+              </div>
+            </div>
           </div>
-          <div class="form-group checkbox-inline">
-            <label class="checkbox-label">
-              <input type="checkbox" id="am-instock" checked>
-              <span>${t('admin.inStock')}</span>
-            </label>
-          </div>
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="am-instock" checked>
+            <span>${t('admin.inStock')}</span>
+          </label>
         </div>
         <div class="form-group">
           <label>${t('admin.description')}</label>
@@ -301,9 +311,15 @@ function openAddModal() {
 
   document.getElementById('am-img')?.addEventListener('change', function() {
     const label = document.getElementById('am-img-label');
+    const preview = document.getElementById('am-img-preview');
+    const previewImg = preview?.querySelector('img');
     const files = (this as HTMLInputElement).files;
-    if (label && files && files[0]) {
-      label.textContent = files[0].name;
+    if (files && files[0]) {
+      if (label) label.textContent = files[0].name;
+      if (preview && previewImg) {
+        previewImg.src = URL.createObjectURL(files[0]);
+        preview.style.display = 'flex';
+      }
     }
   });
 
@@ -359,6 +375,8 @@ function openEditModal(id: number) {
   const content = document.getElementById('admin-edit-content');
   if (!overlay || !content) return;
 
+  document.body.style.overflow = 'hidden';
+
   const hasImage = product.img && product.img.startsWith('images/');
 
   content.innerHTML = `
@@ -366,11 +384,11 @@ function openEditModal(id: number) {
       <h3>${t('admin.editProduct')}: ${product.name}</h3>
       <form id="admin-edit-form-inner">
         <div class="admin-form-row">
-          <div class="form-group">
+          <div class="form-group" style="flex:2">
             <label>${t('admin.name')}</label>
             <input type="text" id="ef-name" class="wot-input" value="${product.name}">
           </div>
-          <div class="form-group">
+          <div class="form-group" style="flex:1">
             <label>${t('admin.price')}</label>
             <input type="number" id="ef-price" class="wot-input" value="${product.price}">
           </div>
@@ -410,6 +428,8 @@ function openEditModal(id: number) {
             <label>DPM</label>
             <input type="text" id="ef-dpm" class="wot-input" value="${product.dpm}">
           </div>
+        </div>
+        <div class="admin-form-row">
           <div class="form-group">
             <label>ACC</label>
             <input type="text" id="ef-ptrs" class="wot-input" value="${product.ptrs || ''}">
@@ -423,31 +443,35 @@ function openEditModal(id: number) {
             <input type="text" id="ef-spw" class="wot-input" value="${product.spw || ''}">
           </div>
         </div>
-        <div class="admin-form-row">
-          <div class="form-group checkbox-inline" style="flex: 0 0 auto; min-width: auto;">
-            <label class="checkbox-label">
-              <input type="checkbox" id="ef-instock" ${product.inStock ? 'checked' : ''}>
-              <span>${t('admin.inStock')}</span>
-            </label>
+        <div class="admin-form-row photo-row">
+          <div class="form-group file-upload-group">
+            <label>${t('admin.tankPhoto')}</label>
+            <div class="photo-upload-wrapper">
+              <label class="custom-file-upload">
+                <input type="file" id="ef-img" accept="image/png,image/jpeg,image/webp,image/gif">
+                <i class="fas fa-camera"></i>
+                <span id="ef-img-label">${t('admin.chooseFile')}</span>
+              </label>
+              <div class="image-preview" id="ef-img-preview" style="display:${hasImage ? 'flex' : 'none'}">
+                ${hasImage ? `<img src="/${product.img}" alt="${product.name}">` : `<img src="" alt="preview">`}
+              </div>
+              ${hasImage ? `
+                <button type="button" class="wot-btn admin-del-image-btn" data-id="${product.id}" style="background:#d32f2f;padding:3px 8px;font-size:0.75rem;">
+                  <i class="fas fa-trash"></i> ${t('admin.deletePhoto')}
+                </button>
+              ` : ''}
+            </div>
           </div>
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="ef-instock" ${product.inStock ? 'checked' : ''}>
+            <span>${t('admin.inStock')}</span>
+          </label>
         </div>
         <div class="form-group">
           <label>${t('admin.description')}</label>
           <textarea id="ef-desc" class="wot-input" rows="2">${product.description || ''}</textarea>
-        </div>
-        <div class="form-group">
-          <label>${t('admin.tankPhoto')}</label>
-          <div class="edit-image-section">
-            ${hasImage ? `
-              <div class="edit-current-image">
-                <img src="/${product.img}" alt="${product.name}" style="max-width:120px;max-height:80px;border-radius:4px;">
-                <button type="button" class="wot-btn admin-del-image-btn" data-id="${product.id}" style="background:#d32f2f;padding:3px 8px;font-size:0.75rem;margin-top:4px;">
-                  <i class="fas fa-trash"></i> ${t('admin.deletePhoto')}
-                </button>
-              </div>
-            ` : `<p class="text-dim">${t('admin.noPhoto')}</p>`}
-            <input type="file" id="ef-img" class="wot-input" accept="image/png,image/jpeg,image/webp,image/gif" style="margin-top:6px;">
-          </div>
         </div>
         <div class="admin-form-actions">
           <button type="submit" class="wot-btn wot-btn-primary">
@@ -464,6 +488,20 @@ function openEditModal(id: number) {
   overlay.style.display = 'flex';
 
   document.getElementById('admin-edit-close')?.addEventListener('click', () => closeModal('admin-edit-modal'));
+
+  document.getElementById('ef-img')?.addEventListener('change', function() {
+    const label = document.getElementById('ef-img-label');
+    const preview = document.getElementById('ef-img-preview');
+    const previewImg = preview?.querySelector('img');
+    const files = (this as HTMLInputElement).files;
+    if (files && files[0]) {
+      if (label) label.textContent = files[0].name;
+      if (preview && previewImg) {
+        previewImg.src = URL.createObjectURL(files[0]);
+        preview.style.display = 'flex';
+      }
+    }
+  });
 
   document.getElementById('admin-edit-form-inner')?.addEventListener('submit', async (e) => {
     e.preventDefault();

@@ -59,15 +59,24 @@
       },
       {
         "tag": "t8",
-        "timestamp": 1780135142075
+        "timestamp": 1780217930103
       },
       {
         "tag": "premium",
-        "timestamp": 1780135142075
+        "timestamp": 1780217930103
+      },
+      {
+        "tag": "germany",
+        "timestamp": 1780217930103
+      },
+      {
+        "tag": "heavy",
+        "timestamp": 1780217930103
       }
     ],
     "likedProductIds": [
-      47
+      47,
+      53
     ]
   }
 ]
