@@ -4,6 +4,8 @@ import { Product } from '../types/index_catalog.js';
 import { t } from '../services/locale.js';
 
 let allProducts: Product[] = [];
+let sortField = 'id';
+let sortDir: 'asc' | 'desc' = 'asc';
 
 export async function renderAdminPage() {
   const app = document.getElementById('app');
@@ -19,6 +21,7 @@ export async function renderAdminPage() {
     const res = await fetch('/api/catalog');
     const data = await res.json();
     allProducts = data.products || [];
+    applySort();
 
     app.innerHTML = `
       <div class="wot-container">
@@ -56,35 +59,16 @@ export async function renderAdminPage() {
             <table class="wot-table">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>${t('admin.name')}</th>
-                  <th>${t('admin.nation')}</th>
-                  <th>${t('admin.type')}</th>
-                  <th>${t('admin.level')}</th>
-                  <th>${t('admin.price')}</th>
+                  <th class="sortable active asc" data-sort="id">ID</th>
+                  <th class="sortable" data-sort="name">${t('admin.name')}</th>
+                  <th class="sortable" data-sort="nation">${t('admin.nation')}</th>
+                  <th class="sortable" data-sort="type">${t('admin.type')}</th>
+                  <th class="sortable" data-sort="level">${t('admin.level')}</th>
+                  <th class="sortable" data-sort="price">${t('admin.price')}</th>
                   <th>${t('admin.actions')}</th>
                 </tr>
               </thead>
-              <tbody id="admin-products-tbody">
-                ${allProducts.map(p => `
-                  <tr>
-                    <td>${p.id}</td>
-                    <td>${p.name}</td>
-                    <td>${p.nation}</td>
-                    <td>${p.type}</td>
-                    <td>${p.level}</td>
-                    <td>${p.price.toLocaleString()}</td>
-                    <td>
-                      <button class="wot-btn wot-btn-primary admin-edit-btn" data-id="${p.id}" style="padding: 5px 10px; font-size: 0.8rem;">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button class="wot-btn admin-delete-btn" data-id="${p.id}" style="padding: 5px 10px; font-size: 0.8rem; background: #d32f2f;">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                `).join('')}
-              </tbody>
+              <tbody id="admin-products-tbody"></tbody>
             </table>
           </div>
         </div>
@@ -98,6 +82,8 @@ export async function renderAdminPage() {
         </div>
       </div>
     `;
+
+    renderTable();
 
     setupAdminListeners();
 
@@ -116,6 +102,62 @@ function setupAdminListeners() {
 
   document.getElementById('admin-add-btn')?.addEventListener('click', openAddModal);
 
+  document.querySelectorAll('.sortable').forEach(th => {
+    th.addEventListener('click', () => {
+      const field = (th as HTMLElement).getAttribute('data-sort') || 'id';
+      if (field === sortField) {
+        sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        sortField = field;
+        sortDir = 'asc';
+      }
+      applySort();
+      document.querySelectorAll('.sortable').forEach(el => el.classList.remove('active', 'asc', 'desc'));
+      th.classList.add('active', sortDir);
+      renderTable();
+    });
+  });
+}
+
+function applySort() {
+  allProducts.sort((a, b) => {
+    const va: any = (a as any)[sortField];
+    const vb: any = (b as any)[sortField];
+    const av = va == null ? '' : va;
+    const bv = vb == null ? '' : vb;
+    let cmp: number;
+    if (typeof av === 'number' && typeof bv === 'number') {
+      cmp = av - bv;
+    } else {
+      cmp = String(av).localeCompare(String(bv));
+    }
+    return sortDir === 'asc' ? cmp : -cmp;
+  });
+}
+
+function renderTable() {
+  const tbody = document.getElementById('admin-products-tbody');
+  if (!tbody) return;
+
+  tbody.innerHTML = allProducts.map(p => `
+    <tr>
+      <td>${p.id}</td>
+      <td>${p.name}</td>
+      <td>${p.nation}</td>
+      <td>${p.type}</td>
+      <td>${p.level}</td>
+      <td>${p.price.toLocaleString()}</td>
+      <td>
+        <button class="wot-btn wot-btn-primary admin-edit-btn" data-id="${p.id}" style="padding: 5px 10px; font-size: 0.8rem;">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="wot-btn admin-delete-btn" data-id="${p.id}" style="padding: 5px 10px; font-size: 0.8rem; background: #d32f2f;">
+          <i class="fas fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+  `).join('');
+
   document.querySelectorAll('.admin-edit-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const id = parseInt((e.currentTarget as HTMLElement).getAttribute('data-id') || '0');
@@ -127,7 +169,6 @@ function setupAdminListeners() {
     btn.addEventListener('click', async (e) => {
       const id = parseInt((e.currentTarget as HTMLElement).getAttribute('data-id') || '0');
       if (!confirm(`Удалить товар #${id}?`)) return;
-
       try {
         const res = await fetch(`/api/catalog/${id}`, { method: 'DELETE' });
         const data = await res.json();
