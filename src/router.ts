@@ -21,7 +21,13 @@ export class Router {
     const path = window.location.pathname;
     const handler = this.routes.get(path) || this.routes.get('/');
     if (handler) {
+      const app = document.getElementById('app');
+      if (app) app.classList.remove('page-enter');
       await handler();
+      if (app) {
+        void app.offsetWidth;
+        app.classList.add('page-enter');
+      }
     }
   }
   
