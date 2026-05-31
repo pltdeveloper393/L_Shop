@@ -239,14 +239,16 @@ function setupAdminListeners() {
     }
 
     try {
-      await fetch('/api/catalog', {
+      const res = await fetch('/api/catalog', {
         method: 'POST',
         body: fd
       });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Ошибка при создании товара');
       renderAdminPage();
     } catch (err) {
       console.error(err);
-      alert('Ошибка при создании товара');
+      alert(err instanceof Error ? err.message : 'Ошибка при создании товара');
       btn.disabled = false;
       btn.innerHTML = `<i class="fas fa-plus"></i> ${t('admin.addProduct')}`;
     }
@@ -259,17 +261,19 @@ function setupAdminListeners() {
     });
   });
 
-  document.querySelectorAll('.admin-delete-btn').forEach(btn => {
+    document.querySelectorAll('.admin-delete-btn').forEach(btn => {
     btn.addEventListener('click', async (e) => {
       const id = parseInt((e.currentTarget as HTMLElement).getAttribute('data-id') || '0');
       if (!confirm(`Удалить товар #${id}?`)) return;
 
       try {
-        await fetch(`/api/catalog/${id}`, { method: 'DELETE' });
+        const res = await fetch(`/api/catalog/${id}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Ошибка при удалении');
         renderAdminPage();
       } catch (err) {
         console.error(err);
-        alert('Ошибка при удалении');
+        alert(err instanceof Error ? err.message : 'Ошибка при удалении');
       }
     });
   });
@@ -419,14 +423,16 @@ function openEditModal(id: number) {
     }
 
     try {
-      await fetch(`/api/catalog/${id}`, {
+      const res = await fetch(`/api/catalog/${id}`, {
         method: 'PUT',
         body: fd
       });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Ошибка при обновлении');
       renderAdminPage();
     } catch (err) {
       console.error(err);
-      alert('Ошибка при обновлении');
+      alert(err instanceof Error ? err.message : 'Ошибка при обновлении');
     }
   });
 
@@ -436,11 +442,13 @@ function openEditModal(id: number) {
     if (!productId || !confirm(t('admin.confirmDeletePhoto'))) return;
 
     try {
-      await fetch(`/api/catalog/${productId}/image`, { method: 'DELETE' });
+      const res = await fetch(`/api/catalog/${productId}/image`, { method: 'DELETE' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Ошибка при удалении фото');
       renderAdminPage();
     } catch (err) {
       console.error(err);
-      alert('Ошибка при удалении фото');
+      alert(err instanceof Error ? err.message : 'Ошибка при удалении фото');
     }
   });
 }

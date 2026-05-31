@@ -23,6 +23,7 @@ export async function register(req: Request, res: Response) {
     const user = await UserModel.createUser(nickname, email, password, phone);
 
     req.session.userId = user.id;
+    req.session.role = user.role || 'user';
 
     res.status(201).json({ message: 'Регистрация прошла успешно', user: { id: user.id, nickname: user.nickname, email: user.email, phone: user.phone } });
   } catch (err: unknown) {
@@ -50,6 +51,7 @@ export async function login(req: Request, res: Response) {
     }
 
     req.session.userId = user.id;
+    req.session.role = user.role || 'user';
 
     res.json({ message: 'Авторизация прошла успешно', user: { id: user.id, nickname: user.nickname, email: user.email } });
   } catch (err: unknown) {
