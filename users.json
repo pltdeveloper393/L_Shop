@@ -78,5 +78,99 @@
       47,
       53
     ]
+  },
+  {
+    "id": "1780722743663",
+    "nickname": "test_unit_1780722743574",
+    "email": "test_unit_1780722743574@test.com",
+    "passwordHash": "$2b$10$H.frGjzWLEyFj/PBTYX7bO9Pm6QZIzOlNAVugjf9NMllhfrc6Jlm.",
+    "createdAt": "2026-06-06T05:12:23.663Z",
+    "role": "user",
+    "likedTags": []
+  },
+  {
+    "id": "1780722743769",
+    "nickname": "test_phone_1780722743670",
+    "email": "test_phone_1780722743670@test.com",
+    "phone": "+375291111111",
+    "passwordHash": "$2b$10$SyJBgM.06k3Mqr5Ctr.7f.eA46DdRep5deuAOafkBaT9r3UpMh55a",
+    "createdAt": "2026-06-06T05:12:23.769Z",
+    "role": "user",
+    "likedTags": []
+  },
+  {
+    "id": "1780722980932",
+    "nickname": "test_unit_1780722980861",
+    "email": "test_unit_1780722980861@test.com",
+    "passwordHash": "$2b$10$pwJCF1XTNBniTPt5JIgVt.pDeVp/bfSB7wT4DQo.Gz9qHjPMA5Uje",
+    "createdAt": "2026-06-06T05:16:20.932Z",
+    "role": "user",
+    "likedTags": []
+  },
+  {
+    "id": "1780722981075",
+    "nickname": "test_phone_1780722980940",
+    "email": "test_phone_1780722980940@test.com",
+    "phone": "+375291111111",
+    "passwordHash": "$2b$10$DVnUuNpfljkFd0pco.g9nOLZucUy6Z2qxqUwgYkLTl3HDmy17/A0O",
+    "createdAt": "2026-06-06T05:16:21.075Z",
+    "role": "user",
+    "likedTags": []
+  },
+  {
+    "id": "1780722984358",
+    "nickname": "'; DROP TABLE users; --",
+    "email": "sqltest_1780722984232@test.com",
+    "passwordHash": "$2b$10$23Eyk02E0ObIy6SreJUNLe/55z3gZgHERUkogEZNgWMV12zdura5y",
+    "createdAt": "2026-06-06T05:16:24.358Z",
+    "role": "user",
+    "likedTags": []
+  },
+  {
+    "id": "1780910524219",
+    "nickname": "test_unit_1780910524141",
+    "email": "test_unit_1780910524141@test.com",
+    "passwordHash": "$2b$10$0Y0UiHa33fKMVnNw5.V8/uYWLDOx2o9jhA09OESdbKvQgj7A8DBoW",
+    "createdAt": "2026-06-08T09:22:04.219Z",
+    "role": "user",
+    "likedTags": []
+  },
+  {
+    "id": "1780910524307",
+    "nickname": "test_phone_1780910524226",
+    "email": "test_phone_1780910524226@test.com",
+    "phone": "+375291111111",
+    "passwordHash": "$2b$10$k3LZczE6jc8JSbwksAqFF.m9G56nWaBELs4FryWl794Zyu0sj1iny",
+    "createdAt": "2026-06-08T09:22:04.307Z",
+    "role": "user",
+    "likedTags": []
+  },
+  {
+    "id": "1780910929789",
+    "nickname": "'; DROP TABLE users; -- 1780910929721",
+    "email": "sqltest_1780910929721@test.com",
+    "passwordHash": "$2b$10$Vzr9ZJ1aEWobuH7.sj31i.IyZLXLf9gEfSwJDBr8z.xLI0y4gqVAm",
+    "createdAt": "2026-06-08T09:28:49.789Z",
+    "role": "user",
+    "likedTags": []
+  },
+  {
+    "id": "1780910930853",
+    "nickname": "test_unit_1780910930801",
+    "email": "test_unit_1780910930801@test.com",
+    "passwordHash": "$2b$10$.w0Ul.QmdWKiaGex.KoDX.jjQPi9mH9LoDc/EwmDtOp7YKpPoOMeG",
+    "createdAt": "2026-06-08T09:28:50.853Z",
+    "role": "user",
+    "likedTags": []
+  },
+  {
+    "id": "1780910930912",
+    "nickname": "test_phone_1780910930860",
+    "email": "test_phone_1780910930860@test.com",
+    "phone": "+375291111111",
+    "passwordHash": "$2b$10$cS89VyRLPCE240.R4XczGOUjsYOlL0zeZ3ZjvsC7yvvph35ydkRyS",
+    "createdAt": "2026-06-08T09:28:50.912Z",
+    "role": "user",
+    "likedTags": []
   }
 ]

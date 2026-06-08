@@ -1190,5 +1190,74 @@
     ],
     "id": 53,
     "likesCount": 1
+  },
+  {
+    "name": "Test Tank 1780722983429",
+    "nation": "ussr",
+    "type": "heavy",
+    "level": 8,
+    "img": "",
+    "price": 5000,
+    "inStock": true,
+    "hp": "0",
+    "dmg": "0",
+    "dpm": "0",
+    "ptrs": "0",
+    "ptrp": "0",
+    "spw": "0",
+    "description": "",
+    "tags": [
+      "ussr",
+      "heavy",
+      "t8",
+      "premium"
+    ],
+    "id": 54
+  },
+  {
+    "name": "Test Tank 1780910531136",
+    "nation": "ussr",
+    "type": "heavy",
+    "level": 8,
+    "img": "",
+    "price": 5000,
+    "inStock": true,
+    "hp": "0",
+    "dmg": "0",
+    "dpm": "0",
+    "ptrs": "0",
+    "ptrp": "0",
+    "spw": "0",
+    "description": "",
+    "tags": [
+      "ussr",
+      "heavy",
+      "t8",
+      "premium"
+    ],
+    "id": 55
+  },
+  {
+    "name": "Test Tank 1780910933550",
+    "nation": "ussr",
+    "type": "heavy",
+    "level": 8,
+    "img": "",
+    "price": 5000,
+    "inStock": true,
+    "hp": "0",
+    "dmg": "0",
+    "dpm": "0",
+    "ptrs": "0",
+    "ptrp": "0",
+    "spw": "0",
+    "description": "",
+    "tags": [
+      "ussr",
+      "heavy",
+      "t8",
+      "premium"
+    ],
+    "id": 56
   }
 ]
