@@ -4,6 +4,11 @@ import bcrypt from 'bcrypt';
 
 const USERS_FILE = path.join(__dirname, '../../users.json');
 
+export interface LikedTag {
+  tag: string;
+  timestamp: number;
+}
+
 export interface User {
   id: string;
   nickname: string;
@@ -11,6 +16,9 @@ export interface User {
   phone?: string;
   passwordHash: string;
   createdAt: string;
+  role?: 'user' | 'admin' | 'owner';
+  likedTags?: LikedTag[];
+  likedProductIds?: number[];
 }
 
 export async function readUsers(): Promise<User[]> {
@@ -45,9 +53,77 @@ export async function createUser(nickname: string, email: string, password: stri
     email,
     phone,
     passwordHash,
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
+    role: 'user',
+    likedTags: []
   };
   users.push(newUser);
   await writeUsers(users);
   return newUser;
+}
+
+export async function addLikedTags(userId: string, tags: string[]): Promise<void> {
+  const users = await readUsers();
+  const user = users.find(u => u.id === userId);
+  if (!user) return;
+
+  if (!user.likedTags) {
+    user.likedTags = [];
+  }
+
+  const now = Date.now();
+  for (const tag of tags) {
+    const existing = user.likedTags.find(lt => lt.tag === tag);
+    if (existing) {
+      existing.timestamp = now;
+    } else {
+      user.likedTags.push({ tag, timestamp: now });
+    }
+  }
+
+  await writeUsers(users);
+}
+
+export async function getUserLikedTags(userId: string): Promise<string[]> {
+  const users = await readUsers();
+  const user = users.find(u => u.id === userId);
+  if (!user || !user.likedTags) return [];
+
+  const threeDaysAgo = Date.now() - 3 * 24 * 60 * 60 * 1000;
+  return user.likedTags
+    .filter(lt => lt.timestamp > threeDaysAgo)
+    .map(lt => lt.tag);
+}
+
+export async function hasLikedProduct(userId: string, productId: number): Promise<boolean> {
+  const users = await readUsers();
+  const user = users.find(u => u.id === userId);
+  if (!user || !user.likedProductIds) return false;
+  return user.likedProductIds.includes(productId);
+}
+
+export async function addLikedProduct(userId: string, productId: number): Promise<void> {
+  const users = await readUsers();
+  const user = users.find(u => u.id === userId);
+  if (!user) return;
+  if (!user.likedProductIds) user.likedProductIds = [];
+  if (!user.likedProductIds.includes(productId)) {
+    user.likedProductIds.push(productId);
+    await writeUsers(users);
+  }
+}
+
+export async function getUserLikedProductIds(userId: string): Promise<number[]> {
+  const users = await readUsers();
+  const user = users.find(u => u.id === userId);
+  if (!user || !user.likedProductIds) return [];
+  return user.likedProductIds;
+}
+
+export async function updateUserRole(userId: string, role: 'user' | 'admin' | 'owner'): Promise<void> {
+  const users = await readUsers();
+  const user = users.find(u => u.id === userId);
+  if (!user) throw new Error('Пользователь не найден');
+  user.role = role;
+  await writeUsers(users);
 }

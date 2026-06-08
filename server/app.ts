@@ -4,7 +4,6 @@ import path from 'path';
 import authRoutes from './routes/auth';
 
 const app = express();
-const PORT = 3000;
 
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} ${req.method} ${req.url}`);
@@ -18,11 +17,12 @@ app.use(session({
   secret: 'your-secret-key-wot-shop-2026',
   resave: true,
   saveUninitialized: true,
-  cookie: { 
-    secure: false, 
-    maxAge: 10 * 60 * 1000,
+  rolling: true,
+  cookie: {
+    secure: false,
     httpOnly: true,
-    sameSite: 'lax'
+    sameSite: 'lax',
+    maxAge: 600000
   }
 }));
 
@@ -45,6 +45,4 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`Сервер запущен по адресу http://localhost:${PORT}`);
-});
+export default app;

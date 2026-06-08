@@ -1,33 +1,602 @@
 [
   {
-    "userId": "1773388263463",
+    "userId": "test-user-1780722981179",
     "items": [],
-    "updatedAt": "2026-03-14T07:36:47.565Z"
+    "updatedAt": "2026-06-06T05:16:21.185Z"
   },
   {
-    "userId": "1772201955920",
+    "userId": "test-cart-add-1780722981190",
     "items": [
       {
-        "productId": 5,
+        "productId": 3,
         "quantity": 1,
         "product": {
-          "id": 5,
-          "name": "VK 72.01 (K)",
-          "nation": "germany",
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
           "type": "heavy",
-          "level": 10,
-          "img": "images/VK7201K.png",
-          "price": 22000,
-          "inStock": false,
-          "hp": "2 500",
-          "dmg": "750",
-          "dpm": "2 250",
-          "ptrs": "246",
-          "ptrp": "350",
-          "spw": "10"
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня",
+          "tags": [
+            "other",
+            "heavy",
+            "t11",
+            "premium"
+          ],
+          "likesCount": 1
         }
       }
     ],
-    "updatedAt": "2026-03-14T07:34:06.710Z"
+    "updatedAt": "2026-06-06T05:16:21.207Z"
+  },
+  {
+    "userId": "test-cart-dup-1780722981250",
+    "items": [
+      {
+        "productId": 3,
+        "quantity": 3,
+        "product": {
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
+          "type": "heavy",
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня",
+          "tags": [
+            "other",
+            "heavy",
+            "t11",
+            "premium"
+          ],
+          "likesCount": 1
+        }
+      }
+    ],
+    "updatedAt": "2026-06-06T05:16:21.297Z"
+  },
+  {
+    "userId": "test-cart-upd-1780722981302",
+    "items": [
+      {
+        "productId": 3,
+        "quantity": 5,
+        "product": {
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
+          "type": "heavy",
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня",
+          "tags": [
+            "other",
+            "heavy",
+            "t11",
+            "premium"
+          ],
+          "likesCount": 1
+        }
+      }
+    ],
+    "updatedAt": "2026-06-06T05:16:21.345Z"
+  },
+  {
+    "userId": "test-cart-rem-1780722981350",
+    "items": [],
+    "updatedAt": "2026-06-06T05:16:21.393Z"
+  },
+  {
+    "userId": "test-cart-rem2-1780722981419",
+    "items": [],
+    "updatedAt": "2026-06-06T05:16:21.444Z"
+  },
+  {
+    "userId": "test-cart-clear-1780722981449",
+    "items": [],
+    "updatedAt": "2026-06-06T05:16:21.491Z"
+  },
+  {
+    "userId": "test-cart-total-1780722981514",
+    "items": [
+      {
+        "productId": 3,
+        "quantity": 2,
+        "product": {
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
+          "type": "heavy",
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня",
+          "tags": [
+            "other",
+            "heavy",
+            "t11",
+            "premium"
+          ],
+          "likesCount": 1
+        }
+      }
+    ],
+    "updatedAt": "2026-06-06T05:16:21.518Z"
+  },
+  {
+    "userId": "1780722986143",
+    "items": [
+      {
+        "productId": 3,
+        "quantity": -5,
+        "product": {
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
+          "type": "heavy",
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня",
+          "tags": [
+            "other",
+            "heavy",
+            "t11",
+            "premium"
+          ],
+          "likesCount": 1
+        }
+      }
+    ],
+    "updatedAt": "2026-06-06T05:16:26.831Z"
+  },
+  {
+    "userId": "1780722987668",
+    "items": [],
+    "updatedAt": "2026-06-06T05:16:28.255Z"
+  },
+  {
+    "userId": "1780722987546",
+    "items": [],
+    "updatedAt": "2026-06-06T05:16:28.674Z"
+  },
+  {
+    "userId": "test-user-1780910524368",
+    "items": [],
+    "updatedAt": "2026-06-08T09:22:04.379Z"
+  },
+  {
+    "userId": "test-cart-add-1780910524382",
+    "items": [
+      {
+        "productId": 3,
+        "quantity": 1,
+        "product": {
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
+          "type": "heavy",
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня",
+          "tags": [
+            "other",
+            "heavy",
+            "t11",
+            "premium"
+          ],
+          "likesCount": 1
+        }
+      }
+    ],
+    "updatedAt": "2026-06-08T09:22:04.392Z"
+  },
+  {
+    "userId": "test-cart-dup-1780910524420",
+    "items": [
+      {
+        "productId": 3,
+        "quantity": 3,
+        "product": {
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
+          "type": "heavy",
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня",
+          "tags": [
+            "other",
+            "heavy",
+            "t11",
+            "premium"
+          ],
+          "likesCount": 1
+        }
+      }
+    ],
+    "updatedAt": "2026-06-08T09:22:04.444Z"
+  },
+  {
+    "userId": "test-cart-upd-1780910524450",
+    "items": [
+      {
+        "productId": 3,
+        "quantity": 5,
+        "product": {
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
+          "type": "heavy",
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня",
+          "tags": [
+            "other",
+            "heavy",
+            "t11",
+            "premium"
+          ],
+          "likesCount": 1
+        }
+      }
+    ],
+    "updatedAt": "2026-06-08T09:22:04.494Z"
+  },
+  {
+    "userId": "test-cart-rem-1780910524500",
+    "items": [],
+    "updatedAt": "2026-06-08T09:22:04.542Z"
+  },
+  {
+    "userId": "test-cart-rem2-1780910524559",
+    "items": [],
+    "updatedAt": "2026-06-08T09:22:04.573Z"
+  },
+  {
+    "userId": "test-cart-clear-1780910524575",
+    "items": [],
+    "updatedAt": "2026-06-08T09:22:04.598Z"
+  },
+  {
+    "userId": "test-cart-total-1780910524615",
+    "items": [
+      {
+        "productId": 3,
+        "quantity": 2,
+        "product": {
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
+          "type": "heavy",
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня",
+          "tags": [
+            "other",
+            "heavy",
+            "t11",
+            "premium"
+          ],
+          "likesCount": 1
+        }
+      }
+    ],
+    "updatedAt": "2026-06-08T09:22:04.618Z"
+  },
+  {
+    "userId": "1780910531548",
+    "items": [],
+    "updatedAt": "2026-06-08T09:22:11.884Z"
+  },
+  {
+    "userId": "1780910531478",
+    "items": [],
+    "updatedAt": "2026-06-08T09:22:12.155Z"
+  },
+  {
+    "userId": "1780910532642",
+    "items": [
+      {
+        "productId": 3,
+        "quantity": -5,
+        "product": {
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
+          "type": "heavy",
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня",
+          "tags": [
+            "other",
+            "heavy",
+            "t11",
+            "premium"
+          ],
+          "likesCount": 1
+        }
+      }
+    ],
+    "updatedAt": "2026-06-08T09:22:12.999Z"
+  },
+  {
+    "userId": "test-user-1780910930955",
+    "items": [],
+    "updatedAt": "2026-06-08T09:28:50.957Z"
+  },
+  {
+    "userId": "test-cart-add-1780910930959",
+    "items": [
+      {
+        "productId": 3,
+        "quantity": 1,
+        "product": {
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
+          "type": "heavy",
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня",
+          "tags": [
+            "other",
+            "heavy",
+            "t11",
+            "premium"
+          ],
+          "likesCount": 1
+        }
+      }
+    ],
+    "updatedAt": "2026-06-08T09:28:50.967Z"
+  },
+  {
+    "userId": "test-cart-dup-1780910930986",
+    "items": [
+      {
+        "productId": 3,
+        "quantity": 3,
+        "product": {
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
+          "type": "heavy",
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня",
+          "tags": [
+            "other",
+            "heavy",
+            "t11",
+            "premium"
+          ],
+          "likesCount": 1
+        }
+      }
+    ],
+    "updatedAt": "2026-06-08T09:28:50.997Z"
+  },
+  {
+    "userId": "test-cart-upd-1780910930999",
+    "items": [
+      {
+        "productId": 3,
+        "quantity": 5,
+        "product": {
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
+          "type": "heavy",
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня",
+          "tags": [
+            "other",
+            "heavy",
+            "t11",
+            "premium"
+          ],
+          "likesCount": 1
+        }
+      }
+    ],
+    "updatedAt": "2026-06-08T09:28:51.015Z"
+  },
+  {
+    "userId": "test-cart-rem-1780910931017",
+    "items": [],
+    "updatedAt": "2026-06-08T09:28:51.034Z"
+  },
+  {
+    "userId": "test-cart-rem2-1780910931043",
+    "items": [],
+    "updatedAt": "2026-06-08T09:28:51.054Z"
+  },
+  {
+    "userId": "test-cart-clear-1780910931055",
+    "items": [],
+    "updatedAt": "2026-06-08T09:28:51.075Z"
+  },
+  {
+    "userId": "test-cart-total-1780910931089",
+    "items": [
+      {
+        "productId": 3,
+        "quantity": 2,
+        "product": {
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
+          "type": "heavy",
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня",
+          "tags": [
+            "other",
+            "heavy",
+            "t11",
+            "premium"
+          ],
+          "likesCount": 1
+        }
+      }
+    ],
+    "updatedAt": "2026-06-08T09:28:51.092Z"
+  },
+  {
+    "userId": "1780910931459",
+    "items": [],
+    "updatedAt": "2026-06-08T09:28:51.856Z"
+  },
+  {
+    "userId": "1780910931397",
+    "items": [],
+    "updatedAt": "2026-06-08T09:28:52.140Z"
+  },
+  {
+    "userId": "1780910932416",
+    "items": [
+      {
+        "productId": 3,
+        "quantity": -5,
+        "product": {
+          "id": 3,
+          "name": "Black Rock",
+          "nation": "other",
+          "type": "heavy",
+          "level": 11,
+          "img": "images/BlackRock.png",
+          "price": 25000,
+          "inStock": true,
+          "hp": "2 450",
+          "dmg": "430",
+          "dpm": "2 457",
+          "ptrs": "283",
+          "ptrp": "335",
+          "spw": "18,18",
+          "description": "Машина XI уровня",
+          "tags": [
+            "other",
+            "heavy",
+            "t11",
+            "premium"
+          ],
+          "likesCount": 1
+        }
+      }
+    ],
+    "updatedAt": "2026-06-08T09:28:52.819Z"
   }
 ]
